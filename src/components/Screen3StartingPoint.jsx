@@ -1,17 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, Activity } from 'lucide-react';
 
 export default function Screen3StartingPoint({ formData, updateFormData, onNext, onBack }) {
   const [unit, setUnit] = useState(formData.unit || 'Imperial');
   
   // Imperial
   const [feet, setFeet] = useState(formData.feet || 5);
-  const [inches, setInches] = useState(formData.inches || 7);
-  const [lbs, setLbs] = useState(formData.lbs || 205);
+  const [inches, setInches] = useState(formData.inches || 10);
+  const [lbs, setLbs] = useState(formData.lbs || 180);
 
   // Metric
-  const [cm, setCm] = useState(formData.cm || 170);
-  const [kg, setKg] = useState(formData.kg || 93);
+  const [cm, setCm] = useState(formData.cm || 178);
+  const [kg, setKg] = useState(formData.kg || 81.6);
 
   // Dynamic BMI Calculation
   const bmi = useMemo(() => {
@@ -28,20 +27,27 @@ export default function Screen3StartingPoint({ formData, updateFormData, onNext,
         return (weightKg / (heightM * heightM)).toFixed(1);
       }
     }
-    return '32.4';
+    return '25.8';
   }, [unit, feet, inches, lbs, cm, kg]);
 
-  const bmiNumber = parseFloat(bmi) || 32.4;
+  const bmiNumber = parseFloat(bmi) || 25.8;
 
-  const getBmiCategory = (val) => {
-    if (val < 18.5) return { label: 'Underweight', color: '#66645F' };
-    if (val < 25) return { label: 'Normal weight', color: '#2F8968' };
-    if (val < 30) return { label: 'Overweight', color: '#D49B2A' };
-    if (val < 35) return { label: 'Class I Obesity (Potential Candidate)', color: '#2F8968' };
-    return { label: 'Class II/III Obesity (Potential Candidate)', color: '#1F4F3D' };
-  };
+  // Determine which range is active
+  // UNDER: < 18.5, HEALTHY: 18.5 - 24.9, OVER: 25 - 29.9, OBESE: >= 30
+  const activeCategory = useMemo(() => {
+    if (bmiNumber < 18.5) return 'under';
+    if (bmiNumber < 25) return 'healthy';
+    if (bmiNumber < 30) return 'over';
+    return 'obese';
+  }, [bmiNumber]);
 
-  const category = getBmiCategory(bmiNumber);
+  // Calculate gauge angle for needle: from -90 deg to +90 deg
+  // BMI scale from 15 to 40
+  const needleRotation = useMemo(() => {
+    const clamped = Math.max(15, Math.min(40, bmiNumber));
+    const percent = (clamped - 15) / (40 - 15);
+    return -90 + percent * 180;
+  }, [bmiNumber]);
 
   const handleContinue = (e) => {
     e.preventDefault();
@@ -59,176 +65,201 @@ export default function Screen3StartingPoint({ formData, updateFormData, onNext,
 
   return (
     <div className="content-inner fade-in">
-      <div className="step-nav-header">
-        <button type="button" className="back-btn" onClick={onBack}>
-          <ArrowLeft size={16} /> Back
-        </button>
-        <span className="step-counter-text">Step 3 of 10</span>
+      <div className="step-tag-teal">
+        STEP 1 · ELIGIBILITY CHECK
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">Let’s check your starting point</h1>
+        <h1 className="page-title">Let's check if GLP–1 is right for you</h1>
         <p className="page-subtitle">
-          Your height and weight help calculate your BMI, which is one factor your clinician may consider when evaluating weight-management treatment.
+          Your height and weight help us calculate your BMI — a key factor in eligibility.
         </p>
       </div>
 
       <form onSubmit={handleContinue} style={{ width: '100%' }}>
-        {/* Unit Selector */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-          <div style={{
-            background: 'var(--color-badge-bg)',
-            padding: '4px',
-            borderRadius: '24px',
-            display: 'inline-flex',
-            gap: '4px'
-          }}>
+        {/* Main White Rounded Card */}
+        <div className="bmi-calc-card">
+          {/* Unit Toggle Pill */}
+          <div className="unit-toggle-pill">
             <button
               type="button"
-              className={`toolbar-btn ${unit === 'Imperial' ? 'active' : ''}`}
-              style={{ padding: '6px 20px', borderRadius: '20px' }}
+              className={`unit-toggle-btn ${unit === 'Imperial' ? 'active' : ''}`}
               onClick={() => setUnit('Imperial')}
             >
-              Imperial (ft, lbs)
+              Imperial (ft / lbs)
             </button>
             <button
               type="button"
-              className={`toolbar-btn ${unit === 'Metric' ? 'active' : ''}`}
-              style={{ padding: '6px 20px', borderRadius: '20px' }}
+              className={`unit-toggle-btn ${unit === 'Metric' ? 'active' : ''}`}
               onClick={() => setUnit('Metric')}
             >
-              Metric (cm, kg)
+              Metric (cm / kg)
             </button>
           </div>
-        </div>
 
-        {unit === 'Imperial' ? (
-          <div className="form-row-2" style={{ marginBottom: '20px' }}>
-            <div className="form-group">
-              <label className="form-label">Height</label>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                <div>
-                  <input
-                    type="number"
-                    min="3"
-                    max="7"
-                    className="form-input"
-                    value={feet}
-                    onChange={(e) => setFeet(e.target.value)}
-                  />
-                  <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', display: 'block', marginTop: '3px' }}>Feet</span>
-                </div>
-                <div>
-                  <input
-                    type="number"
-                    min="0"
-                    max="11"
-                    className="form-input"
-                    value={inches}
-                    onChange={(e) => setInches(e.target.value)}
-                  />
-                  <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', display: 'block', marginTop: '3px' }}>Inches</span>
+          {unit === 'Imperial' ? (
+            <>
+              {/* HEIGHT Label & 2-column input */}
+              <div className="calc-field-group">
+                <span className="calc-field-label">HEIGHT</span>
+                <div className="calc-input-pair">
+                  <div className="calc-input-box">
+                    <input
+                      type="number"
+                      min="3"
+                      max="7"
+                      className="calc-input"
+                      value={feet}
+                      onChange={(e) => setFeet(e.target.value)}
+                    />
+                    <span className="calc-unit-tag">FT</span>
+                  </div>
+                  <div className="calc-input-box">
+                    <input
+                      type="number"
+                      min="0"
+                      max="11"
+                      className="calc-input"
+                      value={inches}
+                      onChange={(e) => setInches(e.target.value)}
+                    />
+                    <span className="calc-unit-tag">IN</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="form-group">
-              <label className="form-label">Weight</label>
-              <div>
-                <input
-                  type="number"
-                  min="60"
-                  max="600"
-                  className="form-input"
-                  value={lbs}
-                  onChange={(e) => setLbs(e.target.value)}
-                />
-                <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', display: 'block', marginTop: '3px' }}>lbs</span>
+              {/* WEIGHT Label & input */}
+              <div className="calc-field-group">
+                <span className="calc-field-label">WEIGHT</span>
+                <div className="calc-input-box full-width">
+                  <input
+                    type="number"
+                    min="60"
+                    max="600"
+                    className="calc-input"
+                    value={lbs}
+                    onChange={(e) => setLbs(e.target.value)}
+                  />
+                  <span className="calc-unit-tag">LBS</span>
+                </div>
               </div>
-            </div>
-          </div>
-        ) : (
-          <div className="form-row-2" style={{ marginBottom: '20px' }}>
-            <div className="form-group">
-              <label className="form-label">Height (cm)</label>
-              <input
-                type="number"
-                min="100"
-                max="240"
-                className="form-input"
-                value={cm}
-                onChange={(e) => setCm(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Weight (kg)</label>
-              <input
-                type="number"
-                min="30"
-                max="300"
-                className="form-input"
-                value={kg}
-                onChange={(e) => setKg(e.target.value)}
-              />
-            </div>
-          </div>
-        )}
+            </>
+          ) : (
+            <>
+              <div className="calc-field-group">
+                <span className="calc-field-label">HEIGHT</span>
+                <div className="calc-input-box full-width">
+                  <input
+                    type="number"
+                    min="100"
+                    max="250"
+                    className="calc-input"
+                    value={cm}
+                    onChange={(e) => setCm(e.target.value)}
+                  />
+                  <span className="calc-unit-tag">CM</span>
+                </div>
+              </div>
 
-        {/* Dynamic BMI Card */}
-        <div style={{
-          background: 'var(--color-green-pale)',
-          border: '1.5px solid var(--color-active-border)',
-          borderRadius: '16px',
-          padding: '20px',
-          marginBottom: '20px',
-          textAlign: 'center'
-        }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--color-accent)', fontWeight: 700, fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px' }}>
-            <Activity size={16} /> Clinical Metric
-          </div>
-          <div style={{ fontSize: '32px', fontWeight: 800, color: 'var(--color-primary-dark)', letterSpacing: '-0.02em' }}>
-            Your BMI: {bmi}
-          </div>
-          <div style={{
-            display: 'inline-block',
-            margin: '8px 0 12px',
-            padding: '4px 14px',
-            borderRadius: '20px',
-            background: 'var(--color-green-light)',
-            color: 'var(--color-primary-dark)',
-            fontSize: '13px',
-            fontWeight: 700
-          }}>
-            {category.label}
+              <div className="calc-field-group">
+                <span className="calc-field-label">WEIGHT</span>
+                <div className="calc-input-box full-width">
+                  <input
+                    type="number"
+                    min="30"
+                    max="300"
+                    className="calc-input"
+                    value={kg}
+                    onChange={(e) => setKg(e.target.value)}
+                  />
+                  <span className="calc-unit-tag">KG</span>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* SVG Speedometer Gauge Card */}
+          <div className="bmi-gauge-card">
+            <svg 
+              className="bmi-dial-svg" 
+              viewBox="0 0 280 150" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Radial subtle background glow */}
+              <defs>
+                <radialGradient id="gaugeGlow" cx="50%" cy="100%" r="90%">
+                  <stop offset="0%" stopColor="#E9F7EC" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              <rect x="0" y="0" width="280" height="150" fill="url(#gaugeGlow)" rx="16" />
+
+              {/* Gauge arc track */}
+              <path
+                d="M 40 135 A 100 100 0 0 1 240 135"
+                stroke="#E2EBE2"
+                strokeWidth="16"
+                strokeLinecap="round"
+              />
+
+              {/* Dashed tick marks along outer rim */}
+              <path
+                d="M 32 135 A 108 108 0 0 1 248 135"
+                stroke="#C6D3C8"
+                strokeWidth="2.5"
+                strokeDasharray="2 10"
+                strokeLinecap="round"
+              />
+
+              {/* Active filled arc */}
+              <path
+                d="M 40 135 A 100 100 0 0 1 240 135"
+                stroke="#64997E"
+                strokeWidth="16"
+                strokeLinecap="round"
+                strokeDasharray="314"
+                strokeDashoffset={314 - (314 * Math.max(0.1, Math.min(1, (bmiNumber - 15) / 25)))}
+                style={{ transition: 'stroke-dashoffset 0.4s ease' }}
+              />
+            </svg>
+
+            {/* Gauge Center Text Display */}
+            <div className="bmi-center-readout">
+              <span className="readout-label">YOUR BMI</span>
+              <span className="readout-value">{bmi}</span>
+            </div>
           </div>
 
-          {/* Clean BMI Visual Track */}
-          <div style={{ width: '100%', height: '8px', background: '#DCE8DD', borderRadius: '4px', position: 'relative', overflow: 'hidden', margin: '8px 0 6px' }}>
-            <div 
-              style={{
-                width: `${Math.min(100, Math.max(10, (bmiNumber / 45) * 100))}%`,
-                height: '100%',
-                background: 'linear-gradient(90deg, #2F8968, #1F4F3D)',
-                borderRadius: '4px',
-                transition: 'width 0.4s ease'
-              }}
-            />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'var(--color-text-muted)' }}>
-            <span>18.5 Normal</span>
-            <span>25 Overweight</span>
-            <span>30+ Clinical Candidate</span>
+          {/* 4 Category Pill Badges Grid */}
+          <div className="bmi-categories-grid">
+            <div className={`bmi-cat-cell cat-under ${activeCategory === 'under' ? 'active' : ''}`}>
+              <span className="cat-name">UNDER</span>
+              <span className="cat-range">&lt; 18.5</span>
+            </div>
+            <div className={`bmi-cat-cell cat-healthy ${activeCategory === 'healthy' ? 'active' : ''}`}>
+              <span className="cat-name">HEALTHY</span>
+              <span className="cat-range">18.5 — 24.9</span>
+            </div>
+            <div className={`bmi-cat-cell cat-over ${activeCategory === 'over' ? 'active' : ''}`}>
+              <span className="cat-name">OVER</span>
+              <span className="cat-range">25 — 29.9</span>
+            </div>
+            <div className={`bmi-cat-cell cat-obese ${activeCategory === 'obese' ? 'active' : ''}`}>
+              <span className="cat-name">OBESE</span>
+              <span className="cat-range">≥ 30</span>
+            </div>
           </div>
         </div>
 
-        {/* Clinical Disclaimer */}
-        <div className="clinical-note-box">
-          BMI is one part of your overall health picture. Your clinician will consider your complete health history when determining whether treatment is appropriate.
-        </div>
-
-        <button type="submit" className="cta-button" style={{ marginTop: '8px' }}>
+        {/* Continue Button */}
+        <button 
+          type="submit" 
+          className="cta-button-pill active"
+          style={{ marginTop: '24px' }}
+        >
           <span>Continue</span>
-          <ArrowRight size={18} />
+          <span className="cta-arrow" aria-hidden="true">→</span>
         </button>
       </form>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, CheckCircle2, Calendar, Star, ShieldCheck, Lock, ArrowRight } from 'lucide-react';
+import { Heart, CheckCircle2, Calendar, Star, ShieldCheck, Lock } from 'lucide-react';
 import ProgressIndicator from './ProgressIndicator';
 
 export default function TransitionScreen({ onContinue }) {
@@ -57,7 +57,7 @@ export default function TransitionScreen({ onContinue }) {
       <div className="heading-section">
         <h1 className="page-title">Great! Now a few questions</h1>
         <p className="page-subtitle">
-          Here’s what’s next on your journey to a personalised plan.
+          Here's what's next on your journey to a personalised plan.
         </p>
       </div>
 
@@ -107,11 +107,11 @@ export default function TransitionScreen({ onContinue }) {
         </div>
       </div>
 
-      {/* Primary CTA */}
+      {/* Primary CTA pill */}
       <button
         type="button"
         id="btn-continue-transition"
-        className="cta-button"
+        className="cta-button-pill active"
         onClick={handleContinue}
         disabled={isLoading}
         aria-label="Continue to Health questions"
@@ -124,7 +124,7 @@ export default function TransitionScreen({ onContinue }) {
         ) : (
           <>
             <span>Continue</span>
-            <ArrowRight size={18} strokeWidth={2.4} aria-hidden="true" />
+            <span className="cta-arrow" aria-hidden="true">→</span>
           </>
         )}
       </button>

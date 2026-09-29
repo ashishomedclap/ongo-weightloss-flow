@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { CheckCircle2, Calendar, FileText, ArrowRight, ShieldCheck, RefreshCw } from 'lucide-react';
+import { CheckCircle2, FileText, RefreshCw } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function Screen11Confirmed({ formData, onRestart }) {
   useEffect(() => {
-    // Fire festive celebratory confetti
     try {
       confetti({
         particleCount: 90,
@@ -13,7 +12,7 @@ export default function Screen11Confirmed({ formData, onRestart }) {
         colors: ['#1F4F3D', '#2F8968', '#DDF2DF', '#FF7B60', '#F4E9C8']
       });
     } catch (e) {
-      // gracefully handle if canvas not supported
+      // gracefully handle
     }
   }, []);
 
@@ -25,8 +24,8 @@ export default function Screen11Confirmed({ formData, onRestart }) {
         width: '68px',
         height: '68px',
         borderRadius: '50%',
-        background: 'var(--color-green-light)',
-        color: 'var(--color-primary-dark)',
+        background: '#DDF2DF',
+        color: '#1F4F3D',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -37,38 +36,20 @@ export default function Screen11Confirmed({ formData, onRestart }) {
       </div>
 
       <div className="heading-section" style={{ marginBottom: '18px' }}>
-        <span style={{
-          display: 'inline-block',
-          background: 'var(--color-green-pale)',
-          color: 'var(--color-accent)',
-          border: '1px solid var(--color-active-border)',
-          padding: '3px 12px',
-          borderRadius: '20px',
-          fontSize: '12px',
-          fontWeight: 700,
-          marginBottom: '8px'
-        }}>
-          Order #{orderNum} Confirmed
+        <span className="step-tag-teal" style={{ marginBottom: '8px' }}>
+          ORDER #{orderNum} CONFIRMED
         </span>
         <h1 className="page-title">Payment Confirmed ✓</h1>
         <p className="page-subtitle" style={{ fontSize: '18px', fontWeight: 600, color: 'var(--color-primary-dark)', marginTop: '4px' }}>
-          You’re officially on your way.
+          You're officially on your way.
         </p>
         <p style={{ fontSize: '14.5px', color: 'var(--color-text-secondary)', marginTop: '8px', maxWidth: '440px', margin: '8px auto 0' }}>
-          Your payment has been successfully processed. We’ve received your order and your Ongo care journey can now continue.
+          Your payment has been successfully processed. We've received your order and your Ongo care journey can now continue.
         </p>
       </div>
 
       {/* Next Step Box */}
-      <div style={{
-        background: '#FFFFFF',
-        border: '1.5px solid var(--color-border)',
-        borderRadius: '16px',
-        padding: '22px 20px',
-        margin: '20px 0',
-        textAlign: 'left',
-        boxShadow: 'var(--shadow-card)'
-      }}>
+      <div className="white-elevated-card" style={{ margin: '20px 0', textAlign: 'left' }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -78,7 +59,7 @@ export default function Screen11Confirmed({ formData, onRestart }) {
           fontWeight: 800,
           marginBottom: '6px'
         }}>
-          <FileText size={18} color="var(--color-accent)" />
+          <FileText size={18} color="#1F4F3D" />
           <span>Next: Complete Your Health Assessment</span>
         </div>
         <p style={{ fontSize: '13.5px', color: 'var(--color-text-secondary)', lineHeight: '1.45', margin: 0 }}>
@@ -89,11 +70,11 @@ export default function Screen11Confirmed({ formData, onRestart }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <button
           type="button"
-          className="cta-button"
+          className="cta-button-pill active"
           onClick={() => alert("Proceeding to comprehensive clinical intake questionnaire...")}
         >
           <span>Continue to Health Assessment</span>
-          <ArrowRight size={18} />
+          <span className="cta-arrow" aria-hidden="true">→</span>
         </button>
 
         <button

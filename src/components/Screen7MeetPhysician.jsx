@@ -1,38 +1,24 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight, Award, CheckCircle, Video, ShieldCheck, MapPin } from 'lucide-react';
+import { Award, CheckCircle, Video, MapPin } from 'lucide-react';
 
 export default function Screen7MeetPhysician({ formData, onNext, onBack }) {
   const patientState = formData.state || 'California';
 
   return (
     <div className="content-inner fade-in">
-      <div className="step-nav-header">
-        <button type="button" className="back-btn" onClick={onBack}>
-          <ArrowLeft size={16} /> Back
-        </button>
-        <span className="step-counter-text">Clinical Team</span>
+      <div className="step-tag-teal">
+        CARE TEAM · MEDICAL PROVIDER
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">Meet Your Physician</h1>
+        <h1 className="page-title">Meet your physician</h1>
         <p className="page-subtitle">
           Your care is reviewed by a licensed healthcare professional who will evaluate your health information and treatment goals.
         </p>
       </div>
 
       {/* Physician Profile Card */}
-      <div style={{
-        background: '#FFFFFF',
-        border: '1.5px solid var(--color-border)',
-        borderRadius: '20px',
-        padding: '24px',
-        marginBottom: '20px',
-        boxShadow: 'var(--shadow-card)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center'
-      }}>
+      <div className="white-elevated-card" style={{ alignItems: 'center', textAlign: 'center' }}>
         {/* Physician Portrait */}
         <div style={{ position: 'relative', marginBottom: '16px' }}>
           <img
@@ -43,7 +29,7 @@ export default function Screen7MeetPhysician({ formData, onNext, onBack }) {
               height: '110px',
               borderRadius: '50%',
               objectFit: 'cover',
-              border: '3px solid var(--color-green-light)',
+              border: '3px solid #DDF2DF',
               boxShadow: '0 4px 12px rgba(23, 75, 56, 0.12)'
             }}
           />
@@ -54,7 +40,7 @@ export default function Screen7MeetPhysician({ formData, onNext, onBack }) {
             width: '26px',
             height: '26px',
             borderRadius: '50%',
-            background: 'var(--color-accent)',
+            background: '#1F4F3D',
             color: '#FFFFFF',
             display: 'flex',
             alignItems: 'center',
@@ -69,7 +55,7 @@ export default function Screen7MeetPhysician({ formData, onNext, onBack }) {
           Dr. Sarah Jenkins, MD, FACP
         </h2>
         
-        <p style={{ fontSize: '13.5px', color: 'var(--color-accent)', fontWeight: 600, marginBottom: '8px' }}>
+        <p style={{ fontSize: '13.5px', color: '#1F4F3D', fontWeight: 600, marginBottom: '8px' }}>
           Board-Certified Obesity Medicine & Internal Medicine
         </p>
 
@@ -142,11 +128,11 @@ export default function Screen7MeetPhysician({ formData, onNext, onBack }) {
 
       <button
         type="button"
-        className="cta-button"
+        className="cta-button-pill active"
         onClick={onNext}
       >
         <span>Continue to Treatment Options</span>
-        <ArrowRight size={18} />
+        <span className="cta-arrow" aria-hidden="true">→</span>
       </button>
     </div>
   );

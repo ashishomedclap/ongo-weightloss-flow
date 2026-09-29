@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight, UserCheck, Stethoscope, Sparkles, TrendingDown, ShieldAlert, HeartPulse } from 'lucide-react';
+import { UserCheck, Stethoscope, Sparkles, TrendingDown, HeartPulse } from 'lucide-react';
 
 export default function Screen6InitialResult({ formData, onNext, onBack }) {
   const steps = [
@@ -18,7 +18,7 @@ export default function Screen6InitialResult({ formData, onNext, onBack }) {
     {
       num: 3,
       title: 'Start Your Treatment',
-      desc: 'If prescribed, your treatment will be provided according to your clinician’s instructions.',
+      desc: "If prescribed, your treatment will be provided according to your clinician's instructions.",
       icon: HeartPulse
     },
     {
@@ -31,51 +31,20 @@ export default function Screen6InitialResult({ formData, onNext, onBack }) {
 
   return (
     <div className="content-inner fade-in">
-      <div className="step-nav-header">
-        <button type="button" className="back-btn" onClick={onBack}>
-          <ArrowLeft size={16} /> Back
-        </button>
-        <span className="step-counter-text" style={{ background: 'var(--color-green-light)', color: 'var(--color-primary-dark)' }}>
-          Clinical Assessment
-        </span>
+      <div className="step-tag-teal">
+        ASSESSMENT · ELIGIBILITY MATCH
       </div>
 
       <div className="heading-section">
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          background: 'var(--color-green-light)',
-          color: 'var(--color-primary-dark)',
-          padding: '4px 12px',
-          borderRadius: '20px',
-          fontSize: '12.5px',
-          fontWeight: 700,
-          marginBottom: '10px'
-        }}>
-          <UserCheck size={14} /> Preliminary Candidate
-        </div>
         <h1 className="page-title">Good news. You may be eligible for GLP-1 treatment</h1>
         <p className="page-subtitle">
-          Based on the information you’ve shared so far, you may be a candidate for prescription weight-management treatment.
+          Based on the information you've shared so far, you may be a candidate for prescription weight-management treatment.
         </p>
       </div>
 
-      {/* Treatment Journey Visual Cards */}
-      <div style={{
-        background: '#FFFFFF',
-        border: '1px solid var(--color-border)',
-        borderRadius: '16px',
-        padding: '20px',
-        marginBottom: '20px',
-        boxShadow: 'var(--shadow-card)'
-      }}>
-        <div style={{
-          fontSize: '14px',
-          fontWeight: 700,
-          color: 'var(--color-primary-dark)',
-          marginBottom: '16px'
-        }}>
+      {/* Treatment Journey Visual Card */}
+      <div className="white-elevated-card">
+        <div className="card-section-heading">
           Your Personalized Treatment Pathway
         </div>
 
@@ -93,11 +62,11 @@ export default function Screen6InitialResult({ formData, onNext, onBack }) {
                 }}
               >
                 <div style={{
-                  width: '34px',
-                  height: '34px',
+                  width: '36px',
+                  height: '36px',
                   borderRadius: '10px',
-                  background: i === 0 ? 'var(--color-primary-dark)' : 'var(--color-green-pale)',
-                  color: i === 0 ? '#FFFFFF' : 'var(--color-accent)',
+                  background: i === 0 ? 'var(--color-primary-dark)' : '#EEF8EC',
+                  color: i === 0 ? '#FFFFFF' : '#1F4F3D',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -105,10 +74,10 @@ export default function Screen6InitialResult({ formData, onNext, onBack }) {
                   fontWeight: 800,
                   flexShrink: 0
                 }}>
-                  <IconC size={16} />
+                  <IconC size={18} />
                 </div>
 
-                <div style={{ flex: 1, paddingBottom: i < steps.length - 1 ? '10px' : '0' }}>
+                <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '2px' }}>
                     {st.num}. {st.title}
                   </div>
@@ -129,11 +98,11 @@ export default function Screen6InitialResult({ formData, onNext, onBack }) {
 
       <button
         type="button"
-        className="cta-button"
+        className="cta-button-pill active"
         onClick={onNext}
       >
         <span>Meet Your Physician</span>
-        <ArrowRight size={18} />
+        <span className="cta-arrow" aria-hidden="true">→</span>
       </button>
     </div>
   );

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 
 const US_STATES = [
+  "Select state",
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", 
   "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", 
   "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", 
@@ -16,9 +17,11 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
   const [lastName, setLastName] = useState(formData.lastName || '');
   const [gender, setGender] = useState(formData.gender || '');
   const [dob, setDob] = useState(formData.dob || '');
-  const [state, setState] = useState(formData.state || 'California');
+  const [state, setState] = useState(formData.state || '');
   const [phone, setPhone] = useState(formData.phone || '');
   const [error, setError] = useState('');
+
+  const isFormValid = firstName.trim().length > 0 && lastName.trim().length > 0 && gender !== '';
 
   const handleContinue = (e) => {
     e.preventDefault();
@@ -26,12 +29,8 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
       setError('Please enter your first and last name');
       return;
     }
-    if (!gender) {
-      setError('Please select a gender');
-      return;
-    }
-    if (!dob) {
-      setError('Please enter your date of birth');
+    if (!gender || gender === 'Select gender') {
+      setError('Please select your gender');
       return;
     }
     setError('');
@@ -40,7 +39,7 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
       lastName,
       gender,
       dob,
-      state,
+      state: state === 'Select state' ? '' : state,
       phone
     });
     onNext();
@@ -48,55 +47,39 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
 
   return (
     <div className="content-inner fade-in">
-      <div className="step-nav-header">
-        <button type="button" className="back-btn" onClick={onBack}>
-          <ArrowLeft size={16} /> Back
-        </button>
-        <span className="step-counter-text">Step 2 of 10</span>
-      </div>
-
       <div className="heading-section">
-        <h1 className="page-title">Tell us a little about you</h1>
+        <h1 className="page-title">Complete your profile</h1>
         <p className="page-subtitle">
-          This information helps us understand your health needs and personalize your care.
+          Your healthcare team will need this for treatment and prescriptions.
         </p>
       </div>
 
       <form onSubmit={handleContinue} style={{ width: '100%' }}>
         {error && (
-          <div style={{
-            background: '#FDF2F2',
-            border: '1px solid #F8B4B4',
-            color: '#9B1C1C',
-            padding: '10px 14px',
-            borderRadius: '10px',
-            fontSize: '13px',
-            marginBottom: '16px'
-          }}>
+          <div className="form-error-banner">
             {error}
           </div>
         )}
 
-        <div className="form-row-2">
-          <div className="form-group">
-            <label className="form-label" htmlFor="first-name">First Name</label>
+        {/* First Name & Last Name row */}
+        <div className="input-capsule-row-2">
+          <div className="input-capsule-wrap">
             <input
               id="first-name"
               type="text"
-              className="form-input"
-              placeholder="e.g. Sarah"
+              className="input-capsule"
+              placeholder="First name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               required
             />
           </div>
-          <div className="form-group">
-            <label className="form-label" htmlFor="last-name">Last Name</label>
+          <div className="input-capsule-wrap">
             <input
               id="last-name"
               type="text"
-              className="form-input"
-              placeholder="e.g. Miller"
+              className="input-capsule"
+              placeholder="Last name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               required
@@ -104,68 +87,76 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
           </div>
         </div>
 
-        <div className="form-group">
-          <label className="form-label">Gender</label>
-          <div className="selectable-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
-            {['Female', 'Male', 'Prefer not to say'].map((option) => (
-              <div
-                key={option}
-                className={`select-card-pill ${gender === option ? 'selected' : ''}`}
-                onClick={() => setGender(option)}
-                role="radio"
-                aria-checked={gender === option}
-              >
-                {option}
-              </div>
+        {/* Select gender dropdown */}
+        <div className="input-capsule-wrap select-wrap">
+          <select
+            id="gender-select"
+            className={`input-capsule-select ${!gender ? 'is-placeholder' : ''}`}
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+          >
+            <option value="" disabled>Select gender</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Non-binary">Non-binary</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+          <div className="select-dropdown-arrow" aria-hidden="true">▼</div>
+        </div>
+
+        {/* Date of birth with calendar icon */}
+        <div className="input-capsule-wrap has-suffix">
+          <input
+            id="dob-input"
+            type="text"
+            className="input-capsule"
+            placeholder="Date of birth"
+            value={dob}
+            onFocus={(e) => { e.target.type = 'date'; }}
+            onBlur={(e) => { if (!e.target.value) e.target.type = 'text'; }}
+            onChange={(e) => setDob(e.target.value)}
+          />
+          <span className="input-suffix-icon" aria-hidden="true">
+            <Calendar size={18} strokeWidth={1.8} />
+          </span>
+        </div>
+
+        {/* Select state */}
+        <div className="input-capsule-wrap select-wrap">
+          <select
+            id="state-select"
+            className={`input-capsule-select ${!state || state === 'Select state' ? 'is-placeholder' : ''}`}
+            value={state || 'Select state'}
+            onChange={(e) => setState(e.target.value)}
+          >
+            {US_STATES.map((st) => (
+              <option key={st} value={st} disabled={st === 'Select state'}>
+                {st}
+              </option>
             ))}
-          </div>
+          </select>
+          <div className="select-dropdown-arrow" aria-hidden="true">▼</div>
         </div>
 
-        <div className="form-row-2">
-          <div className="form-group">
-            <label className="form-label" htmlFor="dob-input">Date of Birth</label>
-            <input
-              id="dob-input"
-              type="date"
-              className="form-input"
-              value={dob}
-              onChange={(e) => setDob(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label className="form-label" htmlFor="state-select">State</label>
-            <select
-              id="state-select"
-              className="form-select"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            >
-              {US_STATES.map((st) => (
-                <option key={st} value={st}>{st}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label className="form-label" htmlFor="phone-input">
-            Phone Number
-            <span className="form-label-hint">For consultation scheduling</span>
-          </label>
+        {/* Phone number */}
+        <div className="input-capsule-wrap">
           <input
             id="phone-input"
             type="tel"
-            className="form-input"
-            placeholder="(555) 000-0000"
+            className="input-capsule"
+            placeholder="+1(888) 655–5267"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
         </div>
 
-        <button type="submit" className="cta-button" style={{ marginTop: '12px' }}>
+        {/* Continue Button */}
+        <button 
+          type="submit" 
+          className={`cta-button-pill ${isFormValid ? 'active' : ''}`}
+        >
           <span>Continue</span>
-          <ArrowRight size={18} />
+          <span className="cta-arrow" aria-hidden="true">→</span>
         </button>
       </form>
     </div>

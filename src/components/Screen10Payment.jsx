@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, CreditCard, ShieldCheck, Lock, Check, Tag } from 'lucide-react';
+import { CreditCard, Lock, Check } from 'lucide-react';
 
 export default function Screen10Payment({ formData, updateFormData, onNext, onBack }) {
   const [paymentMethod, setPaymentMethod] = useState('card');
@@ -11,7 +11,6 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
       ? `${formData.firstName} ${formData.lastName}` 
       : 'Sarah Miller'
   );
-  const [zip, setZip] = useState('90210');
   
   // Promo code
   const [promoCode, setPromoCode] = useState('');
@@ -21,7 +20,8 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
 
   const plan = formData.selectedPlan || {
     id: '3-months',
-    title: '3-Month Momentum',
+    title: 'Momentum',
+    duration: '3 Months',
     monthlyPrice: 199,
   };
 
@@ -31,7 +31,11 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
   const regularTotal = plan.id === '1-month' ? 299 : plan.id === '3-months' ? 747 : 1494;
   const planDiscount = plan.id === '1-month' ? 50 : plan.id === '3-months' ? 150 : 420;
   const promoDiscount = promoApplied ? 50 : 0;
-  const finalTotal = Math.max(0, regularTotal - planDiscount - promoDiscount);
+  // Additional 30% discount on first month for 3-months or longer plans
+  const extraDiscount = plan.id !== '1-month' ? Math.round(plan.monthlyPrice * 0.30) : 0;
+  // Total savings to highlight to user
+  const totalSavings = planDiscount + extraDiscount + (promoDiscount || 0);
+  const finalTotal = Math.max(0, regularTotal - planDiscount - promoDiscount - extraDiscount);
 
   const handleApplyPromo = (e) => {
     e.preventDefault();
@@ -60,43 +64,37 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
 
   return (
     <div className="content-inner fade-in">
-      <div className="step-nav-header">
-        <button type="button" className="back-btn" onClick={onBack}>
-          <ArrowLeft size={16} /> Back
-        </button>
-        <span className="step-counter-text">Secure Checkout</span>
+      <div className="step-tag-teal">
+        CHECKOUT · SECURE PAYMENT
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">Complete Your Payment</h1>
+        <h1 className="page-title">Complete your payment</h1>
         <p className="page-subtitle">
           Your treatment plan is almost ready.
         </p>
       </div>
 
       {/* Payment Method Switcher Tabs */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '20px' }}>
+      <div className="payment-method-tabs">
         <button
           type="button"
-          className={`select-card-pill ${paymentMethod === 'card' ? 'selected' : ''}`}
+          className={`payment-tab-pill ${paymentMethod === 'card' ? 'active' : ''}`}
           onClick={() => setPaymentMethod('card')}
-          style={{ padding: '10px 4px', fontSize: '13px' }}
         >
           <CreditCard size={15} /> Card
         </button>
         <button
           type="button"
-          className={`select-card-pill ${paymentMethod === 'apple' ? 'selected' : ''}`}
+          className={`payment-tab-pill ${paymentMethod === 'apple' ? 'active' : ''}`}
           onClick={() => setPaymentMethod('apple')}
-          style={{ padding: '10px 4px', fontSize: '13px' }}
         >
           <span style={{ fontWeight: 800 }}> Pay</span>
         </button>
         <button
           type="button"
-          className={`select-card-pill ${paymentMethod === 'google' ? 'selected' : ''}`}
+          className={`payment-tab-pill ${paymentMethod === 'google' ? 'active' : ''}`}
           onClick={() => setPaymentMethod('google')}
-          style={{ padding: '10px 4px', fontSize: '13px' }}
         >
           <span style={{ fontWeight: 800 }}>G Pay</span>
         </button>
@@ -104,44 +102,37 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
 
       {/* Payment Inputs */}
       {paymentMethod === 'card' && (
-        <div style={{
-          background: '#FFFFFF',
-          border: '1.5px solid var(--color-border)',
-          borderRadius: '16px',
-          padding: '20px',
-          marginBottom: '20px',
-          boxShadow: 'var(--shadow-card)'
-        }}>
-          <div className="form-group">
-            <label className="form-label" htmlFor="card-number">Card Number</label>
+        <div className="white-elevated-card" style={{ marginBottom: '16px' }}>
+          <div className="input-capsule-wrap">
+            <label className="field-top-label" htmlFor="card-number">Card Number</label>
             <input
               id="card-number"
               type="text"
-              className="form-input"
+              className="input-capsule"
               value={cardNumber}
               onChange={(e) => setCardNumber(e.target.value)}
               placeholder="1234 5678 9012 3456"
             />
           </div>
 
-          <div className="form-row-2">
-            <div className="form-group">
-              <label className="form-label" htmlFor="card-exp">Expiration Date</label>
+          <div className="input-capsule-row-2">
+            <div className="input-capsule-wrap">
+              <label className="field-top-label" htmlFor="card-exp">Expiration Date</label>
               <input
                 id="card-exp"
                 type="text"
-                className="form-input"
+                className="input-capsule"
                 value={cardExpiry}
                 onChange={(e) => setCardExpiry(e.target.value)}
                 placeholder="MM / YY"
               />
             </div>
-            <div className="form-group">
-              <label className="form-label" htmlFor="card-cvc">CVC</label>
+            <div className="input-capsule-wrap">
+              <label className="field-top-label" htmlFor="card-cvc">CVC</label>
               <input
                 id="card-cvc"
                 type="text"
-                className="form-input"
+                className="input-capsule"
                 value={cardCvc}
                 onChange={(e) => setCardCvc(e.target.value)}
                 placeholder="123"
@@ -149,42 +140,21 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
             </div>
           </div>
 
-          <div className="form-row-2" style={{ marginBottom: 0 }}>
-            <div className="form-group" style={{ marginBottom: 0 }}>
-              <label className="form-label" htmlFor="card-name">Name on Card</label>
-              <input
-                id="card-name"
-                type="text"
-                className="form-input"
-                value={cardName}
-                onChange={(e) => setCardName(e.target.value)}
-              />
-            </div>
-            <div className="form-group" style={{ marginBottom: 0 }}>
-              <label className="form-label" htmlFor="card-zip">Billing ZIP Code</label>
-              <input
-                id="card-zip"
-                type="text"
-                className="form-input"
-                value={zip}
-                onChange={(e) => setZip(e.target.value)}
-                placeholder="90210"
-              />
-            </div>
+          <div className="input-capsule-wrap">
+            <label className="field-top-label" htmlFor="card-name">Name on Card</label>
+            <input
+              id="card-name"
+              type="text"
+              className="input-capsule"
+              value={cardName}
+              onChange={(e) => setCardName(e.target.value)}
+            />
           </div>
         </div>
       )}
 
       {paymentMethod === 'apple' && (
-        <div style={{
-          background: '#FFFFFF',
-          border: '1.5px solid var(--color-border)',
-          borderRadius: '16px',
-          padding: '24px 20px',
-          marginBottom: '20px',
-          textAlign: 'center',
-          boxShadow: 'var(--shadow-card)'
-        }}>
+        <div className="white-elevated-card" style={{ textAlign: 'center', marginBottom: '16px' }}>
           <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--color-primary-dark)', marginBottom: '8px' }}>
             Pay securely with Apple Pay
           </div>
@@ -194,38 +164,16 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
           <button
             type="button"
             onClick={handlePay}
-            style={{
-              width: '100%',
-              height: '52px',
-              borderRadius: '26px',
-              background: '#000000',
-              color: '#FFFFFF',
-              border: 'none',
-              fontFamily: 'inherit',
-              fontSize: '17px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px'
-            }}
+            className="cta-button-pill active"
+            style={{ background: '#000000' }}
           >
-            Pay with Pay
+            <span>Secure Checkout with Pay</span>
           </button>
         </div>
       )}
 
       {paymentMethod === 'google' && (
-        <div style={{
-          background: '#FFFFFF',
-          border: '1.5px solid var(--color-border)',
-          borderRadius: '16px',
-          padding: '24px 20px',
-          marginBottom: '20px',
-          textAlign: 'center',
-          boxShadow: 'var(--shadow-card)'
-        }}>
+        <div className="white-elevated-card" style={{ textAlign: 'center', marginBottom: '16px' }}>
           <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--color-primary-dark)', marginBottom: '8px' }}>
             Pay securely with Google Pay
           </div>
@@ -235,80 +183,52 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
           <button
             type="button"
             onClick={handlePay}
-            style={{
-              width: '100%',
-              height: '52px',
-              borderRadius: '26px',
-              background: '#1F1F1F',
-              color: '#FFFFFF',
-              border: 'none',
-              fontFamily: 'inherit',
-              fontSize: '16px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px'
-            }}
+            className="oauth-capsule-btn"
+            style={{ background: '#000000', color: '#FFFFFF', borderColor: '#000000' }}
           >
-            <span>Buy with</span>
-            <span style={{ fontWeight: 800, letterSpacing: '-0.02em' }}>GPay</span>
+            <span>Secure Checkout with GPay</span>
           </button>
         </div>
       )}
 
       {/* Promo Code Form */}
-      <div style={{
-        background: '#FAF9F6',
-        borderRadius: '14px',
-        padding: '14px 16px',
-        marginBottom: '20px',
-        border: '1px solid var(--color-border)'
-      }}>
+      <div className="promo-box">
         <form onSubmit={handleApplyPromo} style={{ display: 'flex', gap: '8px' }}>
           <div style={{ position: 'relative', flex: 1 }}>
             <input
               type="text"
-              placeholder="Promo code (try ONGO50)"
+              placeholder="PROMO CODE (TRY ONGO50)"
               value={promoCode}
               onChange={(e) => setPromoCode(e.target.value)}
-              className="form-input"
-              style={{ height: '42px', textTransform: 'uppercase', fontSize: '13.5px' }}
+              className="input-capsule"
+              style={{ textTransform: 'uppercase', fontSize: '13px' }}
               disabled={promoApplied}
             />
           </div>
           <button
             type="submit"
             className="secondary-btn"
-            style={{ height: '42px', padding: '0 16px', fontSize: '13px' }}
+            style={{ height: '52px', padding: '0 20px', borderRadius: '26px', fontSize: '13px', fontWeight: 700 }}
             disabled={promoApplied || !promoCode.trim()}
           >
             {promoApplied ? 'Applied ✓' : 'Apply'}
           </button>
         </form>
         {promoApplied && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--color-accent)', fontSize: '12px', fontWeight: 600, marginTop: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#1F4F3D', fontSize: '12px', fontWeight: 600, marginTop: '8px' }}>
             <Check size={14} /> $50 Welcome promotion applied successfully!
           </div>
         )}
         {promoError && (
-          <div style={{ color: '#C81E1E', fontSize: '12px', marginTop: '6px' }}>
+          <div style={{ color: '#C81E1E', fontSize: '12px', marginTop: '8px' }}>
             {promoError}
           </div>
         )}
       </div>
 
       {/* Order Summary */}
-      <div style={{
-        background: '#FFFFFF',
-        border: '1px solid var(--color-border)',
-        borderRadius: '16px',
-        padding: '18px 20px',
-        marginBottom: '20px',
-        boxShadow: 'var(--shadow-card)'
-      }}>
-        <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--color-primary-dark)', marginBottom: '14px' }}>
+      <div className="white-elevated-card" style={{ marginBottom: '20px' }}>
+        <div className="card-section-heading" style={{ marginBottom: '14px' }}>
           Order Summary
         </div>
 
@@ -328,21 +248,34 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
             <span style={{ color: 'var(--color-text-muted)', textDecoration: 'line-through' }}>${regularTotal}</span>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-accent)' }}>
-            <span>Plan Savings</span>
-            <span style={{ fontWeight: 700 }}>-${planDiscount}</span>
-          </div>
-
-          {promoApplied && (
-            <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-accent)' }}>
-              <span>Welcome Discount (ONGO50)</span>
-              <span style={{ fontWeight: 700 }}>-$50</span>
+          {/* Savings Breakdown */}
+          {planDiscount > 0 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#1F4F3D' }}>
+              <span>Plan Savings</span>
+              <span style={{ fontWeight: 700 }}>-${planDiscount}</span>
             </div>
           )}
-
+          {extraDiscount > 0 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#1F4F3D' }}>
+              <span>Additional 30% Discount</span>
+              <span style={{ fontWeight: 700 }}>-${extraDiscount}</span>
+            </div>
+          )}
+          {promoApplied && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#1F4F3D' }}>
+              <span>Welcome Discount (ONGO50)</span>
+              <span style={{ fontWeight: 700 }}>-${promoDiscount}</span>
+            </div>
+          )}
+          {totalSavings > 0 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', background: 'rgba(31, 79, 61, 0.06)', padding: '10px 12px', borderRadius: '8px', color: '#1F4F3D', marginTop: '10px', fontWeight: 700 }}>
+              <span>Total Savings</span>
+              <span>-${totalSavings}</span>
+            </div>
+          )}
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <span style={{ color: 'var(--color-text-secondary)' }}>Shipping</span>
-            <span style={{ fontWeight: 700, color: 'var(--color-accent)' }}>FREE Discreet 2-3 Day</span>
+            <span style={{ fontWeight: 700, color: '#1F4F3D' }}>FREE Discreet 2-3 Day</span>
           </div>
 
           <div style={{
@@ -356,7 +289,7 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
               <span style={{ fontSize: '16px', fontWeight: 800, color: 'var(--color-primary-dark)' }}>Total Today</span>
               <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', display: 'block' }}>Includes physician review</span>
             </div>
-            <span style={{ fontSize: '26px', fontWeight: 800, color: 'var(--color-primary-dark)' }}>
+            <span style={{ fontSize: '28px', fontWeight: 800, color: 'var(--color-primary-dark)' }}>
               ${finalTotal}
             </span>
           </div>
@@ -366,7 +299,7 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
       {paymentMethod === 'card' && (
         <button
           type="button"
-          className="cta-button"
+          className="cta-button-pill active"
           onClick={handlePay}
           disabled={isProcessing}
         >
@@ -378,20 +311,14 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
           ) : (
             <>
               <Lock size={16} />
-              <span>Pay ${finalTotal} & Reserve Care</span>
+              <span>Complete Secure Checkout</span>
             </>
           )}
         </button>
       )}
 
-      <p style={{
-        fontSize: '11.5px',
-        color: 'var(--color-text-muted)',
-        textAlign: 'center',
-        marginTop: '12px',
-        lineHeight: '1.4'
-      }}>
-        By completing your purchase, you agree to Ongo’s applicable treatment, payment, refund, and telehealth terms.
+      <p className="safety-sub-note" style={{ marginTop: '14px' }}>
+        By completing your purchase, you agree to Ongo's applicable treatment, payment, refund, and telehealth terms.
       </p>
     </div>
   );

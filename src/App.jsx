@@ -15,13 +15,13 @@ import Screen8TreatmentOptions from './components/Screen8TreatmentOptions';
 import Screen9TreatmentPlan from './components/Screen9TreatmentPlan';
 import Screen10Payment from './components/Screen10Payment';
 import Screen11Confirmed from './components/Screen11Confirmed';
-import { Smartphone, Monitor, Sparkles, CheckCheck, Compass } from 'lucide-react';
+import { Smartphone, Monitor, Sparkles, CheckCheck } from 'lucide-react';
 
 const SCREEN_LIST = [
-  { key: 'transition', label: '⭐ Reference Screen (Transition)' },
-  { key: '1', label: 'Screen 1: Create Account' },
-  { key: '2', label: 'Screen 2: Tell Us About You' },
-  { key: '3', label: 'Screen 3: Your Starting Point (BMI)' },
+  { key: '1', label: 'Screen 1: Find Treatment (Account)' },
+  { key: '2', label: 'Screen 2: Complete Profile' },
+  { key: '3', label: 'Screen 3: Eligibility & BMI' },
+  { key: 'transition', label: 'Reference Screen (Transition)' },
   { key: '4', label: 'Screen 4: Safety Checks' },
   { key: '5', label: 'Screen 5: Prior GLP-1? (Yes/No)' },
   { key: '5b', label: 'Screen 5b: Which GLP-1 Meds?' },
@@ -36,27 +36,27 @@ const SCREEN_LIST = [
 ];
 
 export default function App() {
-  // Start on the reference transition screen as requested
-  const [currentScreen, setCurrentScreen] = useState('transition');
+  // Default to Screen 1 so user immediately sees the recreated design of screenshot 1
+  const [currentScreen, setCurrentScreen] = useState('1');
   const [isMobileFrame, setIsMobileFrame] = useState(false);
 
   // Form State across the entire patient survey journey
   const [formData, setFormData] = useState({
-    email: 'sarah.miller@example.com',
+    email: '',
     password: '',
     agreeTerms: true,
+    agreeMarketing: false,
     firstName: 'Sarah',
     lastName: 'Miller',
     gender: 'Female',
     dob: '1988-06-14',
     state: 'California',
-    phone: '(415) 890-4421',
-    pregnancyStatus: 'Neither',
+    phone: '+1(888) 655–5267',
     unit: 'Imperial',
     feet: 5,
-    inches: 6,
-    lbs: 202,
-    calculatedBmi: '32.6',
+    inches: 10,
+    lbs: 180,
+    calculatedBmi: '25.8',
     safetyAnswers: {},
     noneApply: true,
     usedGLP1Before: true,
@@ -73,7 +73,7 @@ export default function App() {
     selectedPlanId: '3-months',
     selectedPlan: {
       id: '3-months',
-      duration: '3 Months',
+      duration: '3 MONTHS',
       title: 'Momentum',
       monthlyPrice: 199,
       savingsText: 'Save $50/mo',
@@ -88,33 +88,22 @@ export default function App() {
 
   const handleAutofill = () => {
     setFormData({
-      email: 'alex.taylor@example.com',
+      email: 'sarah.miller@example.com',
       password: 'SecurePassword123!',
       agreeTerms: true,
-      firstName: 'Alex',
-      lastName: 'Taylor',
+      agreeMarketing: true,
+      firstName: 'Sarah',
+      lastName: 'Miller',
       gender: 'Female',
-      dob: '1989-11-20',
-      state: 'Texas',
-      phone: '(512) 839-2911',
-      pregnancyStatus: 'Neither',
+      dob: '1988-06-14',
+      state: 'California',
+      phone: '+1(888) 655–5267',
       unit: 'Imperial',
       feet: 5,
-      inches: 7,
-      lbs: 208,
-      calculatedBmi: '32.6',
-      safetyAnswers: {
-        pancreatitis: 'No',
-        thyroidCancer: 'No',
-        men2: 'No',
-        glp1Allergy: 'No',
-        gastroparesis: 'No',
-        kidneyDialysis: 'No',
-        eatingDisorder: 'No',
-        gallbladder: 'No',
-        pregnantNow: 'No',
-        breastfeedingNow: 'No'
-      },
+      inches: 10,
+      lbs: 180,
+      calculatedBmi: '25.8',
+      safetyAnswers: {},
       noneApply: true,
       usedGLP1Before: true,
       glp1Meds: ['Ozempic®'],
@@ -130,7 +119,7 @@ export default function App() {
       selectedPlanId: '3-months',
       selectedPlan: {
         id: '3-months',
-        duration: '3 Months',
+        duration: '3 MONTHS',
         title: 'Momentum',
         monthlyPrice: 199,
         savingsText: 'Save $50/mo',
@@ -140,15 +129,47 @@ export default function App() {
     });
   };
 
+  // Determine back navigation handler for Header
+  const getHeaderBackAction = () => {
+    switch (currentScreen) {
+      case '1':
+        return null;
+      case '2':
+        return () => setCurrentScreen('1');
+      case '3':
+        return () => setCurrentScreen('2');
+      case 'transition':
+        return () => setCurrentScreen('3');
+      case '4':
+        return () => setCurrentScreen('transition');
+      case '5':
+        return () => setCurrentScreen('4');
+      case '5b':
+        return () => setCurrentScreen('5');
+      case '5c':
+        return () => setCurrentScreen('5b');
+      case '5d':
+        return () => setCurrentScreen('5c');
+      case '6':
+        return () => setCurrentScreen(formData.usedGLP1Before ? '5d' : '5');
+      case '7':
+        return () => setCurrentScreen('6');
+      case '8':
+        return () => setCurrentScreen('7');
+      case '9':
+        return () => setCurrentScreen('8');
+      case '10':
+        return () => setCurrentScreen('9');
+      case '11':
+        return () => setCurrentScreen('10');
+      default:
+        return null;
+    }
+  };
+
   // Screen routing
   const renderCurrentScreen = () => {
     switch (currentScreen) {
-      case 'transition':
-        return (
-          <TransitionScreen
-            onContinue={() => setCurrentScreen('4')}
-          />
-        );
       case '1':
         return (
           <Screen1Account
@@ -173,6 +194,12 @@ export default function App() {
             updateFormData={updateFormData}
             onNext={() => setCurrentScreen('transition')}
             onBack={() => setCurrentScreen('2')}
+          />
+        );
+      case 'transition':
+        return (
+          <TransitionScreen
+            onContinue={() => setCurrentScreen('4')}
           />
         );
       case '4':
@@ -273,35 +300,50 @@ export default function App() {
         return (
           <Screen11Confirmed
             formData={formData}
-            onRestart={() => setCurrentScreen('transition')}
+            onRestart={() => setCurrentScreen('1')}
           />
         );
       default:
-        return <TransitionScreen onContinue={() => setCurrentScreen('4')} />;
+        return <Screen1Account formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('2')} />;
     }
   };
+
+  const backAction = getHeaderBackAction();
 
   return (
     <div className="app-viewport">
       {/* Top Reviewer Controls & Screen Switcher */}
       <aside className="top-dev-toolbar" aria-label="Survey review and device controls">
         <div className="toolbar-brand">
-          <Sparkles size={16} color="var(--color-accent)" />
-          <span>Ongo Survey Inspector</span>
+          <Sparkles size={16} color="var(--color-primary-dark)" />
+          <span>Ongo Flow Inspector</span>
         </div>
 
         <div className="toolbar-controls">
-          {/* Quick jump to Reference Screen */}
+          {/* Quick jump buttons for Screenshots 1, 2, 3 */}
           <button
             type="button"
-            className={`toolbar-btn ${currentScreen === 'transition' ? 'active' : 'highlight'}`}
-            onClick={() => setCurrentScreen('transition')}
-            title="Jump directly to the Reference Transition Screen"
+            className={`toolbar-btn ${currentScreen === '1' ? 'active' : ''}`}
+            onClick={() => setCurrentScreen('1')}
           >
-            ⭐ Reference Screen
+            📸 Screen 1
+          </button>
+          <button
+            type="button"
+            className={`toolbar-btn ${currentScreen === '2' ? 'active' : ''}`}
+            onClick={() => setCurrentScreen('2')}
+          >
+            📸 Screen 2
+          </button>
+          <button
+            type="button"
+            className={`toolbar-btn ${currentScreen === '3' ? 'active' : ''}`}
+            onClick={() => setCurrentScreen('3')}
+          >
+            📸 Screen 3
           </button>
 
-          {/* Jump to any screen */}
+          {/* Jump to any screen dropdown */}
           <select
             className="screen-select-dropdown"
             value={currentScreen}
@@ -334,17 +376,21 @@ export default function App() {
             title="Toggle between mobile viewport frame and centered desktop layout"
           >
             {isMobileFrame ? <Monitor size={13} /> : <Smartphone size={13} />}
-            <span>{isMobileFrame ? 'Desktop (620px)' : 'Mobile Frame'}</span>
+            <span>{isMobileFrame ? 'Desktop (540px)' : 'Mobile Frame'}</span>
           </button>
         </div>
       </aside>
 
       {/* Main Onboarding Container */}
       <main className={`onboarding-shell ${isMobileFrame ? 'device-frame-mobile' : ''}`}>
-        {/* Compact Dark Green Ongo Header */}
-        <Header onLogoClick={() => setCurrentScreen('transition')} />
+        {/* Compact Dark Green Ongo Header with Back Button (if not on screen 1) */}
+        <Header 
+          showBack={backAction !== null} 
+          onBack={backAction} 
+          onLogoClick={() => setCurrentScreen('1')}
+        />
 
-        {/* Card Body */}
+        {/* Card Body with Warm Cream Background */}
         <div className="main-card-body">
           {renderCurrentScreen()}
         </div>

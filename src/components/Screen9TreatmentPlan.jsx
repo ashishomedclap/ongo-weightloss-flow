@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ArrowRight, ShieldCheck, Check } from 'lucide-react';
+import { ShieldCheck, Check } from 'lucide-react';
 
 const PLANS = [
   {
     id: '1-month',
-    duration: '1 Month',
+    duration: '1 MONTH',
     title: 'Kickstart',
     monthlyPrice: 249,
     savingsText: 'Save $50',
@@ -14,7 +14,7 @@ const PLANS = [
   },
   {
     id: '3-months',
-    duration: '3 Months',
+    duration: '3 MONTHS',
     title: 'Momentum',
     monthlyPrice: 199,
     savingsText: 'Save $50/mo',
@@ -24,7 +24,7 @@ const PLANS = [
   },
   {
     id: '6-months',
-    duration: '6 Months',
+    duration: '6 MONTHS',
     title: 'Transform',
     monthlyPrice: 179,
     savingsText: 'Save $70/mo',
@@ -48,22 +48,19 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
 
   return (
     <div className="content-inner fade-in">
-      <div className="step-nav-header">
-        <button type="button" className="back-btn" onClick={onBack}>
-          <ArrowLeft size={16} /> Back
-        </button>
-        <span className="step-counter-text">Care Plan</span>
+      <div className="step-tag-teal">
+        PLANS · DURATION & PRICING
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">Choose Your Treatment Plan</h1>
+        <h1 className="page-title">Choose your treatment plan</h1>
         <p className="page-subtitle">
           Weight-loss results vary from person to person. Choose the plan that fits your treatment journey.
         </p>
       </div>
 
       {/* Plan Cards */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '22px' }}>
+      <div className="plans-stack">
         {PLANS.map((plan) => {
           const isSelected = selectedPlanId === plan.id;
 
@@ -71,39 +68,17 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
             <div
               key={plan.id}
               onClick={() => setSelectedPlanId(plan.id)}
-              style={{
-                borderRadius: '18px',
-                border: `2px solid ${isSelected ? 'var(--color-accent)' : 'var(--color-border)'}`,
-                background: isSelected ? 'var(--color-green-pale)' : '#FFFFFF',
-                padding: '20px',
-                cursor: 'pointer',
-                boxShadow: isSelected ? '0 6px 20px rgba(47, 137, 104, 0.12)' : 'var(--shadow-card)',
-                transition: 'all 0.2s ease',
-                position: 'relative'
-              }}
+              className={`plan-card ${isSelected ? 'selected' : ''}`}
             >
               {plan.isRecommended && (
-                <div style={{
-                  position: 'absolute',
-                  top: '-11px',
-                  right: '20px',
-                  background: 'var(--color-primary-dark)',
-                  color: '#FFFFFF',
-                  fontSize: '11px',
-                  fontWeight: 800,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.06em',
-                  padding: '3px 12px',
-                  borderRadius: '12px',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
-                }}>
-                  Recommended
+                <div className="plan-badge-recommended">
+                  RECOMMENDED
                 </div>
               )}
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '6px' }}>
                 <div>
-                  <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                     {plan.duration}
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: 'var(--color-primary-dark)' }}>
@@ -116,14 +91,7 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
                     ${plan.monthlyPrice}
                     <span style={{ fontSize: '14px', fontWeight: 500, color: 'var(--color-text-secondary)' }}> / mo</span>
                   </div>
-                  <span style={{
-                    fontSize: '11.5px',
-                    fontWeight: 700,
-                    color: 'var(--color-accent)',
-                    background: 'var(--color-green-light)',
-                    padding: '2px 8px',
-                    borderRadius: '10px'
-                  }}>
+                  <span className="savings-badge-pill">
                     {plan.savingsText}
                   </span>
                 </div>
@@ -144,7 +112,7 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
                   gap: '6px',
                   fontSize: '13px',
                   fontWeight: 700,
-                  color: isSelected ? 'var(--color-accent)' : 'var(--color-text-muted)'
+                  color: isSelected ? '#1F4F3D' : 'var(--color-text-muted)'
                 }}>
                   {isSelected ? (
                     <>
@@ -161,27 +129,8 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
       </div>
 
       {/* Ongo Eligibility Guarantee Banner */}
-      <div style={{
-        background: '#FAF8F2',
-        border: '1.5px solid #E8DFCC',
-        borderRadius: '16px',
-        padding: '16px 18px',
-        display: 'flex',
-        alignItems: 'flex-start',
-        gap: '12px',
-        marginBottom: '22px'
-      }}>
-        <div style={{
-          width: '32px',
-          height: '32px',
-          borderRadius: '50%',
-          background: 'var(--color-primary-dark)',
-          color: '#FFF',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexShrink: 0
-        }}>
+      <div className="guarantee-box">
+        <div className="guarantee-icon-circle">
           <ShieldCheck size={18} />
         </div>
         <div>
@@ -189,7 +138,7 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
             Ongo Eligibility Guarantee
           </strong>
           <p style={{ fontSize: '13px', color: 'var(--color-text-secondary)', lineHeight: '1.45', margin: '0 0 4px' }}>
-            If you pay for a treatment and your provider determines that you are not eligible, we’ll issue a full refund.
+            If you pay for a treatment and your provider determines that you are not eligible, we'll issue a full refund.
           </p>
           <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
             Subject to Ongo's refund policy and applicable terms.
@@ -199,11 +148,11 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
 
       <button
         type="button"
-        className="cta-button"
+        className="cta-button-pill active"
         onClick={handleContinue}
       >
         <span>Continue to Secure Payment</span>
-        <ArrowRight size={18} />
+        <span className="cta-arrow" aria-hidden="true">→</span>
       </button>
     </div>
   );
