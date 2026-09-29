@@ -20,6 +20,16 @@ import Screen13Medications from './components/Screen13Medications';
 import Screen14Allergies from './components/Screen14Allergies';
 import Screen15WeightJourney from './components/Screen15WeightJourney';
 import Screen16WeightLossAttempts from './components/Screen16WeightLossAttempts';
+import Screen17WeightLossSurgery from './components/Screen17WeightLossSurgery';
+import Screen18WeightLossGoal from './components/Screen18WeightLossGoal';
+import Screen19Motivation from './components/Screen19Motivation';
+import Screen20DailyRoutine from './components/Screen20DailyRoutine';
+import Screen21Lifestyle from './components/Screen21Lifestyle';
+import Screen21bPhotoID from './components/Screen21bPhotoID';
+import Screen21cShipping from './components/Screen21cShipping';
+import Screen22Ethnicity from './components/Screen22Ethnicity';
+import Screen23Appointment from './components/Screen23Appointment';
+import Screen24IntakeConfirmed from './components/Screen24IntakeConfirmed';
 import { Smartphone, Monitor, Sparkles, CheckCheck } from 'lucide-react';
 
 const SCREEN_LIST = [
@@ -43,6 +53,16 @@ const SCREEN_LIST = [
   { key: '14', label: 'Screen 14: Allergies' },
   { key: '15', label: 'Screen 15: Weight Journey' },
   { key: '16', label: 'Screen 16: Past Attempts' },
+  { key: '17', label: 'Screen 17: Weight Loss Surgery' },
+  { key: '18', label: 'Screen 18: Weight Loss Goal' },
+  { key: '19', label: 'Screen 19: Motivation' },
+  { key: '20', label: 'Screen 20: Daily Routine' },
+  { key: '21', label: 'Screen 21: Lifestyle' },
+  { key: '21b', label: 'Screen 21b: Photo ID' },
+  { key: '21c', label: 'Screen 21c: Shipping' },
+  { key: '22', label: 'Screen 22: Ethnicity' },
+  { key: '23', label: 'Screen 23: Appointment' },
+  { key: '24', label: 'Screen 24: Intake Confirmed' },
 ];
 
 export default function App() {
@@ -182,6 +202,26 @@ export default function App() {
         return () => setCurrentScreen('14');
       case '16':
         return () => setCurrentScreen('15');
+      case '17':
+        return () => setCurrentScreen('16');
+      case '18':
+        return () => setCurrentScreen('17');
+      case '19':
+        return () => setCurrentScreen('18');
+      case '20':
+        return () => setCurrentScreen('19');
+      case '21':
+        return () => setCurrentScreen('20');
+      case '21b':
+        return () => setCurrentScreen('21');
+      case '21c':
+        return () => setCurrentScreen('21b');
+      case '22':
+        return () => setCurrentScreen('21c');
+      case '23':
+        return () => setCurrentScreen('22');
+      case '24':
+        return () => setCurrentScreen('23');
       default:
         return null;
     }
@@ -365,8 +405,97 @@ export default function App() {
           <Screen16WeightLossAttempts
             formData={formData}
             updateFormData={updateFormData}
-            onNext={() => alert("Intake Complete! (End of Flow)")}
+            onNext={() => setCurrentScreen('17')}
             onBack={() => setCurrentScreen('15')}
+          />
+        );
+      case '17':
+        return (
+          <Screen17WeightLossSurgery
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('18')}
+            onBack={() => setCurrentScreen('16')}
+          />
+        );
+      case '18':
+        return (
+          <Screen18WeightLossGoal
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('19')}
+            onBack={() => setCurrentScreen('17')}
+          />
+        );
+      case '19':
+        return (
+          <Screen19Motivation
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('20')}
+            onBack={() => setCurrentScreen('18')}
+          />
+        );
+      case '20':
+        return (
+          <Screen20DailyRoutine
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('21')}
+            onBack={() => setCurrentScreen('19')}
+          />
+        );
+      case '21':
+        return (
+          <Screen21Lifestyle
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('21b')}
+            onBack={() => setCurrentScreen('20')}
+          />
+        );
+      case '21b':
+        return (
+          <Screen21bPhotoID
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('21c')}
+            onBack={() => setCurrentScreen('21')}
+          />
+        );
+      case '21c':
+        return (
+          <Screen21cShipping
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('22')}
+            onBack={() => setCurrentScreen('21b')}
+          />
+        );
+      case '22':
+        return (
+          <Screen22Ethnicity
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('23')}
+            onBack={() => setCurrentScreen('21c')}
+          />
+        );
+      case '23':
+        return (
+          <Screen23Appointment
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('24')}
+            onBack={() => setCurrentScreen('22')}
+          />
+        );
+      case '24':
+        return (
+          <Screen24IntakeConfirmed
+            formData={formData}
+            onNext={() => alert("Flow Complete! Navigating to dashboard...")}
+            onBack={() => setCurrentScreen('23')}
           />
         );
       default:
