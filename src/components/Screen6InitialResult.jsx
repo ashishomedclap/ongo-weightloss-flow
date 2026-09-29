@@ -1,38 +1,11 @@
 import React from 'react';
-import { UserCheck, Stethoscope, Sparkles, TrendingDown, HeartPulse } from 'lucide-react';
 
 export default function Screen6InitialResult({ formData, onNext, onBack }) {
-  const steps = [
-    {
-      num: 1,
-      title: 'Meet Your Physician',
-      desc: 'Discuss your health history, goals, and previous treatment experience.',
-      icon: Stethoscope
-    },
-    {
-      num: 2,
-      title: 'Review Your Options',
-      desc: 'Your physician will determine which treatment options may be appropriate for you.',
-      icon: Sparkles
-    },
-    {
-      num: 3,
-      title: 'Start Your Treatment',
-      desc: "If prescribed, your treatment will be provided according to your clinician's instructions.",
-      icon: HeartPulse
-    },
-    {
-      num: 4,
-      title: 'Ongoing Care',
-      desc: 'Continue your treatment with follow-up guidance and support.',
-      icon: TrendingDown
-    }
-  ];
 
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        ASSESSMENT · ELIGIBILITY MATCH
+        ELIGIBILITY
       </div>
 
       <div className="heading-section">
@@ -45,49 +18,56 @@ export default function Screen6InitialResult({ formData, onNext, onBack }) {
       {/* Treatment Journey Visual Card */}
       <div className="white-elevated-card">
         <div className="card-section-heading">
-          Your Personalized Treatment Pathway
+          Here's what happens next
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-          {steps.map((st, i) => {
-            const IconC = st.icon;
-            return (
-              <div 
-                key={st.num} 
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '14px',
-                  position: 'relative'
-                }}
-              >
-                <div style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '10px',
-                  background: i === 0 ? 'var(--color-primary-dark)' : '#EEF8EC',
-                  color: i === 0 ? '#FFFFFF' : '#1F4F3D',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '13px',
-                  fontWeight: 800,
-                  flexShrink: 0
-                }}>
-                  <IconC size={18} />
-                </div>
+        <div style={{ position: 'relative' }}>
+          {/* Timeline Line */}
+          <div style={{ position: 'absolute', left: '11px', top: '24px', bottom: '30px', width: '2px', background: '#E8E8E8', zIndex: 0 }}></div>
 
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '2px' }}>
-                    {st.num}. {st.title}
-                  </div>
-                  <div style={{ fontSize: '13.5px', color: 'var(--color-text-secondary)', lineHeight: '1.4' }}>
-                    {st.desc}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {/* Step 1 */}
+          <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', position: 'relative', zIndex: 1 }}>
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#3A7D63', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '13px', fontWeight: 700 }}>
+              1
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Meet Your Physician</div>
+              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>Discuss your health history, goals, and previous treatment experience.</div>
+            </div>
+          </div>
+
+          {/* Step 2 */}
+          <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', position: 'relative', zIndex: 1 }}>
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#FFF', border: '2px solid #E8E8E8', color: '#999', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '13px', fontWeight: 700 }}>
+              2
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Review Your Options</div>
+              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>Your physician will determine which treatment options may be appropriate for you.</div>
+            </div>
+          </div>
+
+          {/* Step 3 */}
+          <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', position: 'relative', zIndex: 1 }}>
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#FFF', border: '2px solid #E8E8E8', color: '#999', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '13px', fontWeight: 700 }}>
+              3
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Start Your Treatment</div>
+              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>If prescribed, your treatment will be provided according to your clinician's instructions.</div>
+            </div>
+          </div>
+
+          {/* Step 4 */}
+          <div style={{ display: 'flex', gap: '16px', position: 'relative', zIndex: 1 }}>
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#FFF', border: '2px solid #E8E8E8', color: '#999', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '13px', fontWeight: 700 }}>
+              4
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Ongoing Care</div>
+              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>Continue your treatment with follow-up guidance and support.</div>
+            </div>
+          </div>
         </div>
       </div>
 

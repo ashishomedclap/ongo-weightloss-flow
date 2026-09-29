@@ -9,10 +9,9 @@ export default function Screen23Appointment({ formData, updateFormData, onNext, 
   const [selectedTime, setSelectedTime] = useState(formData.appointmentTime || null);
   const [error, setError] = useState('');
 
-  // Helper to get local timezone string (e.g., "MDT" or "PST")
-  const timeZoneAbbr = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
-    .formatToParts(new Date())
-    .find((part) => part.type === 'timeZoneName')?.value || 'local time';
+  // Helper to get local timezone string
+  // Hardcoded to MDT for prototype demo as requested
+  const timeZoneAbbr = 'MDT';
 
   // Calendar logic
   const year = currentMonth.getFullYear();
@@ -75,7 +74,7 @@ export default function Screen23Appointment({ formData, updateFormData, onNext, 
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 14 · APPOINTMENT
+        CONSULTATION
       </div>
 
       <div className="heading-section">
@@ -102,7 +101,7 @@ export default function Screen23Appointment({ formData, updateFormData, onNext, 
         fontSize: '14px',
         fontWeight: 500
       }}>
-        Times shown in your local timezone ({timeZoneAbbr}).
+        All appointment times are shown in Mountain Daylight Time (MDT).
       </div>
 
       {/* Month Navigation */}
@@ -213,7 +212,7 @@ export default function Screen23Appointment({ formData, updateFormData, onNext, 
         className={`cta-button-pill ${(selectedDate && selectedTime) ? 'active' : ''}`}
         onClick={handleContinue}
       >
-        <span>Confirm appointment</span>
+        <span>Book My Consultation</span>
         <span className="cta-arrow" aria-hidden="true">→</span>
       </button>
     </div>

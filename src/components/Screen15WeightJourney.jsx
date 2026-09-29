@@ -21,7 +21,7 @@ export default function Screen15WeightJourney({ formData, updateFormData, onNext
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 6 · WEIGHT JOURNEY
+        HEALTH ASSESSMENT
       </div>
 
       <div className="heading-section">

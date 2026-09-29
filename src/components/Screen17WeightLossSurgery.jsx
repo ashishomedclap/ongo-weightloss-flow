@@ -11,6 +11,7 @@ const SURGERIES = [
 export default function Screen17WeightLossSurgery({ formData, updateFormData, onNext, onBack }) {
   const [hadSurgery, setHadSurgery] = useState(formData.hadSurgery ?? null);
   const [selectedSurgeries, setSelectedSurgeries] = useState(formData.weightLossSurgeries || []);
+  const [otherSurgery, setOtherSurgery] = useState(formData.otherWeightLossSurgery || '');
   const [error, setError] = useState('');
 
   const handleSelect = (val) => {
@@ -36,15 +37,23 @@ export default function Screen17WeightLossSurgery({ formData, updateFormData, on
       setError('Please select at least one surgery type.');
       return;
     }
+    if (hadSurgery && selectedSurgeries.includes('other') && !otherSurgery.trim()) {
+      setError('Please specify the other surgery.');
+      return;
+    }
     
-    updateFormData({ hadSurgery, weightLossSurgeries: selectedSurgeries });
+    updateFormData({ 
+      hadSurgery, 
+      weightLossSurgeries: selectedSurgeries,
+      otherWeightLossSurgery: (hadSurgery && selectedSurgeries.includes('other')) ? otherSurgery.trim() : ''
+    });
     onNext();
   };
 
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 8 · MEDICAL HISTORY
+        MEDICAL HISTORY
       </div>
 
       <div className="heading-section">
@@ -143,6 +152,20 @@ export default function Screen17WeightLossSurgery({ formData, updateFormData, on
                 </div>
               );
             })}
+
+            {selectedSurgeries.includes('other') && (
+              <div className="input-capsule-wrap fade-in" style={{ marginTop: '4px' }}>
+                <input
+                  id="other-surgery"
+                  type="text"
+                  className="input-capsule"
+                  placeholder="Please specify surgery"
+                  value={otherSurgery}
+                  onChange={(e) => setOtherSurgery(e.target.value)}
+                  autoFocus
+                />
+              </div>
+            )}
           </div>
         </div>
       )}

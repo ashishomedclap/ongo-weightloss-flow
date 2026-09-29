@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Check } from 'lucide-react';
+import { Check, Info } from 'lucide-react';
 
-export default function Screen4SafetyChecks({ formData, updateFormData, onNext, onBack }) {
+export default function Screen4HealthQuestions({ formData, updateFormData, onNext, onBack }) {
   const isFemale = formData.gender === 'Female' || formData.gender === 'Prefer not to say' || !formData.gender;
 
   const conditions = [
@@ -74,13 +74,13 @@ export default function Screen4SafetyChecks({ formData, updateFormData, onNext, 
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 2 · MEDICAL SCREENING
+        MEDICAL SCREENING
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">Important safety checks</h1>
+        <h1 className="page-title">A few important health questions</h1>
         <p className="page-subtitle">
-          Do any of the following apply to you? Select all that apply.
+          Your answers help us identify anything your physician should know before discussing treatment with you. Select all that apply.
         </p>
       </div>
 
@@ -92,7 +92,7 @@ export default function Screen4SafetyChecks({ formData, updateFormData, onNext, 
 
       {/* Unified Rounded Checklist Card */}
       <div className="safety-checks-card">
-        {/* Fast-Track 1-Click "None of these apply to me" Row */}
+        {/* "None of these apply to me" Row */}
         <div
           onClick={toggleNone}
           role="checkbox"
@@ -118,7 +118,7 @@ export default function Screen4SafetyChecks({ formData, updateFormData, onNext, 
           )}
         </div>
 
-        {/* Clean Condition Rows */}
+        {/* Condition Rows */}
         {conditions.map((item, idx) => {
           const isChecked = selected.includes(item.id);
           const isLast = idx === conditions.length - 1;
@@ -145,10 +145,14 @@ export default function Screen4SafetyChecks({ formData, updateFormData, onNext, 
         })}
       </div>
 
-      {/* Clinical Reassurance Note */}
-      <p className="safety-sub-note">
-        Your physician will review your complete health history before prescribing any medication.
-      </p>
+      {/* Why we ask & Reassurance */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginTop: '16px', marginBottom: '24px', fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.45' }}>
+        <Info size={15} style={{ flexShrink: 0, marginTop: '2px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <span><strong>Why we ask:</strong> These conditions may affect which treatments your physician can safely consider for you.</span>
+          <span>Your physician will review your complete health history before prescribing any medication.</span>
+        </div>
+      </div>
 
       {/* Primary CTA pill */}
       <button

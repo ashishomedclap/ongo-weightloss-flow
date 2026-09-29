@@ -10,7 +10,7 @@ const PLANS = [
     savingsText: 'Save $50',
     totalText: '$249 billed today',
     isRecommended: false,
-    description: 'Great for trying out medical weight loss and seeing how your body responds.'
+    description: 'A flexible way to get started with ongoing medical weight-loss care.'
   },
   {
     id: '3-months',
@@ -20,7 +20,7 @@ const PLANS = [
     savingsText: 'Save $50/mo',
     totalText: '$597 total billed for 3 months',
     isRecommended: true,
-    description: 'Our most popular plan. Allows sufficient time for medication titration and sustained results.'
+    description: 'Allows sufficient time for medication titration and ongoing clinical guidance.'
   },
   {
     id: '6-months',
@@ -30,7 +30,7 @@ const PLANS = [
     savingsText: 'Save $70/mo',
     totalText: '$1,074 total billed for 6 months',
     isRecommended: false,
-    description: 'Maximum savings for committed long-term metabolic health and milestone goals.'
+    description: 'Maximum savings for committed long-term metabolic health and ongoing care.'
   }
 ];
 
@@ -49,13 +49,13 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        PLANS · DURATION & PRICING
+        YOUR TREATMENT
       </div>
 
       <div className="heading-section">
         <h1 className="page-title">Choose your treatment plan</h1>
         <p className="page-subtitle">
-          Weight-loss results vary from person to person. Choose the plan that fits your treatment journey.
+          Select the plan duration that works best for you. Your physician makes the final treatment decision.
         </p>
       </div>
 

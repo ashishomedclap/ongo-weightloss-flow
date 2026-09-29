@@ -1,5 +1,6 @@
 import React from 'react';
 import { Phone, ArrowLeft } from 'lucide-react';
+import OngoLogo from './OngoLogo';
 
 export default function Header({ onBack, onLogoClick, showBack = false, progressPercent = 0 }) {
   return (
@@ -24,45 +25,7 @@ export default function Header({ onBack, onLogoClick, showBack = false, progress
         style={{ cursor: onLogoClick ? 'pointer' : 'default' }}
         title="Ongo Weight Loss"
       >
-        <svg 
-          className="header-meter-icon" 
-          viewBox="0 0 36 36" 
-          fill="none" 
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          {/* Dial Arc */}
-          <path 
-            d="M 8 26 A 13 13 0 1 1 28 26" 
-            stroke="rgba(255, 255, 255, 0.45)" 
-            strokeWidth="3" 
-            strokeLinecap="round" 
-            strokeDasharray="2 3"
-          />
-          {/* Orange/Coral Active Zone */}
-          <path 
-            d="M 12 28 A 13 13 0 0 1 24 28" 
-            stroke="#FF6B4A" 
-            strokeWidth="3.2" 
-            strokeLinecap="round"
-          />
-          {/* Gauge Center & Needle pointing up-right */}
-          <circle cx="18" cy="22" r="2.5" fill="#FFFFFF" />
-          <line 
-            x1="18" 
-            y1="22" 
-            x2="25" 
-            y2="13" 
-            stroke="#FF6B4A" 
-            strokeWidth="2.4" 
-            strokeLinecap="round" 
-          />
-        </svg>
-
-        <div className="header-brand-text">
-          <span className="logo-brand-ongo">Ongo</span>
-          <span className="logo-brand-sub">Weight Loss</span>
-        </div>
+        <OngoLogo style={{ height: '34px', width: 'auto', display: 'block', paddingBottom: '2px' }} />
       </div>
 
       <div className="header-right-slot">

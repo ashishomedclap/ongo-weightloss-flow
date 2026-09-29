@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Syringe, Pill, Droplets, Check } from 'lucide-react';
+import { Syringe, Pill, Droplets, Check, UserCheck } from 'lucide-react';
 
 const TREATMENT_OPTIONS = [
   {
@@ -9,7 +9,7 @@ const TREATMENT_OPTIONS = [
     icon: Syringe,
     routeTag: 'Subcutaneous',
     description: 'Once-weekly injectable treatment, as prescribed.',
-    popular: true,
+    popular: false,
   },
   {
     id: 'compounded-tirzepatide',
@@ -46,19 +46,29 @@ const TREATMENT_OPTIONS = [
     routeTag: 'Dual Action Drops',
     description: 'Oral treatment option, if prescribed. Sublingual absorption.',
     popular: false,
+  },
+  {
+    id: 'physician-recommend',
+    name: "I'd like my physician to recommend",
+    route: '',
+    icon: UserCheck,
+    routeTag: "Physician's Choice",
+    description: 'Let your physician choose the treatment they believe is most appropriate based on your health profile.',
+    popular: false,
+    isDefault: true,
   }
 ];
 
 export default function Screen8TreatmentOptions({ formData, updateFormData, onNext, onBack }) {
   const [selectedTreatment, setSelectedTreatment] = useState(
-    formData.selectedTreatment || 'compounded-semaglutide'
+    formData.selectedTreatment || 'physician-recommend'
   );
 
   const handleContinue = () => {
     const chosen = TREATMENT_OPTIONS.find(t => t.id === selectedTreatment);
     updateFormData({
       selectedTreatment,
-      selectedTreatmentName: chosen?.name || 'Compounded Semaglutide'
+      selectedTreatmentName: chosen?.name || "Physician's Choice"
     });
     onNext();
   };
@@ -66,13 +76,13 @@ export default function Screen8TreatmentOptions({ formData, updateFormData, onNe
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        OPTIONS · TREATMENT SELECTION
+        YOUR TREATMENT
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">Review your treatment options</h1>
+        <h1 className="page-title">Which treatment option interests you most?</h1>
         <p className="page-subtitle">
-          Based on your information, these treatment options may be available for consideration. Your physician will determine which treatment, if any, is medically appropriate for you.
+          These treatment options may be available for consideration. Your physician will determine which treatment, if any, is medically appropriate for you.
         </p>
       </div>
 
@@ -86,10 +96,33 @@ export default function Screen8TreatmentOptions({ formData, updateFormData, onNe
             <div
               key={item.id}
               onClick={() => setSelectedTreatment(item.id)}
-              className={`treatment-option-card ${isSelected ? 'selected' : ''}`}
+              style={{
+                width: '100%',
+                background: isSelected ? '#F2F9F5' : '#FFFFFF',
+                border: `2px solid ${isSelected ? '#2F8968' : '#E2E6E2'}`,
+                borderRadius: '16px',
+                padding: '16px 18px',
+                marginBottom: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '16px',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+              }}
             >
-              <div className="treatment-icon-bubble">
-                <IconComp size={18} />
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '12px',
+                background: isSelected ? '#FFFFFF' : '#F5F8F6',
+                color: isSelected ? '#1F4F3D' : '#3A7D63',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                boxShadow: isSelected ? '0 2px 8px rgba(47, 137, 104, 0.1)' : 'none'
+              }}>
+                <IconComp size={20} />
               </div>
 
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -98,15 +131,12 @@ export default function Screen8TreatmentOptions({ formData, updateFormData, onNe
                     <span style={{ fontSize: '15.5px', fontWeight: 700, color: 'var(--color-text-primary)' }}>
                       {item.name}
                     </span>
-                    {item.popular && (
-                      <span className="popular-badge-pill">
-                        Most Popular
-                      </span>
-                    )}
                   </div>
-                  <span className="route-badge-pill">
-                    {item.route}
-                  </span>
+                  {item.route && (
+                    <span className="route-badge-pill">
+                      {item.route}
+                    </span>
+                  )}
                 </div>
 
                 <p style={{ fontSize: '13.5px', color: 'var(--color-text-secondary)', lineHeight: '1.4', margin: 0 }}>
@@ -114,8 +144,16 @@ export default function Screen8TreatmentOptions({ formData, updateFormData, onNe
                 </p>
               </div>
 
-              <div className={`checkbox-box ${isSelected ? 'checked' : ''}`} aria-hidden="true">
-                {isSelected && <Check size={14} strokeWidth={3} />}
+              <div 
+                style={{ 
+                  width: '22px', height: '22px', borderRadius: '50%', flexShrink: 0,
+                  border: `2px solid ${isSelected ? '#2F8968' : '#E2E6E2'}`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFF',
+                  transition: 'all 0.2s ease', marginLeft: '4px'
+                }}
+                aria-hidden="true"
+              >
+                {isSelected && <div style={{ width: '12px', height: '12px', backgroundColor: '#2F8968', borderRadius: '50%' }} />}
               </div>
             </div>
           );

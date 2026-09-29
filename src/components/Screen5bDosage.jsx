@@ -30,13 +30,13 @@ export default function Screen5cDosage({ formData, updateFormData, onNext, onBac
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        PREVIOUS TREATMENT · DOSAGE
+        PREVIOUS TREATMENT
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">What dose were you taking?</h1>
+        <h1 className="page-title">What was your most recent dose?</h1>
         <p className="page-subtitle">
-          Select your most recent maintenance dose or amount.
+          Select your most recent dose, or enter it manually if you don't see it listed.
         </p>
       </div>
 
@@ -103,7 +103,7 @@ export default function Screen5cDosage({ formData, updateFormData, onNext, onBac
       </div>
 
       <p className="safety-sub-note" style={{ marginTop: '20px' }}>
-        Unsure of the exact dose? You can upload a photo of your prescription label on the next step.
+        Not sure of the exact dose? You can enter it as shown on your prescription label, or upload a photo on the next step.
       </p>
 
       <button

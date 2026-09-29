@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Calendar } from 'lucide-react';
+import ThemedDropdown from './ThemedDropdown';
 
 const US_STATES = [
   "Select state",
@@ -48,9 +49,9 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
   return (
     <div className="content-inner fade-in">
       <div className="heading-section">
-        <h1 className="page-title">Complete your profile</h1>
+        <h1 className="page-title">Tell us a little about you</h1>
         <p className="page-subtitle">
-          Your healthcare team will need this for treatment and prescriptions.
+          These details help your care team understand who you are and provide care appropriate for your state and needs.
         </p>
       </div>
 
@@ -64,6 +65,7 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
         {/* First Name & Last Name row */}
         <div className="input-capsule-row-2">
           <div className="input-capsule-wrap">
+            <label className="field-top-label" htmlFor="first-name">First Name</label>
             <input
               id="first-name"
               type="text"
@@ -75,6 +77,7 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
             />
           </div>
           <div className="input-capsule-wrap">
+            <label className="field-top-label" htmlFor="last-name">Last Name</label>
             <input
               id="last-name"
               type="text"
@@ -88,24 +91,21 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
         </div>
 
         {/* Select gender dropdown */}
-        <div className="input-capsule-wrap select-wrap">
-          <select
-            id="gender-select"
-            className={`input-capsule-select ${!gender ? 'is-placeholder' : ''}`}
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-          >
-            <option value="" disabled>Select gender</option>
-            <option value="Female">Female</option>
-            <option value="Male">Male</option>
-            <option value="Non-binary">Non-binary</option>
-            <option value="Prefer not to say">Prefer not to say</option>
-          </select>
-          <div className="select-dropdown-arrow" aria-hidden="true">▼</div>
+        <div className="input-capsule-wrap select-wrap" style={{ margin: 0 }}>
+          <label className="field-top-label">Gender</label>
+          <div style={{ position: 'relative', marginTop: '4px' }}>
+            <ThemedDropdown
+              value={gender}
+          options={['Female', 'Male', 'Non-binary', 'Prefer not to say']}
+          onChange={setGender}
+          placeholder="Select gender"
+            />
+          </div>
         </div>
 
         {/* Date of birth with calendar icon */}
         <div className="input-capsule-wrap has-suffix">
+          <label className="field-top-label" htmlFor="dob-input">Date of Birth</label>
           <input
             id="dob-input"
             type="text"
@@ -122,24 +122,21 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
         </div>
 
         {/* Select state */}
-        <div className="input-capsule-wrap select-wrap">
-          <select
-            id="state-select"
-            className={`input-capsule-select ${!state || state === 'Select state' ? 'is-placeholder' : ''}`}
-            value={state || 'Select state'}
-            onChange={(e) => setState(e.target.value)}
-          >
-            {US_STATES.map((st) => (
-              <option key={st} value={st} disabled={st === 'Select state'}>
-                {st}
-              </option>
-            ))}
-          </select>
-          <div className="select-dropdown-arrow" aria-hidden="true">▼</div>
+        <div className="input-capsule-wrap select-wrap" style={{ margin: 0 }}>
+          <label className="field-top-label">State</label>
+          <div style={{ position: 'relative', marginTop: '4px' }}>
+            <ThemedDropdown
+              value={state === 'Select state' ? '' : state}
+          options={US_STATES.filter(s => s !== 'Select state')}
+          onChange={setState}
+          placeholder="Select state"
+            />
+          </div>
         </div>
 
         {/* Phone number */}
         <div className="input-capsule-wrap">
+          <label className="field-top-label" htmlFor="phone-input">Phone Number</label>
           <input
             id="phone-input"
             type="tel"

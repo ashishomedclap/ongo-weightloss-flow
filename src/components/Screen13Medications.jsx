@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check } from 'lucide-react';
+import { Check, Info } from 'lucide-react';
 
 export default function Screen13Medications({ formData, updateFormData, onNext, onBack }) {
   const [takesMedication, setTakesMedication] = useState(formData.takesMedication ?? null);
@@ -30,7 +30,7 @@ export default function Screen13Medications({ formData, updateFormData, onNext, 
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 4 · MEDICATIONS
+        HEALTH ASSESSMENT
       </div>
 
       <div className="heading-section">
@@ -104,6 +104,12 @@ export default function Screen13Medications({ formData, updateFormData, onNext, 
           />
         </div>
       )}
+
+      {/* Why we ask */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginTop: '16px', fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.45' }}>
+        <Info size={15} style={{ flexShrink: 0, marginTop: '2px' }} />
+        <span><strong>Why we ask:</strong> Your medication list helps your physician check for potential interactions and safety considerations.</span>
+      </div>
 
       <button
         type="button"

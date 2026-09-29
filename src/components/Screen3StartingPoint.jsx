@@ -66,13 +66,13 @@ export default function Screen3StartingPoint({ formData, updateFormData, onNext,
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 1 · ELIGIBILITY CHECK
+        ELIGIBILITY
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">Let's check if GLP–1 is right for you</h1>
+        <h1 className="page-title">Let's check your starting point</h1>
         <p className="page-subtitle">
-          Your height and weight help us calculate your BMI — a key factor in eligibility.
+          Your height and weight help us calculate your BMI, one factor your clinician may consider when evaluating weight-loss treatment.
         </p>
       </div>
 
@@ -234,22 +234,26 @@ export default function Screen3StartingPoint({ formData, updateFormData, onNext,
           {/* 4 Category Pill Badges Grid */}
           <div className="bmi-categories-grid">
             <div className={`bmi-cat-cell cat-under ${activeCategory === 'under' ? 'active' : ''}`}>
-              <span className="cat-name">UNDER</span>
+              <span className="cat-name">Underweight</span>
               <span className="cat-range">&lt; 18.5</span>
             </div>
             <div className={`bmi-cat-cell cat-healthy ${activeCategory === 'healthy' ? 'active' : ''}`}>
-              <span className="cat-name">HEALTHY</span>
+              <span className="cat-name">Healthy weight</span>
               <span className="cat-range">18.5 — 24.9</span>
             </div>
             <div className={`bmi-cat-cell cat-over ${activeCategory === 'over' ? 'active' : ''}`}>
-              <span className="cat-name">OVER</span>
+              <span className="cat-name">Overweight</span>
               <span className="cat-range">25 — 29.9</span>
             </div>
             <div className={`bmi-cat-cell cat-obese ${activeCategory === 'obese' ? 'active' : ''}`}>
-              <span className="cat-name">OBESE</span>
+              <span className="cat-name">Obesity</span>
               <span className="cat-range">≥ 30</span>
             </div>
           </div>
+
+          <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', textAlign: 'center', margin: '12px 0 0', lineHeight: '1.4' }}>
+            BMI is one measure of health and is not a diagnosis by itself.
+          </p>
         </div>
 
         {/* Continue Button */}

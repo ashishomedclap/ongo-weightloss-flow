@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import ThemedDropdown from './ThemedDropdown';
 
 const DROPDOWNS = [
   { id: 'fastFood', label: 'Fast food / week', options: ['0', '1-2', '3-4', '5+'] },
@@ -33,11 +34,11 @@ export default function Screen21Lifestyle({ formData, updateFormData, onNext, on
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 12 · LIFESTYLE
+        LIFESTYLE
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">What about your lifestyle habits?</h1>
+        <h1 className="page-title">And a few more lifestyle questions</h1>
         <p className="page-subtitle">
           These factors play a big role in your overall wellness.
         </p>
@@ -52,33 +53,20 @@ export default function Screen21Lifestyle({ formData, updateFormData, onNext, on
       {/* Grid of Dropdowns */}
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', 
-        gap: '12px', 
+        gridTemplateColumns: '1fr 1fr', 
+        gap: '16px 12px', 
         marginBottom: '24px' 
       }}>
         {DROPDOWNS.map(d => (
-          <div key={d.id} style={{ position: 'relative' }}>
-            <select
-              value={lifestyle[d.id] || ''}
-              onChange={(e) => handleDropdownChange(d.id, e.target.value)}
-              className="input-capsule"
-              style={{
-                appearance: 'none',
-                WebkitAppearance: 'none',
-                width: '100%',
-                cursor: 'pointer',
-                color: lifestyle[d.id] ? 'var(--color-text)' : '#888',
-                paddingRight: '40px',
-              }}
-            >
-              <option value="" disabled>{d.label}</option>
-              {d.options.map(opt => (
-                <option key={opt} value={opt}>{opt}</option>
-              ))}
-            </select>
-            {/* Custom Arrow */}
-            <div style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#999' }}>
-              <ChevronDown size={18} strokeWidth={2.5} />
+          <div key={d.id} className="input-capsule-wrap" style={{ margin: 0 }}>
+            <label className="field-top-label" htmlFor={`dropdown-${d.id}`}>{d.label}</label>
+            <div style={{ position: 'relative', marginTop: '4px' }}>
+              <ThemedDropdown
+                value={lifestyle[d.id] || ''}
+                options={d.options}
+                onChange={(val) => handleDropdownChange(d.id, val)}
+                placeholder="Select..."
+              />
             </div>
           </div>
         ))}
@@ -88,37 +76,52 @@ export default function Screen21Lifestyle({ formData, updateFormData, onNext, on
       <p style={{ fontSize: '14px', color: '#666', marginBottom: '8px', paddingLeft: '4px' }}>Stress level</p>
       <div style={{ background: '#FFF', borderRadius: '16px', padding: '24px', border: '1px solid var(--color-border)' }}>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-          <span style={{ fontSize: '14px', color: '#999' }}>1</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+          <span style={{ fontSize: '14px', color: '#999', fontWeight: 600 }}>1</span>
           
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value={stress}
-            onChange={(e) => setStress(parseInt(e.target.value, 10))}
-            style={{
-              flex: 1,
-              accentColor: 'var(--color-primary)',
-              cursor: 'pointer'
-            }}
-          />
+          <div style={{ position: 'relative', flex: 1 }}>
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={stress}
+              onChange={(e) => setStress(parseInt(e.target.value, 10))}
+              style={{
+                width: '100%',
+                accentColor: stress <= 3 ? 'var(--color-primary)' : stress <= 7 ? '#F5B011' : '#C81E1E',
+                cursor: 'pointer',
+                position: 'relative',
+                zIndex: 2,
+                transition: 'accent-color 0.3s ease'
+              }}
+            />
+            {/* 10 Markers */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 6px', marginTop: '-4px', position: 'relative', zIndex: 1, pointerEvents: 'none' }}>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
+                <div key={n} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+                  <div style={{ width: '2px', height: '6px', background: '#D8D8D8', borderRadius: '1px' }} />
+                </div>
+              ))}
+            </div>
+          </div>
           
-          <span style={{ fontSize: '14px', color: '#999' }}>10</span>
+          <span style={{ fontSize: '14px', color: '#999', fontWeight: 600 }}>10</span>
           
           <div style={{
-            width: '32px', height: '32px', borderRadius: '50%', background: 'var(--color-primary)',
+            width: '36px', height: '36px', borderRadius: '50%', 
+            background: stress <= 3 ? 'var(--color-primary)' : stress <= 7 ? '#F5B011' : '#C81E1E',
             color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontWeight: 700, fontSize: '16px', marginLeft: '8px', flexShrink: 0
+            fontWeight: 700, fontSize: '16px', marginLeft: '8px', flexShrink: 0,
+            transition: 'background 0.3s ease'
           }}>
             {stress}
           </div>
         </div>
         
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 20px' }}>
-          <span style={{ fontSize: '12px', fontWeight: 600, color: stress <= 3 ? 'var(--color-primary)' : '#BBB', transition: 'color 0.2s' }}>LOW</span>
-          <span style={{ fontSize: '12px', fontWeight: 600, color: (stress > 3 && stress < 8) ? 'var(--color-primary)' : '#BBB', transition: 'color 0.2s' }}>MEDIUM</span>
-          <span style={{ fontSize: '12px', fontWeight: 600, color: stress >= 8 ? 'var(--color-primary)' : '#BBB', transition: 'color 0.2s' }}>HIGH</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 10px' }}>
+          <span style={{ fontSize: '12px', fontWeight: 700, color: stress <= 3 ? 'var(--color-primary)' : '#CCC', transition: 'color 0.3s' }}>LOW</span>
+          <span style={{ fontSize: '12px', fontWeight: 700, color: (stress > 3 && stress <= 7) ? '#F5B011' : '#CCC', transition: 'color 0.3s' }}>MEDIUM</span>
+          <span style={{ fontSize: '12px', fontWeight: 700, color: stress >= 8 ? '#C81E1E' : '#CCC', transition: 'color 0.3s' }}>HIGH</span>
         </div>
       </div>
 
@@ -134,3 +137,5 @@ export default function Screen21Lifestyle({ formData, updateFormData, onNext, on
     </div>
   );
 }
+
+// Trigger HMR

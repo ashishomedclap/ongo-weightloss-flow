@@ -22,6 +22,7 @@
   --color-cta-disabled: #EAE6DC;      /* Light beige disabled pill */
   --color-cta-disabled-text: #8E8C85;
   
+  --color-primary: #2F8968;           /* Standard primary teal for radio dots and active borders */
   --color-green-light: #DDF2DF;
   --color-green-pale: #EEF8EC;
   --color-peach: #F8E2D2;
@@ -934,6 +935,8 @@ body {
   padding: 14px 18px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
   gap: 14px;
   cursor: pointer;
   background: #FFFFFF;
@@ -1016,6 +1019,8 @@ body {
   border-radius: var(--radius-input-capsule);
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
   padding: 0 20px;
   gap: 12px;
   cursor: pointer;
@@ -1599,3 +1604,5 @@ body {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* Force HMR index.css */

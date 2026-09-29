@@ -9,6 +9,7 @@ const MOTIVATIONS = [
   { id: 'diabetesRisk', label: 'I want to reduce my risk of diabetes' },
   { id: 'labs', label: 'I want better health results (labs)' },
   { id: 'feelBetter', label: 'I want to feel better day to day' },
+  { id: 'somethingElse', label: 'Something else' },
 ];
 
 export default function Screen19Motivation({ formData, updateFormData, onNext, onBack }) {
@@ -36,7 +37,7 @@ export default function Screen19Motivation({ formData, updateFormData, onNext, o
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 10 · MOTIVATION
+        YOUR GOALS
       </div>
 
       <div className="heading-section">

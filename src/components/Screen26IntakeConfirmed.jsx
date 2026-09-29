@@ -37,7 +37,7 @@ export default function Screen24IntakeConfirmed({ formData, onNext, onBack }) {
       </div>
 
       <div className="heading-section" style={{ marginBottom: '24px' }}>
-        <h1 className="page-title" style={{ fontSize: '28px', color: '#000000', marginBottom: '12px' }}>You're all set.</h1>
+        <h1 className="page-title" style={{ fontSize: '28px', color: '#000000', marginBottom: '12px' }}>Appointment confirmed 🎉</h1>
         <p className="page-subtitle" style={{ fontSize: '15px', color: '#666', maxWidth: '440px', margin: '0 auto', lineHeight: '1.5' }}>
           Your clinical intake is complete and your appointment is confirmed. Your physician will review your details before your visit.
         </p>
@@ -69,7 +69,7 @@ export default function Screen24IntakeConfirmed({ formData, onNext, onBack }) {
             </div>
             <div>
               <div style={{ fontWeight: 700, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Payment</div>
-              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>Kickstart - $249</div>
+              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>{formData.selectedPlan?.title || 'Kickstart'} - ${formData.orderTotal || 249}</div>
             </div>
           </div>
 
@@ -91,7 +91,7 @@ export default function Screen24IntakeConfirmed({ formData, onNext, onBack }) {
             </div>
             <div>
               <div style={{ fontWeight: 700, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Consultation</div>
-              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>Next. Your physician will call you at your scheduled time.</div>
+              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>Next. Your physician will meet with you at your scheduled time.</div>
             </div>
           </div>
 
@@ -114,8 +114,9 @@ export default function Screen24IntakeConfirmed({ formData, onNext, onBack }) {
         onClick={onNext}
         style={{ background: '#111111', color: '#FFFFFF', border: 'none', height: '54px', width: '100%' }}
       >
-        <span>Go to Dashboard</span>
+        <span>Go to My Patient Portal</span>
       </button>
+
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import ThemedDropdown from './ThemedDropdown';
 
 const DROPDOWNS = [
   { id: 'meals', label: 'Meals per day', options: ['1', '2', '3', '4', '5+'] },
@@ -32,11 +33,11 @@ export default function Screen20DailyRoutine({ formData, updateFormData, onNext,
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 11 · HABITS
+        LIFESTYLE
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">Can you tell us a bit about your daily routine and habits?</h1>
+        <h1 className="page-title">Let's start with your daily routine</h1>
         <p className="page-subtitle">
           This helps your doctor build the right plan for you.
         </p>
@@ -51,33 +52,20 @@ export default function Screen20DailyRoutine({ formData, updateFormData, onNext,
       {/* Grid of Dropdowns */}
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', 
-        gap: '12px', 
+        gridTemplateColumns: '1fr 1fr', 
+        gap: '16px 12px', 
         marginBottom: '24px' 
       }}>
         {DROPDOWNS.map(d => (
-          <div key={d.id} style={{ position: 'relative' }}>
-            <select
-              value={routine[d.id] || ''}
-              onChange={(e) => handleDropdownChange(d.id, e.target.value)}
-              className="input-capsule"
-              style={{
-                appearance: 'none',
-                WebkitAppearance: 'none',
-                width: '100%',
-                cursor: 'pointer',
-                color: routine[d.id] ? 'var(--color-text)' : '#888',
-                paddingRight: '40px',
-              }}
-            >
-              <option value="" disabled>{d.label}</option>
-              {d.options.map(opt => (
-                <option key={opt} value={opt}>{opt}</option>
-              ))}
-            </select>
-            {/* Custom Arrow */}
-            <div style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#999' }}>
-              <ChevronDown size={18} strokeWidth={2.5} />
+          <div key={d.id} className="input-capsule-wrap" style={{ margin: 0 }}>
+            <label className="field-top-label" htmlFor={`dropdown-${d.id}`}>{d.label}</label>
+            <div style={{ position: 'relative', marginTop: '4px' }}>
+              <ThemedDropdown
+                value={routine[d.id] || ''}
+                options={d.options}
+                onChange={(val) => handleDropdownChange(d.id, val)}
+                placeholder="Select..."
+              />
             </div>
           </div>
         ))}

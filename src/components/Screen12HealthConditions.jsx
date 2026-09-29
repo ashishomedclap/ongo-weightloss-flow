@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check } from 'lucide-react';
+import { Check, Info } from 'lucide-react';
 
 export default function Screen12HealthConditions({ formData, updateFormData, onNext, onBack }) {
   const isFemale = formData.gender === 'Female' || formData.gender === 'Prefer not to say' || !formData.gender;
@@ -31,6 +31,10 @@ export default function Screen12HealthConditions({ formData, updateFormData, onN
     }
     return [];
   });
+  
+  const [otherCondition, setOtherCondition] = useState(
+    formData.healthConditions?.otherCondition || ''
+  );
 
   const [noneApply, setNoneApply] = useState(
     formData.healthConditions?.noneApply ?? false
@@ -64,11 +68,17 @@ export default function Screen12HealthConditions({ formData, updateFormData, onN
       setError('Please select any conditions that apply, or select "None of these apply to me".');
       return;
     }
+    
+    if (selected.includes('other') && !otherCondition.trim()) {
+      setError('Please specify the other health condition.');
+      return;
+    }
 
     updateFormData({
       healthConditions: {
         selected,
-        noneApply
+        noneApply,
+        otherCondition: selected.includes('other') ? otherCondition.trim() : ''
       }
     });
     onNext();
@@ -77,13 +87,13 @@ export default function Screen12HealthConditions({ formData, updateFormData, onN
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 3 · HEALTH CONDITIONS
+        HEALTH ASSESSMENT
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">Do you have any of these conditions?</h1>
+        <h1 className="page-title">Tell us about your health</h1>
         <p className="page-subtitle">
-          Select all that apply.
+          Select all conditions that apply to you.
         </p>
       </div>
 
@@ -130,6 +140,26 @@ export default function Screen12HealthConditions({ formData, updateFormData, onN
             </div>
           );
         })}
+      </div>
+
+      {selected.includes('other') && (
+        <div className="input-capsule-wrap fade-in" style={{ marginTop: '16px' }}>
+          <input
+            id="other-condition"
+            type="text"
+            className="input-capsule"
+            placeholder="Please specify condition"
+            value={otherCondition}
+            onChange={(e) => setOtherCondition(e.target.value)}
+            autoFocus
+          />
+        </div>
+      )}
+
+      {/* Why we ask */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginTop: '16px', fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.45' }}>
+        <Info size={15} style={{ flexShrink: 0, marginTop: '2px' }} />
+        <span><strong>Why we ask:</strong> Your health conditions help your physician assess which treatments are safe and appropriate for you.</span>
       </div>
 
       <button

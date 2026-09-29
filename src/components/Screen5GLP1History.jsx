@@ -25,7 +25,7 @@ export default function Screen5GLP1History({ formData, updateFormData, onNext, o
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 3 · PREVIOUS TREATMENT
+        PREVIOUS TREATMENT
       </div>
 
       <div className="heading-section">
@@ -45,26 +45,44 @@ export default function Screen5GLP1History({ formData, updateFormData, onNext, o
       <div className="choice-cards-pair">
         <div
           onClick={() => handleSelect(true)}
-          role="button"
+          role="radio"
+          aria-checked={usedBefore === true}
           tabIndex={0}
           onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') handleSelect(true); }}
           className={`choice-card ${usedBefore === true ? 'selected' : ''}`}
         >
-          <div className={`checkbox-box ${usedBefore === true ? 'checked' : ''}`} aria-hidden="true">
-            {usedBefore === true && <Check size={14} strokeWidth={3} />}
+          <div 
+            style={{ 
+              width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0,
+              border: `2px solid ${usedBefore === true ? 'var(--color-primary)' : 'var(--color-border)'}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFF',
+              transition: 'all 0.2s ease'
+            }}
+            aria-hidden="true"
+          >
+            {usedBefore === true && <div style={{ width: '10px', height: '10px', backgroundColor: 'var(--color-primary)', borderRadius: '50%' }} />}
           </div>
           <span className="choice-title">Yes</span>
         </div>
 
         <div
           onClick={() => handleSelect(false)}
-          role="button"
+          role="radio"
+          aria-checked={usedBefore === false}
           tabIndex={0}
           onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') handleSelect(false); }}
           className={`choice-card ${usedBefore === false ? 'selected' : ''}`}
         >
-          <div className={`checkbox-box ${usedBefore === false ? 'checked' : ''}`} aria-hidden="true">
-            {usedBefore === false && <Check size={14} strokeWidth={3} />}
+          <div 
+            style={{ 
+              width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0,
+              border: `2px solid ${usedBefore === false ? 'var(--color-primary)' : 'var(--color-border)'}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFF',
+              transition: 'all 0.2s ease'
+            }}
+            aria-hidden="true"
+          >
+            {usedBefore === false && <div style={{ width: '10px', height: '10px', backgroundColor: 'var(--color-primary)', borderRadius: '50%' }} />}
           </div>
           <span className="choice-title">No</span>
         </div>
@@ -73,7 +91,7 @@ export default function Screen5GLP1History({ formData, updateFormData, onNext, o
       <p className="safety-sub-note">
         {usedBefore === true 
           ? "We'll ask a couple of quick questions about your previous medication and dose." 
-          : "First time trying GLP-1s? Ongo will tailor your journey from day one."}
+          : "That's completely okay. We'll use your health information to help your physician determine what's appropriate for you."}
       </p>
 
       <button

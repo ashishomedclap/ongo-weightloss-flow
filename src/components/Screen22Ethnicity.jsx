@@ -7,11 +7,13 @@ const ETHNICITIES = [
   { id: 'hispanic', label: 'Hispanic or Latin' },
   { id: 'nativeAmerican', label: 'Native American or Alaskan' },
   { id: 'pacificIslander', label: 'Pacific Islander' },
+  { id: 'other', label: 'Other' },
   { id: 'preferNotToSay', label: 'Prefer not to say' },
 ];
 
 export default function Screen22Ethnicity({ formData, updateFormData, onNext, onBack }) {
   const [selected, setSelected] = useState(formData.ethnicity || null);
+  const [otherEthnicity, setOtherEthnicity] = useState(formData.otherEthnicity || '');
   const [error, setError] = useState('');
 
   const handleSelect = (id) => {
@@ -25,21 +27,28 @@ export default function Screen22Ethnicity({ formData, updateFormData, onNext, on
       setError('Please select an option.');
       return;
     }
+    if (selected === 'other' && !otherEthnicity.trim()) {
+      setError('Please specify your ethnicity.');
+      return;
+    }
     
-    updateFormData({ ethnicity: selected });
+    updateFormData({ 
+      ethnicity: selected,
+      otherEthnicity: selected === 'other' ? otherEthnicity.trim() : ''
+    });
     onNext();
   };
 
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 13 · DEMOGRAPHICS
+        DEMOGRAPHICS
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">What is your ethnicity?</h1>
+        <h1 className="page-title">How do you describe your ethnicity?</h1>
         <p className="page-subtitle">
-          Select one option. We ask this to better tailor treatment options to you.
+          This information helps us understand the patients we serve and may be used as part of your health record.
         </p>
       </div>
 
@@ -49,7 +58,7 @@ export default function Screen22Ethnicity({ formData, updateFormData, onNext, on
         </div>
       )}
 
-      {/* Stack of separate choice cards (Radio Button style) */}
+      {/* Stack of separate choice cards */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {ETHNICITIES.map((item) => {
           const isChecked = selected === item.id;
@@ -65,7 +74,7 @@ export default function Screen22Ethnicity({ formData, updateFormData, onNext, on
               style={{
                 border: isChecked ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                 borderRadius: '12px',
-                background: isChecked ? 'var(--color-bg-teal)' : '#FFFFFF',
+                background: '#FFFFFF',
                 minHeight: '64px',
                 padding: '0 20px',
                 cursor: 'pointer',
@@ -95,6 +104,19 @@ export default function Screen22Ethnicity({ formData, updateFormData, onNext, on
         })}
       </div>
 
+      {selected === 'other' && (
+        <div className="input-capsule-wrap fade-in" style={{ marginTop: '12px' }}>
+          <input
+            type="text"
+            className="input-capsule"
+            placeholder="Please specify"
+            value={otherEthnicity}
+            onChange={(e) => setOtherEthnicity(e.target.value)}
+            autoFocus
+          />
+        </div>
+      )}
+
       <button
         type="button"
         className={`cta-button-pill ${selected ? 'active' : ''}`}
@@ -107,3 +129,5 @@ export default function Screen22Ethnicity({ formData, updateFormData, onNext, on
     </div>
   );
 }
+
+// Trigger HMR

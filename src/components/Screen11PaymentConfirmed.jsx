@@ -34,9 +34,9 @@ export default function Screen11Confirmed({ formData, onRestart, onNext }) {
       </div>
 
       <div className="heading-section" style={{ marginBottom: '24px' }}>
-        <h1 className="page-title" style={{ fontSize: '28px', color: '#000000', marginBottom: '12px' }}>You're all set.</h1>
+        <h1 className="page-title" style={{ fontSize: '28px', color: '#000000', marginBottom: '12px' }}>Payment confirmed 🎉</h1>
         <p className="page-subtitle" style={{ fontSize: '15px', color: '#666', maxWidth: '440px', margin: '0 auto', lineHeight: '1.5' }}>
-          Your payment is confirmed. Next, finish your clinical intake so your physician can review it before your visit.
+          Your payment was successfully processed. Next, complete your health assessment so your physician can review your information before your consultation.
         </p>
       </div>
 
@@ -53,7 +53,7 @@ export default function Screen11Confirmed({ formData, onRestart, onNext }) {
             </div>
             <div>
               <div style={{ fontWeight: 700, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Payment</div>
-              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>Kickstart - $249</div>
+              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>{formData.selectedPlan?.title || 'Kickstart'} - ${formData.orderTotal || 249}</div>
               <div style={{ fontSize: '13.5px', color: '#999', lineHeight: '1.4' }}>Full refund if your provider determines you're not eligible.</div>
             </div>
           </div>
@@ -99,7 +99,7 @@ export default function Screen11Confirmed({ formData, onRestart, onNext }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
             <Check size={18} color="#3A7D63" style={{ marginTop: '1px' }} />
-            <span style={{ fontSize: '14.5px', color: '#4A4A4A' }}>Have a photo ID ready for the next step</span>
+            <span style={{ fontSize: '14.5px', color: '#4A4A4A' }}>Set aside about 10 minutes to finish your intake</span>
           </div>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
             <Check size={18} color="#3A7D63" style={{ marginTop: '1px' }} />
@@ -107,7 +107,7 @@ export default function Screen11Confirmed({ formData, onRestart, onNext }) {
           </div>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
             <Check size={18} color="#3A7D63" style={{ marginTop: '1px' }} />
-            <span style={{ fontSize: '14.5px', color: '#4A4A4A' }}>Set aside about 10 minutes to finish your intake</span>
+            <span style={{ fontSize: '14.5px', color: '#4A4A4A' }}>Have a photo ID ready for the next step</span>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@ export default function Screen11Confirmed({ formData, onRestart, onNext }) {
         type="button"
         className="cta-button-pill active"
         onClick={onNext}
-        style={{ background: '#111111', color: '#FFFFFF', border: 'none', height: '54px' }}
+        style={{ background: '#111111', color: '#FFFFFF', border: 'none', height: '54px', width: '100%' }}
       >
         <span>Continue</span>
       </button>

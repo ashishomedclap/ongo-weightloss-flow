@@ -25,13 +25,13 @@ export default function Screen5dPrescription({ formData, updateFormData, onNext,
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        PREVIOUS TREATMENT · VERIFICATION
+        PREVIOUS TREATMENT
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">Upload prescription or label</h1>
+        <h1 className="page-title">Have your previous prescription handy?</h1>
         <p className="page-subtitle">
-          A photo of your previous prescription bottle or packaging helps your clinician verify your dose.
+          Uploading a photo of your prescription bottle or label can help your physician review your previous treatment more easily.
         </p>
       </div>
 

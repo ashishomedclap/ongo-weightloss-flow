@@ -3,23 +3,19 @@ import React, { useState } from 'react';
 const GOALS = [
   { 
     id: '1-15', 
-    title: '1–15 lbs.', 
-    subtitle: 'Slim down. Tone up. Stay on track.' 
+    title: '1–15 lbs.' 
   },
   { 
     id: '16-50', 
-    title: '16–50 lbs.', 
-    subtitle: 'Lose weight & keep it off — no more yo-yo cycles.' 
+    title: '16–50 lbs.' 
   },
   { 
     id: '50plus', 
-    title: '50+ lbs.', 
-    subtitle: "Bigger goal? We'll match you with the right plan." 
+    title: '50+ lbs.' 
   },
   { 
     id: 'notSure', 
-    title: 'I’m not sure yet', 
-    subtitle: "That's okay — we'll help you figure it out." 
+    title: 'I’m not sure yet' 
   },
 ];
 
@@ -46,7 +42,7 @@ export default function Screen18WeightLossGoal({ formData, updateFormData, onNex
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 9 · GOALS
+        YOUR GOALS
       </div>
 
       <div className="heading-section">
@@ -71,27 +67,31 @@ export default function Screen18WeightLossGoal({ formData, updateFormData, onNex
               tabIndex={0}
               onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') handleSelect(goal.id); }}
               style={{
-                border: isSelected ? '2px solid #000000' : '1px solid var(--color-border)',
-                borderRadius: '12px',
-                padding: '20px',
-                background: '#FFFFFF',
+                width: '100%',
+                background: isSelected ? '#F2F9F5' : '#FFFFFF',
+                border: `2px solid ${isSelected ? '#2F8968' : '#E2E6E2'}`,
+                borderRadius: '16px',
+                padding: '16px 20px',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between',
+                gap: '16px',
                 transition: 'all 0.2s ease',
               }}
             >
-              <div>
-                <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#000', marginBottom: '4px' }}>
-                  {goal.title}
-                </h3>
-                <p style={{ fontSize: '14px', color: '#888', margin: 0, fontWeight: 400 }}>
-                  {goal.subtitle}
-                </p>
-              </div>
-              <div style={{ color: '#888', fontSize: '18px', fontWeight: 300 }}>
-                →
+              <span style={{ fontSize: '15.5px', fontWeight: isSelected ? 700 : 500, color: isSelected ? '#1F4F3D' : '#111111', flex: 1 }}>
+                {goal.title}
+              </span>
+              <div 
+                style={{ 
+                  width: '22px', height: '22px', borderRadius: '50%', flexShrink: 0,
+                  border: `2px solid ${isSelected ? '#2F8968' : '#E2E6E2'}`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFF',
+                  transition: 'all 0.2s ease', marginLeft: '4px'
+                }}
+                aria-hidden="true"
+              >
+                {isSelected && <div style={{ width: '12px', height: '12px', backgroundColor: '#2F8968', borderRadius: '50%' }} />}
               </div>
             </div>
           );
