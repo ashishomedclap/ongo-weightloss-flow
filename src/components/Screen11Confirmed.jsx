@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { CheckCircle2, FileText, RefreshCw } from 'lucide-react';
+import { Check, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function Screen11Confirmed({ formData, onRestart }) {
+export default function Screen11Confirmed({ formData, onRestart, onNext }) {
   useEffect(() => {
     try {
       confetti({
@@ -16,76 +16,110 @@ export default function Screen11Confirmed({ formData, onRestart }) {
     }
   }, []);
 
-  const orderNum = 'OG-' + Math.floor(100000 + Math.random() * 900000);
-
   return (
-    <div className="content-inner fade-in" style={{ textAlign: 'center' }}>
+    <div className="content-inner fade-in" style={{ textAlign: 'center', paddingBottom: '30px' }}>
       <div style={{
-        width: '68px',
-        height: '68px',
+        width: '48px',
+        height: '48px',
         borderRadius: '50%',
-        background: '#DDF2DF',
-        color: '#1F4F3D',
+        background: '#3A7D63',
+        color: '#FFFFFF',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: '0 auto 18px',
-        boxShadow: '0 6px 20px rgba(47, 137, 104, 0.15)'
+        margin: '0 auto 16px',
+        boxShadow: '0 4px 12px rgba(58, 125, 99, 0.2)'
       }}>
-        <CheckCircle2 size={38} strokeWidth={2.4} />
+        <Check size={28} strokeWidth={2.5} />
       </div>
 
-      <div className="heading-section" style={{ marginBottom: '18px' }}>
-        <span className="step-tag-teal" style={{ marginBottom: '8px' }}>
-          ORDER #{orderNum} CONFIRMED
-        </span>
-        <h1 className="page-title">Payment Confirmed ✓</h1>
-        <p className="page-subtitle" style={{ fontSize: '18px', fontWeight: 600, color: 'var(--color-primary-dark)', marginTop: '4px' }}>
-          You're officially on your way.
-        </p>
-        <p style={{ fontSize: '14.5px', color: 'var(--color-text-secondary)', marginTop: '8px', maxWidth: '440px', margin: '8px auto 0' }}>
-          Your payment has been successfully processed. We've received your order and your Ongo care journey can now continue.
+      <div className="heading-section" style={{ marginBottom: '24px' }}>
+        <h1 className="page-title" style={{ fontSize: '28px', color: '#000000', marginBottom: '12px' }}>You're all set.</h1>
+        <p className="page-subtitle" style={{ fontSize: '15px', color: '#666', maxWidth: '440px', margin: '0 auto', lineHeight: '1.5' }}>
+          Your payment is confirmed. Next, finish your clinical intake so your physician can review it before your visit.
         </p>
       </div>
 
-      {/* Next Step Box */}
-      <div className="white-elevated-card" style={{ margin: '20px 0', textAlign: 'left' }}>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          color: 'var(--color-primary-dark)',
-          fontSize: '15px',
-          fontWeight: 800,
-          marginBottom: '6px'
-        }}>
-          <FileText size={18} color="#1F4F3D" />
-          <span>Next: Complete Your Health Assessment</span>
+      {/* Timeline Card */}
+      <div className="white-elevated-card" style={{ margin: '0 0 16px', textAlign: 'left', padding: '24px 20px' }}>
+        <div style={{ position: 'relative' }}>
+          {/* Timeline Line */}
+          <div style={{ position: 'absolute', left: '11px', top: '24px', bottom: '30px', width: '2px', background: '#E8E8E8', zIndex: 0 }}></div>
+          
+          {/* Step 1 */}
+          <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', position: 'relative', zIndex: 1 }}>
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#3A7D63', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <Check size={14} strokeWidth={3} />
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Payment</div>
+              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>Kickstart - $249</div>
+              <div style={{ fontSize: '13.5px', color: '#999', lineHeight: '1.4' }}>Full refund if your provider determines you're not eligible.</div>
+            </div>
+          </div>
+
+          {/* Step 2 */}
+          <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', position: 'relative', zIndex: 1 }}>
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#3A7D63', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '13px', fontWeight: 700 }}>
+              2
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Clinical intake</div>
+              <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>Next. A short set of questions, including a photo ID.</div>
+            </div>
+          </div>
+
+          {/* Step 3 */}
+          <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', position: 'relative', zIndex: 1 }}>
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#FFF', border: '2px solid #E8E8E8', color: '#999', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '13px', fontWeight: 700 }}>
+              3
+            </div>
+            <div>
+              <div style={{ fontWeight: 600, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Consultation</div>
+              <div style={{ fontSize: '13.5px', color: '#999', lineHeight: '1.4' }}>You'll pick a time after intake. Your physician calls you.</div>
+            </div>
+          </div>
+
+          {/* Step 4 */}
+          <div style={{ display: 'flex', gap: '16px', position: 'relative', zIndex: 1 }}>
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#FFF', border: '2px solid #E8E8E8', color: '#999', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '13px', fontWeight: 700 }}>
+              4
+            </div>
+            <div>
+              <div style={{ fontWeight: 600, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Medication ships</div>
+              <div style={{ fontSize: '13.5px', color: '#999', lineHeight: '1.4' }}>Free, discreet delivery within 2-3 days of your prescription.</div>
+            </div>
+          </div>
         </div>
-        <p style={{ fontSize: '13.5px', color: 'var(--color-text-secondary)', lineHeight: '1.45', margin: 0 }}>
-          Your clinician needs a few additional details about your health, medications, goals, and lifestyle before your consultation.
-        </p>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <button
-          type="button"
-          className="cta-button-pill active"
-          onClick={() => alert("Proceeding to comprehensive clinical intake questionnaire...")}
-        >
-          <span>Continue to Health Assessment</span>
-          <span className="cta-arrow" aria-hidden="true">→</span>
-        </button>
-
-        <button
-          type="button"
-          className="secondary-btn"
-          onClick={onRestart}
-          style={{ width: '100%', height: '46px', border: 'none', background: 'transparent', color: 'var(--color-text-secondary)' }}
-        >
-          <RefreshCw size={14} /> Restart Survey Demo
-        </button>
+      {/* Before you continue Card */}
+      <div className="white-elevated-card" style={{ margin: '0 0 24px', textAlign: 'left', padding: '24px 20px' }}>
+        <div style={{ fontWeight: 700, fontSize: '15px', color: '#000', marginBottom: '16px' }}>Before you continue</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+            <Check size={18} color="#3A7D63" style={{ marginTop: '1px' }} />
+            <span style={{ fontSize: '14.5px', color: '#4A4A4A' }}>Have a photo ID ready for the next step</span>
+          </div>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+            <Check size={18} color="#3A7D63" style={{ marginTop: '1px' }} />
+            <span style={{ fontSize: '14.5px', color: '#4A4A4A' }}>Keep your current medications nearby</span>
+          </div>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+            <Check size={18} color="#3A7D63" style={{ marginTop: '1px' }} />
+            <span style={{ fontSize: '14.5px', color: '#4A4A4A' }}>Set aside about 10 minutes to finish your intake</span>
+          </div>
+        </div>
       </div>
+
+      <button
+        type="button"
+        className="cta-button-pill active"
+        onClick={onNext}
+        style={{ background: '#111111', color: '#FFFFFF', border: 'none', height: '54px' }}
+      >
+        <span>Continue</span>
+      </button>
     </div>
   );
 }

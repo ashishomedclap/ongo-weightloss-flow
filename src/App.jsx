@@ -15,6 +15,11 @@ import Screen8TreatmentOptions from './components/Screen8TreatmentOptions';
 import Screen9TreatmentPlan from './components/Screen9TreatmentPlan';
 import Screen10Payment from './components/Screen10Payment';
 import Screen11Confirmed from './components/Screen11Confirmed';
+import Screen12HealthConditions from './components/Screen12HealthConditions';
+import Screen13Medications from './components/Screen13Medications';
+import Screen14Allergies from './components/Screen14Allergies';
+import Screen15WeightJourney from './components/Screen15WeightJourney';
+import Screen16WeightLossAttempts from './components/Screen16WeightLossAttempts';
 import { Smartphone, Monitor, Sparkles, CheckCheck } from 'lucide-react';
 
 const SCREEN_LIST = [
@@ -33,6 +38,11 @@ const SCREEN_LIST = [
   { key: '9', label: 'Screen 9: Choose Treatment Plan' },
   { key: '10', label: 'Screen 10: Complete Payment' },
   { key: '11', label: 'Screen 11: Payment Confirmed' },
+  { key: '12', label: 'Screen 12: Health Conditions' },
+  { key: '13', label: 'Screen 13: Medications' },
+  { key: '14', label: 'Screen 14: Allergies' },
+  { key: '15', label: 'Screen 15: Weight Journey' },
+  { key: '16', label: 'Screen 16: Past Attempts' },
 ];
 
 export default function App() {
@@ -162,6 +172,16 @@ export default function App() {
         return () => setCurrentScreen('9');
       case '11':
         return () => setCurrentScreen('10');
+      case '12':
+        return () => setCurrentScreen('11');
+      case '13':
+        return () => setCurrentScreen('12');
+      case '14':
+        return () => setCurrentScreen('13');
+      case '15':
+        return () => setCurrentScreen('14');
+      case '16':
+        return () => setCurrentScreen('15');
       default:
         return null;
     }
@@ -300,7 +320,53 @@ export default function App() {
         return (
           <Screen11Confirmed
             formData={formData}
+            onNext={() => setCurrentScreen('12')}
             onRestart={() => setCurrentScreen('1')}
+          />
+        );
+      case '12':
+        return (
+          <Screen12HealthConditions
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('13')}
+            onBack={() => setCurrentScreen('11')}
+          />
+        );
+      case '13':
+        return (
+          <Screen13Medications
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('14')}
+            onBack={() => setCurrentScreen('12')}
+          />
+        );
+      case '14':
+        return (
+          <Screen14Allergies
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('15')}
+            onBack={() => setCurrentScreen('13')}
+          />
+        );
+      case '15':
+        return (
+          <Screen15WeightJourney
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => setCurrentScreen('16')}
+            onBack={() => setCurrentScreen('14')}
+          />
+        );
+      case '16':
+        return (
+          <Screen16WeightLossAttempts
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => alert("Intake Complete! (End of Flow)")}
+            onBack={() => setCurrentScreen('15')}
           />
         );
       default:
