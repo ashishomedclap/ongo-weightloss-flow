@@ -42,7 +42,7 @@ export default function Screen18WeightLossGoal({ formData, updateFormData, onNex
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        YOUR GOALS
+        STEP 7 OF 14 · YOUR GOALS
       </div>
 
       <div className="heading-section">

@@ -5,7 +5,7 @@ export default function Screen6InitialResult({ formData, onNext, onBack }) {
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        ELIGIBILITY
+        STEP 5 OF 8 · CLINICAL REVIEW
       </div>
 
       <div className="heading-section">

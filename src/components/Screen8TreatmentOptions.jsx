@@ -61,10 +61,16 @@ const TREATMENT_OPTIONS = [
 
 export default function Screen8TreatmentOptions({ formData, updateFormData, onNext, onBack }) {
   const [selectedTreatment, setSelectedTreatment] = useState(
-    formData.selectedTreatment || 'physician-recommend'
+    formData.selectedTreatment || null
   );
 
+  const [error, setError] = useState('');
+
   const handleContinue = () => {
+    if (!selectedTreatment) {
+      setError('Please select a treatment option to continue.');
+      return;
+    }
     const chosen = TREATMENT_OPTIONS.find(t => t.id === selectedTreatment);
     updateFormData({
       selectedTreatment,
@@ -76,7 +82,7 @@ export default function Screen8TreatmentOptions({ formData, updateFormData, onNe
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        YOUR TREATMENT
+        STEP 7 OF 8 · TREATMENT OPTIONS
       </div>
 
       <div className="heading-section">
@@ -85,6 +91,12 @@ export default function Screen8TreatmentOptions({ formData, updateFormData, onNe
           These treatment options may be available for consideration. Your physician will determine which treatment, if any, is medically appropriate for you.
         </p>
       </div>
+
+      {error && (
+        <div className="form-error-banner">
+          {error}
+        </div>
+      )}
 
       {/* Options List */}
       <div className="treatments-stack">
@@ -167,7 +179,7 @@ export default function Screen8TreatmentOptions({ formData, updateFormData, onNe
 
       <button
         type="button"
-        className="cta-button-pill active"
+        className={`cta-button-pill ${selectedTreatment ? 'active' : ''}`}
         onClick={handleContinue}
       >
         <span>Continue</span>

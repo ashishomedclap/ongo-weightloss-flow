@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Check, Info } from 'lucide-react';
 
 export default function Screen12HealthConditions({ formData, updateFormData, onNext, onBack }) {
-  const isFemale = formData.gender === 'Female' || formData.gender === 'Prefer not to say' || !formData.gender;
+  const isFemale = formData.gender === 'Female';
 
   const ALL_CONDITIONS = [
     { id: 'highBpCholesterol', label: 'High blood pressure or cholesterol' },
@@ -87,7 +87,7 @@ export default function Screen12HealthConditions({ formData, updateFormData, onN
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        HEALTH ASSESSMENT
+        STEP 1 OF 14 · COMPREHENSIVE MEDICAL HISTORY
       </div>
 
       <div className="heading-section">
@@ -173,3 +173,5 @@ export default function Screen12HealthConditions({ formData, updateFormData, onN
     </div>
   );
 }
+
+// Trigger HMR

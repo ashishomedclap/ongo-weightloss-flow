@@ -25,7 +25,7 @@ export default function Screen5GLP1History({ formData, updateFormData, onNext, o
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        PREVIOUS TREATMENT
+        STEP 4 OF 8 · GLP-1 HISTORY
       </div>
 
       <div className="heading-section">

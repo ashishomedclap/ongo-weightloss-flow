@@ -33,7 +33,7 @@ export default function Screen20DailyRoutine({ formData, updateFormData, onNext,
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        LIFESTYLE
+        STEP 9 OF 14 · LIFESTYLE
       </div>
 
       <div className="heading-section">

@@ -42,7 +42,7 @@ export default function Screen22Ethnicity({ formData, updateFormData, onNext, on
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        DEMOGRAPHICS
+        STEP 11 OF 14 · DEMOGRAPHICS
       </div>
 
       <div className="heading-section">
@@ -74,7 +74,7 @@ export default function Screen22Ethnicity({ formData, updateFormData, onNext, on
               style={{
                 border: isChecked ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                 borderRadius: '12px',
-                background: '#FFFFFF',
+                background: isChecked ? '#EEF8EC' : '#FFFFFF',
                 minHeight: '64px',
                 padding: '0 20px',
                 cursor: 'pointer',
@@ -129,6 +129,8 @@ export default function Screen22Ethnicity({ formData, updateFormData, onNext, on
     </div>
   );
 }
+
+// Trigger HMR
 
 // Trigger HMR
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Check } from 'lucide-react';
 
 export default function Screen1Account({ formData, updateFormData, onNext }) {
   const [agreedTerms, setAgreedTerms] = useState(formData.agreeTerms ?? true);
@@ -99,12 +99,8 @@ export default function Screen1Account({ formData, updateFormData, onNext }) {
             checked={agreedMarketing}
             onChange={(e) => setAgreedMarketing(e.target.checked)}
           />
-          <div className="checkbox-box" aria-hidden="true">
-            {agreedMarketing && (
-              <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
-                <path d="M1.5 5L4.5 8L10.5 1.5" stroke="#1F4F3D" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            )}
+          <div className={`checkbox-box ${agreedMarketing ? 'checked' : ''}`} aria-hidden="true">
+            {agreedMarketing && <Check size={13} strokeWidth={3.5} />}
           </div>
           <span className="checkbox-label-text">
             Send me the latest news, treatment tips, and offers.
@@ -165,3 +161,5 @@ export default function Screen1Account({ formData, updateFormData, onNext }) {
     </div>
   );
 }
+
+// Trigger HMR

@@ -28,7 +28,7 @@ export default function Screen21bPhotoID({ formData, updateFormData, onNext, onB
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        VERIFICATION
+        STEP 12 OF 14 · IDENTITY VERIFICATION
       </div>
 
       <div className="heading-section">

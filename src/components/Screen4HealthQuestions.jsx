@@ -74,7 +74,7 @@ export default function Screen4HealthQuestions({ formData, updateFormData, onNex
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        MEDICAL SCREENING
+        STEP 3 OF 8 · HEALTH ASSESSMENT
       </div>
 
       <div className="heading-section">
@@ -111,11 +111,7 @@ export default function Screen4HealthQuestions({ formData, updateFormData, onNex
             </span>
           </div>
 
-          {noneApply && (
-            <span className="selected-badge-pill">
-              Selected ✓
-            </span>
-          )}
+
         </div>
 
         {/* Condition Rows */}
@@ -166,3 +162,5 @@ export default function Screen4HealthQuestions({ formData, updateFormData, onNex
     </div>
   );
 }
+
+// Trigger HMR 6

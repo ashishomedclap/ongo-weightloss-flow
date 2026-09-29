@@ -74,7 +74,7 @@ export default function Screen23Appointment({ formData, updateFormData, onNext, 
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        CONSULTATION
+        STEP 14 OF 14 · BOOK CONSULTATION
       </div>
 
       <div className="heading-section">
@@ -207,6 +207,11 @@ export default function Screen23Appointment({ formData, updateFormData, onNext, 
         </p>
       )}
 
+      {/* Scarcity message */}
+      <div style={{ textAlign: 'center', fontSize: '13px', color: '#C81E1E', fontWeight: 600, marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+        <span aria-hidden="true">🔥</span> High demand: Only a few slots left this week!
+      </div>
+
       <button
         type="button"
         className={`cta-button-pill ${(selectedDate && selectedTime) ? 'active' : ''}`}
@@ -218,3 +223,5 @@ export default function Screen23Appointment({ formData, updateFormData, onNext, 
     </div>
   );
 }
+
+// Trigger HMR

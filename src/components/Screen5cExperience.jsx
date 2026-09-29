@@ -53,7 +53,7 @@ export default function Screen5cExperience({ formData, updateFormData, onNext, o
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        PREVIOUS EXPERIENCE
+        STEP 4 OF 8 · GLP-1 HISTORY
       </div>
 
       <div className="heading-section">

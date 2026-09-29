@@ -34,7 +34,7 @@ export default function Screen21Lifestyle({ formData, updateFormData, onNext, on
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        LIFESTYLE
+        STEP 10 OF 14 · LIFESTYLE
       </div>
 
       <div className="heading-section">

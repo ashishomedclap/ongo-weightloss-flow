@@ -124,6 +124,8 @@ export default function App() {
     setFormData(prev => ({ ...prev, ...fields }));
   };
 
+  const [autofillKey, setAutofillKey] = useState(0);
+
   const handleAutofill = () => {
     setFormData({
       email: 'sarah.miller@example.com',
@@ -165,6 +167,7 @@ export default function App() {
         isRecommended: true
       }
     });
+    setAutofillKey(prev => prev + 1);
   };
 
   const getHeaderBackAction = () => {
@@ -287,10 +290,6 @@ export default function App() {
         </div>
 
         <div className="toolbar-controls">
-          <button type="button" className={`toolbar-btn ${currentScreen === '1' ? 'active' : ''}`} onClick={() => setCurrentScreen('1')}>📸 Screen 1</button>
-          <button type="button" className={`toolbar-btn ${currentScreen === '2' ? 'active' : ''}`} onClick={() => setCurrentScreen('2')}>📸 Screen 2</button>
-          <button type="button" className={`toolbar-btn ${currentScreen === '3' ? 'active' : ''}`} onClick={() => setCurrentScreen('3')}>📸 Screen 3</button>
-
           <select className="screen-select-dropdown" value={currentScreen} onChange={(e) => setCurrentScreen(e.target.value)} aria-label="Select screen to view">
             {SCREEN_LIST.map((s) => (
               <option key={s.key} value={s.key}>{s.label}</option>
@@ -311,10 +310,12 @@ export default function App() {
 
       <main className={`onboarding-shell ${isMobileFrame ? 'device-frame-mobile' : ''}`}>
         <Header showBack={backAction !== null} onBack={backAction} onLogoClick={() => setCurrentScreen('1')} />
-        <div className="main-card-body">
+        <div className="main-card-body" key={autofillKey}>
           {renderCurrentScreen()}
         </div>
       </main>
     </div>
   );
 }
+
+// Trigger HMR

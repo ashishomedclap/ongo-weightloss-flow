@@ -36,7 +36,7 @@ export default function Screen24IntakeConfirmed({ formData, onNext, onBack }) {
         <Check size={28} strokeWidth={2.5} />
       </div>
 
-      <div className="heading-section" style={{ marginBottom: '24px' }}>
+      <div className="heading-section" style={{ marginBottom: '24px', textAlign: 'center' }}>
         <h1 className="page-title" style={{ fontSize: '28px', color: '#000000', marginBottom: '12px' }}>Appointment confirmed 🎉</h1>
         <p className="page-subtitle" style={{ fontSize: '15px', color: '#666', maxWidth: '440px', margin: '0 auto', lineHeight: '1.5' }}>
           Your clinical intake is complete and your appointment is confirmed. Your physician will review your details before your visit.
@@ -120,3 +120,5 @@ export default function Screen24IntakeConfirmed({ formData, onNext, onBack }) {
     </div>
   );
 }
+
+// Trigger HMR

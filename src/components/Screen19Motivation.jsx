@@ -37,7 +37,7 @@ export default function Screen19Motivation({ formData, updateFormData, onNext, o
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        YOUR GOALS
+        STEP 8 OF 14 · YOUR GOALS
       </div>
 
       <div className="heading-section">
@@ -69,7 +69,7 @@ export default function Screen19Motivation({ formData, updateFormData, onNext, o
               style={{
                 border: isChecked ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                 borderRadius: '12px',
-                background: isChecked ? 'var(--color-bg-teal)' : '#FFFFFF',
+                background: isChecked ? '#EEF8EC' : '#FFFFFF',
                 minHeight: '64px',
                 padding: '0 20px',
                 cursor: 'pointer',
@@ -103,3 +103,5 @@ export default function Screen19Motivation({ formData, updateFormData, onNext, o
     </div>
   );
 }
+
+// Trigger HMR

@@ -355,6 +355,15 @@ body {
   max-width: var(--max-content-desktop);
   display: flex;
   flex-direction: column;
+  min-height: 560px;
+}
+
+.content-inner > .cta-button-pill {
+  margin-top: auto !important;
+}
+
+.content-inner > :nth-last-child(2) {
+  margin-bottom: 24px !important;
 }
 
 /* Step Teal Pill Tag (e.g. STEP 1 · ELIGIBILITY CHECK) */
@@ -568,6 +577,7 @@ body {
 
 .checkbox-card.checked {
   border-color: #2F8968;
+  background-color: #EEF8EC;
 }
 
 .checkbox-custom-input {
@@ -592,7 +602,8 @@ body {
 .checkbox-box.checked,
 .checkbox-card.checked .checkbox-box {
   border-color: #2F8968;
-  background: #E8F4EC;
+  background: #2F8968;
+  color: #FFFFFF;
 }
 
 .checkbox-label-text {
@@ -1606,3 +1617,5 @@ body {
 }
 
 /* Force HMR index.css */
+
+/* Trigger HMR Height Fix */

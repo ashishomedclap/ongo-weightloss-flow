@@ -53,7 +53,7 @@ export default function Screen17WeightLossSurgery({ formData, updateFormData, on
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        MEDICAL HISTORY
+        STEP 6 OF 14 · HEALTH ASSESSMENT
       </div>
 
       <div className="heading-section">
@@ -132,7 +132,7 @@ export default function Screen17WeightLossSurgery({ formData, updateFormData, on
                   style={{
                     border: isChecked ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                     borderRadius: '12px',
-                    background: '#FFFFFF',
+                    background: isChecked ? '#EEF8EC' : '#FFFFFF',
                     minHeight: '64px',
                     padding: '0 20px',
                     cursor: 'pointer',
@@ -182,3 +182,5 @@ export default function Screen17WeightLossSurgery({ formData, updateFormData, on
     </div>
   );
 }
+
+// Trigger HMR

@@ -36,7 +36,7 @@ export default function Screen16WeightLossAttempts({ formData, updateFormData, o
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        HEALTH ASSESSMENT
+        STEP 5 OF 14 · HEALTH ASSESSMENT
       </div>
 
       <div className="heading-section">
@@ -68,7 +68,7 @@ export default function Screen16WeightLossAttempts({ formData, updateFormData, o
               style={{
                 border: isChecked ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                 borderRadius: '12px',
-                background: '#FFFFFF',
+                background: isChecked ? '#EEF8EC' : '#FFFFFF',
                 minHeight: '64px',
                 padding: '0 20px',
                 cursor: 'pointer',
@@ -102,3 +102,5 @@ export default function Screen16WeightLossAttempts({ formData, updateFormData, o
     </div>
   );
 }
+
+// Trigger HMR

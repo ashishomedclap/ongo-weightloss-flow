@@ -33,7 +33,7 @@ export default function Screen11Confirmed({ formData, onRestart, onNext }) {
         <Check size={28} strokeWidth={2.5} />
       </div>
 
-      <div className="heading-section" style={{ marginBottom: '24px' }}>
+      <div className="heading-section" style={{ marginBottom: '24px', textAlign: 'center' }}>
         <h1 className="page-title" style={{ fontSize: '28px', color: '#000000', marginBottom: '12px' }}>Payment confirmed 🎉</h1>
         <p className="page-subtitle" style={{ fontSize: '15px', color: '#666', maxWidth: '440px', margin: '0 auto', lineHeight: '1.5' }}>
           Your payment was successfully processed. Next, complete your health assessment so your physician can review your information before your consultation.
@@ -54,7 +54,7 @@ export default function Screen11Confirmed({ formData, onRestart, onNext }) {
             <div>
               <div style={{ fontWeight: 700, fontSize: '15px', color: '#000', marginBottom: '2px' }}>Payment</div>
               <div style={{ fontSize: '13.5px', color: '#666', lineHeight: '1.4' }}>{formData.selectedPlan?.title || 'Kickstart'} - ${formData.orderTotal || 249}</div>
-              <div style={{ fontSize: '13.5px', color: '#999', lineHeight: '1.4' }}>Full refund if your provider determines you're not eligible.</div>
+              <div style={{ fontSize: '13.5px', color: '#999', lineHeight: '1.4' }}>If deemed ineligible after your appointment, a $39 fee is kept and the rest is refunded.</div>
             </div>
           </div>
 
@@ -123,3 +123,7 @@ export default function Screen11Confirmed({ formData, onRestart, onNext }) {
     </div>
   );
 }
+
+// Trigger HMR
+
+// Trigger HMR

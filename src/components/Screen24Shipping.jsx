@@ -18,7 +18,7 @@ export default function Screen21cShipping({ formData, updateFormData, onNext, on
     apt: '',
     city: '',
     zip: '',
-    state: ''
+    state: formData.state || '' // Auto-copy from screen 2
   });
   const [error, setError] = useState('');
 
@@ -42,7 +42,7 @@ export default function Screen21cShipping({ formData, updateFormData, onNext, on
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        FULFILLMENT
+        STEP 13 OF 14 · SHIPPING INFORMATION
       </div>
 
       <div className="heading-section">
@@ -141,3 +141,9 @@ export default function Screen21cShipping({ formData, updateFormData, onNext, on
     </div>
   );
 }
+
+// Trigger HMR
+
+// Trigger HMR 2
+
+// Trigger HMR 3

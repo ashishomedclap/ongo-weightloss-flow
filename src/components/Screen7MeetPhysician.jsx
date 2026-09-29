@@ -7,7 +7,7 @@ export default function Screen7MeetPhysician({ formData, onNext, onBack }) {
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        YOUR CARE TEAM
+        STEP 6 OF 8 · MEET YOUR PHYSICIAN
       </div>
 
       <div className="heading-section">

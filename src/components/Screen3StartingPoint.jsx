@@ -66,7 +66,7 @@ export default function Screen3StartingPoint({ formData, updateFormData, onNext,
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        ELIGIBILITY
+        STEP 2 OF 8 · ELIGIBILITY CHECK
       </div>
 
       <div className="heading-section">

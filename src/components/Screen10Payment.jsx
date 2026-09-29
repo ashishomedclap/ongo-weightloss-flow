@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CreditCard, Lock, Check } from 'lucide-react';
 import ThemedDropdown from './ThemedDropdown';
+import CountdownTimer from './CountdownTimer';
 
 const AppleLogo = ({ size = 15 }) => (
   <svg viewBox="0 0 384 512" width={size} height={size} fill="currentColor" style={{ marginBottom: '1px' }}>
@@ -48,7 +49,11 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
   const monthCount = plan.id === '1-month' ? 1 : plan.id === '3-months' ? 3 : 6;
   const subtotal = plan.monthlyPrice * monthCount;
   const promoDiscount = promoApplied ? 50 : 0;
-  const finalTotal = Math.max(0, subtotal - promoDiscount);
+  
+  // Extra 30% discount on the first month for plans 3 months or longer
+  const extraFirstMonthDiscount = monthCount >= 3 ? Math.round(plan.monthlyPrice * 0.30) : 0;
+  
+  const finalTotal = Math.max(0, subtotal - promoDiscount - extraFirstMonthDiscount);
 
   const handleApplyPromo = (e) => {
     e.preventDefault();
@@ -301,6 +306,13 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
             <span style={{ fontWeight: 700, color: 'var(--color-text-primary)' }}>${subtotal}</span>
           </div>
 
+          {extraFirstMonthDiscount > 0 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#F2F9F5', padding: '6px 10px', borderRadius: '8px', margin: '4px 0', color: '#1F4F3D' }}>
+              <span style={{ fontWeight: 600 }}>First Month Saving (30% Off)</span>
+              <span style={{ fontWeight: 800 }}>-${extraFirstMonthDiscount}</span>
+            </div>
+          )}
+
           {promoApplied && (
             <div style={{ display: 'flex', justifyContent: 'space-between', color: '#1F4F3D' }}>
               <span>Promo Discount</span>
@@ -308,9 +320,20 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
             </div>
           )}
 
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ color: 'var(--color-text-secondary)' }}>Shipping</span>
-            <span style={{ fontWeight: 700, color: '#1F4F3D' }}>FREE Discreet 2-3 Day</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ color: 'var(--color-text-secondary)' }}>Nutritionist / Dietician</span>
+            <span style={{ fontWeight: 700, color: '#1F4F3D', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ textDecoration: 'line-through', color: '#999', fontSize: '13px', fontWeight: 500 }}>$99</span>
+              FREE
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ color: 'var(--color-text-secondary)' }}>Shipping (Discreet 2-3 Day)</span>
+            <span style={{ fontWeight: 700, color: '#1F4F3D', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ textDecoration: 'line-through', color: '#999', fontSize: '13px', fontWeight: 500 }}>$23</span>
+              FREE
+            </span>
           </div>
 
           <div style={{
@@ -353,9 +376,27 @@ export default function Screen10Payment({ formData, updateFormData, onNext, onBa
         </button>
       )}
 
+      <div style={{ margin: '16px -24px 24px -24px' }}>
+        <CountdownTimer />
+      </div>
+
       <p className="safety-sub-note" style={{ marginTop: '14px' }}>
-        By completing your purchase, you agree to Ongo's applicable treatment, payment, refund, and telehealth terms.
+        By completing your purchase, you agree to Ongo's applicable terms. If your doctor finds you are not eligible after your appointment, a $39 consultation fee is deducted and the rest of your money will be refunded to you.
       </p>
     </div>
   );
 }
+
+// Trigger HMR
+
+// Trigger HMR
+
+// Trigger HMR 2
+
+// Trigger HMR 3
+
+// Trigger HMR 4
+
+// Trigger HMR 5
+
+// Trigger HMR

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ShieldCheck, Check } from 'lucide-react';
+import CountdownTimer from './CountdownTimer';
 
 const PLANS = [
   {
@@ -35,9 +36,14 @@ const PLANS = [
 ];
 
 export default function Screen9TreatmentPlan({ formData, updateFormData, onNext, onBack }) {
-  const [selectedPlanId, setSelectedPlanId] = useState(formData.selectedPlanId || '3-months');
+  const [selectedPlanId, setSelectedPlanId] = useState(formData.selectedPlanId || null);
+  const [error, setError] = useState('');
 
   const handleContinue = () => {
+    if (!selectedPlanId) {
+      setError('Please select a treatment plan to continue.');
+      return;
+    }
     const chosenPlan = PLANS.find(p => p.id === selectedPlanId);
     updateFormData({
       selectedPlanId,
@@ -49,7 +55,7 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        YOUR TREATMENT
+        STEP 8 OF 8 · YOUR TREATMENT
       </div>
 
       <div className="heading-section">
@@ -58,6 +64,12 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
           Select the plan duration that works best for you. Your physician makes the final treatment decision.
         </p>
       </div>
+
+      {error && (
+        <div className="form-error-banner">
+          {error}
+        </div>
+      )}
 
       {/* Plan Cards */}
       <div className="plans-stack">
@@ -138,7 +150,7 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
             Ongo Eligibility Guarantee
           </strong>
           <p style={{ fontSize: '13px', color: 'var(--color-text-secondary)', lineHeight: '1.45', margin: '0 0 4px' }}>
-            If you pay for a treatment and your provider determines that you are not eligible, we'll issue a full refund.
+            If you pay for a treatment and your provider determines that you are not eligible after your appointment, a $39 consultation fee is deducted and the rest money will be refunded to you.
           </p>
           <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
             Subject to Ongo's refund policy and applicable terms.
@@ -146,9 +158,13 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
         </div>
       </div>
 
+      <div style={{ margin: '16px -24px 24px -24px' }}>
+        <CountdownTimer />
+      </div>
+
       <button
         type="button"
-        className="cta-button-pill active"
+        className={`cta-button-pill ${selectedPlanId ? 'active' : ''}`}
         onClick={handleContinue}
       >
         <span>Continue to Secure Payment</span>
@@ -157,3 +173,9 @@ export default function Screen9TreatmentPlan({ formData, updateFormData, onNext,
     </div>
   );
 }
+
+// Trigger HMR
+
+// Trigger HMR
+
+// Trigger HMR 2

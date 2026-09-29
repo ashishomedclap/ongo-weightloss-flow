@@ -30,7 +30,7 @@ export default function Screen14Allergies({ formData, updateFormData, onNext, on
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        HEALTH ASSESSMENT
+        STEP 3 OF 14 · MEDICAL HISTORY
       </div>
 
       <div className="heading-section">
