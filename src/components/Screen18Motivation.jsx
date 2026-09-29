@@ -12,7 +12,7 @@ const MOTIVATIONS = [
   { id: 'somethingElse', label: 'Something else' },
 ];
 
-export default function Screen19Motivation({ formData, updateFormData, onNext, onBack }) {
+export default function Screen18Motivation({ formData, updateFormData, onNext, onBack }) {
   const [selected, setSelected] = useState(formData.motivations || []);
   const [error, setError] = useState('');
 
@@ -37,7 +37,7 @@ export default function Screen19Motivation({ formData, updateFormData, onNext, o
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 8 OF 14 · YOUR GOALS
+        STEP 7 OF 13 · YOUR GOALS
       </div>
 
       <div className="heading-section">

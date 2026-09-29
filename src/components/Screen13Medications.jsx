@@ -30,7 +30,7 @@ export default function Screen13Medications({ formData, updateFormData, onNext, 
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 2 OF 14 · MEDICAL HISTORY
+        STEP 2 OF 13 · MEDICAL HISTORY
       </div>
 
       <div className="heading-section">

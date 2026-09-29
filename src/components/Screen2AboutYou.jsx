@@ -90,19 +90,6 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
           </div>
         </div>
 
-        {/* Select gender dropdown */}
-        <div className="input-capsule-wrap select-wrap" style={{ margin: 0 }}>
-          <label className="field-top-label">Gender</label>
-          <div style={{ position: 'relative', marginTop: '4px' }}>
-            <ThemedDropdown
-              value={gender}
-          options={['Female', 'Male', 'Non-binary', 'Prefer not to say']}
-          onChange={setGender}
-          placeholder="Select gender"
-            />
-          </div>
-        </div>
-
         {/* Date of birth with calendar icon */}
         <div className="input-capsule-wrap has-suffix">
           <label className="field-top-label" htmlFor="dob-input">Date of Birth</label>
@@ -121,15 +108,15 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
           </span>
         </div>
 
-        {/* Select state */}
+        {/* Select gender dropdown */}
         <div className="input-capsule-wrap select-wrap" style={{ margin: 0 }}>
-          <label className="field-top-label">State</label>
+          <label className="field-top-label">Gender</label>
           <div style={{ position: 'relative', marginTop: '4px' }}>
             <ThemedDropdown
-              value={state === 'Select state' ? '' : state}
-          options={US_STATES.filter(s => s !== 'Select state')}
-          onChange={setState}
-          placeholder="Select state"
+              value={gender}
+          options={['Female', 'Male', 'Non-binary', 'Prefer not to say']}
+          onChange={setGender}
+          placeholder="Select gender"
             />
           </div>
         </div>
@@ -147,6 +134,19 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
           />
         </div>
 
+        {/* Select state */}
+        <div className="input-capsule-wrap select-wrap" style={{ margin: 0 }}>
+          <label className="field-top-label">State</label>
+          <div style={{ position: 'relative', marginTop: '4px' }}>
+            <ThemedDropdown
+              value={state === 'Select state' ? '' : state}
+          options={US_STATES.filter(s => s !== 'Select state')}
+          onChange={setState}
+          placeholder="Select state"
+            />
+          </div>
+        </div>
+
         {/* Continue Button */}
         <button 
           type="submit" 
@@ -159,5 +159,7 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
     </div>
   );
 }
+
+// Trigger HMR
 
 // Trigger HMR

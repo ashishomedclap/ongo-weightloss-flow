@@ -9,7 +9,7 @@ const DROPDOWNS = [
   { id: 'drugs', label: 'Recreational drugs', options: ['None', 'Marijuana', 'Other'] },
 ];
 
-export default function Screen21Lifestyle({ formData, updateFormData, onNext, onBack }) {
+export default function Screen20Lifestyle({ formData, updateFormData, onNext, onBack }) {
   const [lifestyle, setLifestyle] = useState(formData.lifestyle || {});
   const [stress, setStress] = useState(formData.stressLevel || 5);
   const [error, setError] = useState('');
@@ -34,7 +34,7 @@ export default function Screen21Lifestyle({ formData, updateFormData, onNext, on
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 10 OF 14 · LIFESTYLE
+        STEP 9 OF 13 · LIFESTYLE
       </div>
 
       <div className="heading-section">

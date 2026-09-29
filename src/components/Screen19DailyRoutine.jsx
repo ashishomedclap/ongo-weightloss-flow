@@ -9,7 +9,7 @@ const DROPDOWNS = [
   { id: 'exercise', label: 'Exercise days / week', options: ['0', '1-2', '3-4', '5+'] },
 ];
 
-export default function Screen20DailyRoutine({ formData, updateFormData, onNext, onBack }) {
+export default function Screen19DailyRoutine({ formData, updateFormData, onNext, onBack }) {
   const [routine, setRoutine] = useState(formData.routine || {});
   const [error, setError] = useState('');
 
@@ -33,7 +33,7 @@ export default function Screen20DailyRoutine({ formData, updateFormData, onNext,
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 9 OF 14 · LIFESTYLE
+        STEP 8 OF 13 · LIFESTYLE
       </div>
 
       <div className="heading-section">

@@ -6,11 +6,11 @@ export default function Screen7MeetPhysician({ formData, onNext, onBack }) {
 
   return (
     <div className="content-inner fade-in">
-      <div className="step-tag-teal">
+      <div className="step-tag-teal" style={{ margin: '0 auto 16px auto', display: 'flex', justifyContent: 'center' }}>
         STEP 6 OF 8 · MEET YOUR PHYSICIAN
       </div>
 
-      <div className="heading-section">
+      <div className="heading-section" style={{ textAlign: 'center' }}>
         <h1 className="page-title">Meet your physician</h1>
         <p className="page-subtitle">
           Your care is reviewed by a licensed healthcare professional who will evaluate your health information and treatment goals.
@@ -98,7 +98,7 @@ export default function Screen7MeetPhysician({ formData, onNext, onBack }) {
 
         <div style={{
           width: '100%',
-          textAlign: 'left',
+          textAlign: 'center',
           background: '#F9FBF8',
           border: '1px solid var(--color-border)',
           borderRadius: '12px',
@@ -116,6 +116,7 @@ export default function Screen7MeetPhysician({ formData, onNext, onBack }) {
         <div style={{
           display: 'flex',
           alignItems: 'center',
+          justifyContent: 'center',
           gap: '8px',
           color: 'var(--color-primary)',
           fontSize: '13px',
@@ -137,3 +138,5 @@ export default function Screen7MeetPhysician({ formData, onNext, onBack }) {
     </div>
   );
 }
+
+// Trigger HMR

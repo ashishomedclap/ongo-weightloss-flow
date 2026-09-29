@@ -11,7 +11,7 @@ const ETHNICITIES = [
   { id: 'preferNotToSay', label: 'Prefer not to say' },
 ];
 
-export default function Screen22Ethnicity({ formData, updateFormData, onNext, onBack }) {
+export default function Screen21Ethnicity({ formData, updateFormData, onNext, onBack }) {
   const [selected, setSelected] = useState(formData.ethnicity || null);
   const [otherEthnicity, setOtherEthnicity] = useState(formData.otherEthnicity || '');
   const [error, setError] = useState('');
@@ -42,7 +42,7 @@ export default function Screen22Ethnicity({ formData, updateFormData, onNext, on
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 11 OF 14 · DEMOGRAPHICS
+        STEP 10 OF 13 · DEMOGRAPHICS
       </div>
 
       <div className="heading-section">

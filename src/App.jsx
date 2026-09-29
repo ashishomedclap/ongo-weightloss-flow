@@ -1,4 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+const getInitialScreen = () => {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const screen = params.get('screen');
+    if (screen) return screen;
+  }
+  return '1';
+};
+
+const getInitialMobile = () => {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('mobile') === 'true';
+  }
+  return false;
+};
 import Header from './components/Header';
 import Screen1Account from './components/Screen1Account';
 import Screen2AboutYou from './components/Screen2AboutYou';
@@ -21,15 +38,14 @@ import Screen14Allergies from './components/Screen14Allergies';
 import Screen15WeightJourney from './components/Screen15WeightJourney';
 import Screen16WeightLossAttempts from './components/Screen16WeightLossAttempts';
 import Screen17WeightLossSurgery from './components/Screen17WeightLossSurgery';
-import Screen18WeightLossGoal from './components/Screen18WeightLossGoal';
-import Screen19Motivation from './components/Screen19Motivation';
-import Screen20DailyRoutine from './components/Screen20DailyRoutine';
-import Screen21Lifestyle from './components/Screen21Lifestyle';
-import Screen22Ethnicity from './components/Screen22Ethnicity';
-import Screen23PhotoID from './components/Screen23PhotoID';
-import Screen24Shipping from './components/Screen24Shipping';
-import Screen25Appointment from './components/Screen25Appointment';
-import Screen26IntakeConfirmed from './components/Screen26IntakeConfirmed';
+import Screen18Motivation from './components/Screen18Motivation';
+import Screen19DailyRoutine from './components/Screen19DailyRoutine';
+import Screen20Lifestyle from './components/Screen20Lifestyle';
+import Screen21Ethnicity from './components/Screen21Ethnicity';
+import Screen22PhotoID from './components/Screen22PhotoID';
+import Screen23Shipping from './components/Screen23Shipping';
+import Screen24Appointment from './components/Screen24Appointment';
+import Screen25IntakeConfirmed from './components/Screen25IntakeConfirmed';
 import { Smartphone, Monitor, Sparkles, CheckCheck } from 'lucide-react';
 
 const SCREEN_LIST = [
@@ -60,30 +76,40 @@ const SCREEN_LIST = [
   { key: '16', label: 'Screen 16: What Have You Tried Before?' },
   { key: '17', label: 'Screen 17: Have You Had Weight-Loss Surgery?' },
   // Phase 6: Goals & Motivation
-  { key: '18', label: 'Screen 18: What Would You Like to Achieve?' },
-  { key: '19', label: "Screen 19: What's Driving You Right Now?" },
+  { key: '18', label: "Screen 18: What's Driving You Right Now?" },
   // Phase 7: Lifestyle
-  { key: '20', label: 'Screen 20: What Does a Typical Week Look Like?' },
-  { key: '21', label: 'Screen 21: Lifestyle' },
-  { key: '22', label: 'Screen 22: Ethnicity' },
+  { key: '19', label: 'Screen 19: What Does a Typical Week Look Like?' },
+  { key: '20', label: 'Screen 20: Lifestyle' },
+  { key: '21', label: 'Screen 21: Ethnicity' },
   // Phase 8: Verification & Fulfillment
-  { key: '23', label: 'Screen 23: Verify Your Identity' },
-  { key: '24', label: 'Screen 24: Shipping Information' },
+  { key: '22', label: 'Screen 22: Verify Your Identity' },
+  { key: '23', label: 'Screen 23: Shipping Information' },
   // Phase 9: Appointment
-  { key: '25', label: 'Screen 25: Book Your Consultation' },
+  { key: '24', label: 'Screen 24: Book Your Consultation' },
   // Phase 10: Confirmation
-  { key: '26', label: 'Screen 26: Appointment Confirmed' },
+  { key: '25', label: 'Screen 25: Appointment Confirmed' },
 ];
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('1');
-  const [isMobileFrame, setIsMobileFrame] = useState(false);
+  const [currentScreen, setCurrentScreen] = useState(getInitialScreen);
+  const [isMobileFrame, setIsMobileFrame] = useState(getInitialMobile);
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('screen') !== currentScreen) {
+        params.set('screen', currentScreen);
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.replaceState({}, '', newUrl);
+      }
+    }
+  }, [currentScreen]);
+
+  const AUTOFILL_DATA = {
+    email: 'sarah.miller@example.com',
+    password: 'SecurePassword123!',
     agreeTerms: true,
-    agreeMarketing: false,
+    agreeMarketing: true,
     firstName: 'Sarah',
     lastName: 'Miller',
     gender: 'Female',
@@ -98,14 +124,14 @@ export default function App() {
     safetyAnswers: {},
     noneApply: true,
     usedGLP1Before: true,
-    glp1Meds: [],
+    glp1Meds: ['Ozempic®'],
     glp1Dose: '0.5 mg',
-    glp1UnitsAmount: '10 units (0.25 mL)',
+    glp1UnitsAmount: '10 units',
     glp1Frequency: 'Once weekly',
     glp1Experience: 'Positive',
     glp1StoppingReason: 'Cost',
-    glp1LastDate: '2024-04-10',
-    uploadedRxName: '', // Starts empty for a real user
+    glp1LastDate: '2024-05-15',
+    uploadedRxName: 'prescription_sample.jpg',
     selectedTreatment: 'physician-recommend',
     selectedTreatmentName: "Physician's Choice",
     selectedPlanId: '3-months',
@@ -117,21 +143,54 @@ export default function App() {
       savingsText: 'Save $50/mo',
       totalText: '$597 total billed for 3 months',
       isRecommended: true
-    }
-  });
-
-  const updateFormData = (fields) => {
-    setFormData(prev => ({ ...prev, ...fields }));
+    },
+    // Clinical Intake & Demographics
+    healthConditions: {
+      selected: ['pcos'],
+      noneApply: false,
+      otherCondition: ''
+    },
+    takesMedication: 'No',
+    medicationDetails: '',
+    hasAllergies: 'No',
+    allergyDetails: '',
+    highestWeight: '210',
+    lowestWeight: '150',
+    goalWeight: '140',
+    waistCircumference: '35',
+    weightLossAttempts: ['Keto', 'Intermittent Fasting'],
+    hadSurgery: 'No',
+    weightLossGoal: 'improve-health',
+    motivations: ['clothes-fit', 'more-energy'],
+    routine: { sleep: '7-8 hours', activity: 'Moderate' },
+    lifestyle: { smoking: 'No', alcohol: 'Occasional' },
+    stressLevel: 6,
+    ethnicity: 'White',
+    idPhotoName: 'driver_license.jpg',
+    idPhotoSize: '1.2 MB',
+    shippingAddress: {
+      street: '123 Market St',
+      apt: 'Suite 400',
+      city: 'San Francisco',
+      zip: '94105',
+      state: 'California'
+    },
+    appointmentDate: new Date(Date.now() + 86400000).toISOString(),
+    appointmentTime: '10:30 AM'
   };
 
-  const [autofillKey, setAutofillKey] = useState(0);
-
-  const handleAutofill = () => {
-    setFormData({
-      email: 'sarah.miller@example.com',
-      password: 'SecurePassword123!',
+  const getInitialFormData = () => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('autofill') === '1' || params.get('autofill') === 'true') {
+        return AUTOFILL_DATA;
+      }
+    }
+    return {
+      email: '',
+      password: '',
       agreeTerms: true,
-      agreeMarketing: true,
+      agreeMarketing: false,
       firstName: 'Sarah',
       lastName: 'Miller',
       gender: 'Female',
@@ -146,14 +205,14 @@ export default function App() {
       safetyAnswers: {},
       noneApply: true,
       usedGLP1Before: true,
-      glp1Meds: ['Ozempic®'],
+      glp1Meds: [],
       glp1Dose: '0.5 mg',
-      glp1UnitsAmount: '10 units',
+      glp1UnitsAmount: '10 units (0.25 mL)',
       glp1Frequency: 'Once weekly',
       glp1Experience: 'Positive',
       glp1StoppingReason: 'Cost',
-      glp1LastDate: '2024-05-15',
-      uploadedRxName: 'prescription_sample.jpg',
+      glp1LastDate: '2024-04-10',
+      uploadedRxName: '',
       selectedTreatment: 'physician-recommend',
       selectedTreatmentName: "Physician's Choice",
       selectedPlanId: '3-months',
@@ -166,7 +225,19 @@ export default function App() {
         totalText: '$597 total billed for 3 months',
         isRecommended: true
       }
-    });
+    };
+  };
+
+  const [formData, setFormData] = useState(getInitialFormData);
+
+  const updateFormData = (fields) => {
+    setFormData(prev => ({ ...prev, ...fields }));
+  };
+
+  const [autofillKey, setAutofillKey] = useState(0);
+
+  const handleAutofill = () => {
+    setFormData(AUTOFILL_DATA);
     setAutofillKey(prev => prev + 1);
   };
 
@@ -201,7 +272,6 @@ export default function App() {
       case '23': return () => setCurrentScreen('22');
       case '24': return () => setCurrentScreen('23');
       case '25': return () => setCurrentScreen('24');
-      case '26': return () => setCurrentScreen('25');
       default: return null;
     }
   };
@@ -257,23 +327,21 @@ export default function App() {
       case '17':
         return <Screen17WeightLossSurgery formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('18')} onBack={() => setCurrentScreen('16')} />;
       case '18':
-        return <Screen18WeightLossGoal formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('19')} onBack={() => setCurrentScreen('17')} />;
+        return <Screen18Motivation formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('19')} onBack={() => setCurrentScreen('17')} />;
       case '19':
-        return <Screen19Motivation formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('20')} onBack={() => setCurrentScreen('18')} />;
+        return <Screen19DailyRoutine formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('20')} onBack={() => setCurrentScreen('18')} />;
       case '20':
-        return <Screen20DailyRoutine formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('21')} onBack={() => setCurrentScreen('19')} />;
+        return <Screen20Lifestyle formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('21')} onBack={() => setCurrentScreen('19')} />;
       case '21':
-        return <Screen21Lifestyle formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('22')} onBack={() => setCurrentScreen('20')} />;
+        return <Screen21Ethnicity formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('22')} onBack={() => setCurrentScreen('20')} />;
       case '22':
-        return <Screen22Ethnicity formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('23')} onBack={() => setCurrentScreen('21')} />;
+        return <Screen22PhotoID formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('23')} onBack={() => setCurrentScreen('21')} />;
       case '23':
-        return <Screen23PhotoID formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('24')} onBack={() => setCurrentScreen('22')} />;
+        return <Screen23Shipping formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('24')} onBack={() => setCurrentScreen('22')} />;
       case '24':
-        return <Screen24Shipping formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('25')} onBack={() => setCurrentScreen('23')} />;
+        return <Screen24Appointment formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('25')} onBack={() => setCurrentScreen('23')} />;
       case '25':
-        return <Screen25Appointment formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('26')} onBack={() => setCurrentScreen('24')} />;
-      case '26':
-        return <Screen26IntakeConfirmed formData={formData} onNext={() => alert("Flow Complete! Navigating to dashboard...")} onBack={() => setCurrentScreen('25')} />;
+        return <Screen25IntakeConfirmed formData={formData} onNext={() => alert("Flow Complete! Navigating to dashboard...")} onBack={() => setCurrentScreen('24')} />;
       default:
         return <Screen1Account formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('2')} />;
     }
@@ -319,3 +387,9 @@ export default function App() {
 }
 
 // Trigger HMR
+
+// Trigger HMR 2
+
+// Trigger HMR 3
+
+// Trigger HMR 4

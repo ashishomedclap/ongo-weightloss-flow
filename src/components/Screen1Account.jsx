@@ -92,18 +92,18 @@ export default function Screen1Account({ formData, updateFormData, onNext }) {
         </div>
 
         {/* Marketing opt-in — optional */}
-        <label className={`checkbox-card ${agreedMarketing ? 'checked' : ''}`}>
+        <label style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', cursor: 'pointer', margin: '8px 4px 16px 4px' }}>
           <input
             type="checkbox"
             className="checkbox-custom-input"
             checked={agreedMarketing}
             onChange={(e) => setAgreedMarketing(e.target.checked)}
           />
-          <div className={`checkbox-box ${agreedMarketing ? 'checked' : ''}`} aria-hidden="true">
+          <div className={`checkbox-box ${agreedMarketing ? 'checked' : ''}`} aria-hidden="true" style={{ marginTop: '2px' }}>
             {agreedMarketing && <Check size={13} strokeWidth={3.5} />}
           </div>
-          <span className="checkbox-label-text">
-            Send me the latest news, treatment tips, and offers.
+          <span style={{ fontSize: '13.5px', color: 'var(--color-text-secondary)', lineHeight: '1.4', flex: 1 }}>
+            Send me the latest news, treatment tips, and offers. (Optional)
           </span>
         </label>
 
@@ -163,3 +163,5 @@ export default function Screen1Account({ formData, updateFormData, onNext }) {
 }
 
 // Trigger HMR
+
+// Trigger HMR 2

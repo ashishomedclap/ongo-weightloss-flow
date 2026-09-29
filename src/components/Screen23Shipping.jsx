@@ -42,7 +42,7 @@ export default function Screen21cShipping({ formData, updateFormData, onNext, on
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 13 OF 14 · SHIPPING INFORMATION
+        STEP 12 OF 13 · SHIPPING INFORMATION
       </div>
 
       <div className="heading-section">

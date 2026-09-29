@@ -36,7 +36,7 @@ export default function Screen16WeightLossAttempts({ formData, updateFormData, o
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 5 OF 14 · HEALTH ASSESSMENT
+        STEP 5 OF 13 · HEALTH ASSESSMENT
       </div>
 
       <div className="heading-section">

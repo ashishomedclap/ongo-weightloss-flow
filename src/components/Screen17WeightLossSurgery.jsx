@@ -53,7 +53,7 @@ export default function Screen17WeightLossSurgery({ formData, updateFormData, on
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 6 OF 14 · HEALTH ASSESSMENT
+        STEP 6 OF 13 · HEALTH ASSESSMENT
       </div>
 
       <div className="heading-section">

@@ -87,13 +87,13 @@ export default function Screen12HealthConditions({ formData, updateFormData, onN
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 1 OF 14 · COMPREHENSIVE MEDICAL HISTORY
+        STEP 1 OF 13 · COMPREHENSIVE MEDICAL HISTORY
       </div>
 
       <div className="heading-section">
-        <h1 className="page-title">Tell us about your health</h1>
+        <h1 className="page-title">Let's look at your broader health</h1>
         <p className="page-subtitle">
-          Select all conditions that apply to you.
+          Please select any existing health conditions you may have. This comprehensive overview helps your physician ensure your weight-loss treatment is safe for you.
         </p>
       </div>
 
@@ -175,3 +175,5 @@ export default function Screen12HealthConditions({ formData, updateFormData, onN
 }
 
 // Trigger HMR
+
+// Trigger HMR 2

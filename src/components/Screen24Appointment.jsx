@@ -74,7 +74,7 @@ export default function Screen23Appointment({ formData, updateFormData, onNext, 
   return (
     <div className="content-inner fade-in">
       <div className="step-tag-teal">
-        STEP 14 OF 14 · BOOK CONSULTATION
+        STEP 13 OF 13 · BOOK CONSULTATION
       </div>
 
       <div className="heading-section">
