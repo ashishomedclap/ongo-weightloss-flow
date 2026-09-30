@@ -1,6 +1,13 @@
 import React from 'react';
+import OngoClockIcon from './OngoClockIcon';
 
-export default function OngoLogo({ style, className }) {
+export { OngoClockIcon, OngoClockIcon as OngoScaleIcon };
+
+export default function OngoLogo({ style, className, iconOnly = false, size }) {
+  if (iconOnly) {
+    return <OngoClockIcon style={style} className={className} size={size} />;
+  }
+
   return (
     <svg 
       id="Layer_1" 

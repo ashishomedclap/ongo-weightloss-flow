@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Phone, ArrowLeft } from 'lucide-react';
 import OngoLogo from './OngoLogo';
 
-export default function Header({ onBack, onLogoClick, showBack = false, progressPercent = 0 }) {
+const Header = forwardRef(function Header({ onBack, onLogoClick, showBack = false, progressPercent = 0 }, ref) {
   return (
-    <header className="header-container" role="banner">
+    <header ref={ref} id="header-section" className="header-container" role="banner">
       <div className="header-left-slot">
         {showBack && onBack ? (
           <button 
@@ -52,4 +52,6 @@ export default function Header({ onBack, onLogoClick, showBack = false, progress
       )}
     </header>
   );
-}
+});
+
+export default Header;

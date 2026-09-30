@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const getInitialScreen = () => {
   if (typeof window !== 'undefined') {
@@ -17,6 +17,7 @@ const getInitialMobile = () => {
   return false;
 };
 import Header from './components/Header';
+import ScreenPreloader from './components/ScreenPreloader';
 import Screen1Account from './components/Screen1Account';
 import Screen2AboutYou from './components/Screen2AboutYou';
 import Screen3StartingPoint from './components/Screen3StartingPoint';
@@ -46,7 +47,7 @@ import Screen22PhotoID from './components/Screen22PhotoID';
 import Screen23Shipping from './components/Screen23Shipping';
 import Screen24Appointment from './components/Screen24Appointment';
 import Screen25IntakeConfirmed from './components/Screen25IntakeConfirmed';
-import { Smartphone, Monitor, Sparkles, CheckCheck } from 'lucide-react';
+import { Smartphone, Monitor, Sparkles, CheckCheck, Sliders } from 'lucide-react';
 
 const SCREEN_LIST = [
   // Phase 1: Get Started
@@ -88,11 +89,60 @@ const SCREEN_LIST = [
   { key: '24', label: 'Screen 24: Book Your Consultation' },
   // Phase 10: Confirmation
   { key: '25', label: 'Screen 25: Appointment Confirmed' },
+  // Independent Preloader Screen
+  { key: '26', label: 'Screen 26: Preloader Animation Studio' },
 ];
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState(getInitialScreen);
   const [isMobileFrame, setIsMobileFrame] = useState(getInitialMobile);
+  const [preloaderTarget, setPreloaderTarget] = useState(null);
+  const [preloaderConfig, setPreloaderConfig] = useState(null);
+  const headerRef = useRef(null);
+  const isFirstRender = useRef(true);
+
+  const transitionWithPreloader = (targetScreen, config = {}) => {
+    setPreloaderTarget(targetScreen);
+    setPreloaderConfig(config);
+  };
+
+  // Automatically scroll up to the header section whenever the next screen shows up on mobile
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const checkIsMobile = () => {
+      if (typeof window === 'undefined') return false;
+      return (
+        window.innerWidth <= 768 ||
+        isMobileFrame ||
+        Boolean(window.matchMedia && window.matchMedia('(max-width: 768px)').matches) ||
+        ('ontouchstart' in window && window.innerWidth <= 1024) ||
+        /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+      );
+    };
+
+    const isMobile = checkIsMobile();
+
+    // Use a slight timeout (50ms) to ensure the new screen has finished rendering in DOM
+    const timer = setTimeout(() => {
+      const headerElement = headerRef.current || document.getElementById('header-section');
+      if (isMobile) {
+        if (headerElement) {
+          headerElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } else if (typeof window !== 'undefined' && window.scrollY > 100) {
+        // Also support desktop if user scrolled down
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 50);
+
+    return () => clearTimeout(timer);
+  }, [currentScreen, isMobileFrame]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -242,6 +292,7 @@ export default function App() {
   };
 
   const getHeaderBackAction = () => {
+    if (preloaderTarget) return null;
     switch (currentScreen) {
       case '1': return null;
       case '2': return () => setCurrentScreen('1');
@@ -272,14 +323,44 @@ export default function App() {
       case '23': return () => setCurrentScreen('22');
       case '24': return () => setCurrentScreen('23');
       case '25': return () => setCurrentScreen('24');
+      case '26': return () => setCurrentScreen('25');
       default: return null;
     }
   };
 
   const renderCurrentScreen = () => {
+    if (preloaderTarget) {
+      return (
+        <ScreenPreloader
+          duration={preloaderConfig?.duration || 2400}
+          title={preloaderConfig?.title || "Setting up your account..."}
+          subtitle={preloaderConfig?.subtitle || "Preparing your personalized clinical consultation"}
+          stepText={preloaderConfig?.stepText || "Step 1 of 25 • Account Initialized"}
+          initialRefine={Boolean(preloaderConfig?.initialRefine)}
+          onComplete={() => {
+            const next = preloaderTarget;
+            setPreloaderTarget(null);
+            setPreloaderConfig(null);
+            setCurrentScreen(next);
+          }}
+        />
+      );
+    }
+
     switch (currentScreen) {
       case '1':
-        return <Screen1Account formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('2')} />;
+        return (
+          <Screen1Account 
+            formData={formData} 
+            updateFormData={updateFormData} 
+            onNext={() => transitionWithPreloader('2', {
+              duration: 2700,
+              title: "Setting up your account...",
+              subtitle: "Preparing your personalized clinical consultation",
+              stepText: "Step 1 of 25 • Account Created"
+            })} 
+          />
+        );
       case '2':
         return <Screen2AboutYou formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('3')} onBack={() => setCurrentScreen('1')} />;
       case '3':
@@ -341,7 +422,19 @@ export default function App() {
       case '24':
         return <Screen24Appointment formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('25')} onBack={() => setCurrentScreen('23')} />;
       case '25':
-        return <Screen25IntakeConfirmed formData={formData} onNext={() => alert("Flow Complete! Navigating to dashboard...")} onBack={() => setCurrentScreen('24')} />;
+        return <Screen25IntakeConfirmed formData={formData} onNext={() => setCurrentScreen('26')} onBack={() => setCurrentScreen('24')} />;
+      case '26':
+        return (
+          <ScreenPreloader
+            duration={2800}
+            title="Weight Scale Calibration Studio"
+            subtitle="Standalone Motion Calibration & State Refinement"
+            stepText="Screen 26 • Independent Preloader Studio"
+            initialRefine={true}
+            allowRefine={true}
+            onComplete={() => setCurrentScreen('1')}
+          />
+        );
       default:
         return <Screen1Account formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('2')} />;
     }
@@ -358,7 +451,15 @@ export default function App() {
         </div>
 
         <div className="toolbar-controls">
-          <select className="screen-select-dropdown" value={currentScreen} onChange={(e) => setCurrentScreen(e.target.value)} aria-label="Select screen to view">
+          <select 
+            className="screen-select-dropdown" 
+            value={currentScreen} 
+            onChange={(e) => {
+              setPreloaderTarget(null);
+              setCurrentScreen(e.target.value);
+            }} 
+            aria-label="Select screen to view"
+          >
             {SCREEN_LIST.map((s) => (
               <option key={s.key} value={s.key}>{s.label}</option>
             ))}
@@ -369,6 +470,22 @@ export default function App() {
             <span>Autofill Demo</span>
           </button>
 
+          <button 
+            type="button" 
+            className="toolbar-btn" 
+            onClick={() => transitionWithPreloader('2', {
+              duration: 2800,
+              initialRefine: true,
+              title: "Weight Scale Calibration Studio",
+              subtitle: "8-Stage Motion Study & Calibration Inspector",
+              stepText: "Animation Refinement Studio"
+            })} 
+            title="Inspect & Refine all 8 Preloader Animation States"
+          >
+            <Sliders size={13} />
+            <span>Refine Animation</span>
+          </button>
+
           <button type="button" className={`toolbar-btn ${isMobileFrame ? 'active' : ''}`} onClick={() => setIsMobileFrame(!isMobileFrame)} title="Toggle between mobile viewport frame and centered desktop layout">
             {isMobileFrame ? <Monitor size={13} /> : <Smartphone size={13} />}
             <span>{isMobileFrame ? 'Desktop (540px)' : 'Mobile Frame'}</span>
@@ -377,7 +494,15 @@ export default function App() {
       </aside>
 
       <main className={`onboarding-shell ${isMobileFrame ? 'device-frame-mobile' : ''}`}>
-        <Header showBack={backAction !== null} onBack={backAction} onLogoClick={() => setCurrentScreen('1')} />
+        <Header 
+          ref={headerRef} 
+          showBack={backAction !== null} 
+          onBack={backAction} 
+          onLogoClick={() => {
+            setPreloaderTarget(null);
+            setCurrentScreen('1');
+          }} 
+        />
         <div className="main-card-body" key={autofillKey}>
           {renderCurrentScreen()}
         </div>
