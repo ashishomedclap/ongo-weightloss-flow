@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { Check, Info } from 'lucide-react';
 
 export default function Screen13Medications({ formData, updateFormData, onNext, onBack }) {
-  const [takesMedication, setTakesMedication] = useState(formData.takesMedication ?? null);
+  const [takesMedication, setTakesMedication] = useState(() => {
+    if (formData.takesMedication === 'No' || formData.takesMedication === false) return false;
+    if (formData.takesMedication === 'Yes' || formData.takesMedication === true) return true;
+    return null;
+  });
   const [medicationDetails, setMedicationDetails] = useState(formData.medicationDetails || '');
   const [error, setError] = useState('');
 

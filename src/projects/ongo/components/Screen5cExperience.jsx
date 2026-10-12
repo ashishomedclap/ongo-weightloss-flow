@@ -17,9 +17,15 @@ export default function Screen5cExperience({ formData, updateFormData, onNext, o
     if (typeof formData.glp1Experience === 'number') return formData.glp1Experience;
     return 5; // Default slider value
   });
-  const [stoppingReason, setStoppingReason] = useState(formData.glp1StoppingReason || null);
+  const [stoppingReason, setStoppingReason] = useState(() => {
+    if (formData.glp1StoppingReason) {
+      const match = STOPPING_REASONS.find(r => r.id.toLowerCase() === formData.glp1StoppingReason.toLowerCase() || r.label.toLowerCase() === formData.glp1StoppingReason.toLowerCase());
+      return match ? match.id : formData.glp1StoppingReason;
+    }
+    return null;
+  });
   const [otherReason, setOtherReason] = useState(
-    formData.glp1StoppingReason === 'other' ? (formData.glp1StoppingReasonOther || '') : ''
+    (formData.glp1StoppingReason === 'other' || formData.glp1StoppingReason === 'Other') ? (formData.glp1StoppingReasonOther || '') : ''
   );
   const [error, setError] = useState('');
 

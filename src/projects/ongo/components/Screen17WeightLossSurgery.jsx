@@ -9,7 +9,11 @@ const SURGERIES = [
 ];
 
 export default function Screen17WeightLossSurgery({ formData, updateFormData, onNext, onBack }) {
-  const [hadSurgery, setHadSurgery] = useState(formData.hadSurgery ?? null);
+  const [hadSurgery, setHadSurgery] = useState(() => {
+    if (formData.hadSurgery === 'No' || formData.hadSurgery === false) return false;
+    if (formData.hadSurgery === 'Yes' || formData.hadSurgery === true) return true;
+    return null;
+  });
   const [selectedSurgeries, setSelectedSurgeries] = useState(formData.weightLossSurgeries || []);
   const [otherSurgery, setOtherSurgery] = useState(formData.otherWeightLossSurgery || '');
   const [error, setError] = useState('');

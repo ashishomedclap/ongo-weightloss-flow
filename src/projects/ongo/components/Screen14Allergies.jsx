@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { Check, Info } from 'lucide-react';
 
 export default function Screen14Allergies({ formData, updateFormData, onNext, onBack }) {
-  const [hasAllergies, setHasAllergies] = useState(formData.hasAllergies ?? null);
+  const [hasAllergies, setHasAllergies] = useState(() => {
+    if (formData.hasAllergies === 'No' || formData.hasAllergies === false) return false;
+    if (formData.hasAllergies === 'Yes' || formData.hasAllergies === true) return true;
+    return null;
+  });
   const [allergyDetails, setAllergyDetails] = useState(formData.allergyDetails || '');
   const [error, setError] = useState('');
 

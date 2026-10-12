@@ -13,7 +13,15 @@ const MOTIVATIONS = [
 ];
 
 export default function Screen18Motivation({ formData, updateFormData, onNext, onBack }) {
-  const [selected, setSelected] = useState(formData.motivations || []);
+  const [selected, setSelected] = useState(() => {
+    if (!Array.isArray(formData.motivations)) return [];
+    return formData.motivations.map(item => {
+      if (item === 'clothes-fit') return 'confident';
+      if (item === 'more-energy') return 'energy';
+      if (item === 'improve-health') return 'health';
+      return item;
+    });
+  });
   const [error, setError] = useState('');
 
   const toggleOption = (id) => {

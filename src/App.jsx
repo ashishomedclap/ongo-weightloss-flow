@@ -1,520 +1,127 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import WelcomeScreen from './projects/WelcomeScreen';
+import OngoFlow from './projects/ongo/OngoFlow';
+import CompetitorFlow from './projects/competitor/CompetitorFlow';
+import { Layers, Sparkles, Building2, ChevronDown } from 'lucide-react';
 
-const getInitialScreen = () => {
+const getInitialProject = () => {
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
-    const screen = params.get('screen');
-    if (screen) return screen;
+    const p = params.get('project');
+    if (p === 'ongo' || p === 'competitor' || p === 'welcome') {
+      return p;
+    }
   }
-  return '1';
+  return 'welcome';
 };
-
-const getInitialMobile = () => {
-  if (typeof window !== 'undefined') {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('mobile') === 'true';
-  }
-  return false;
-};
-import Header from './components/Header';
-import ScreenPreloader from './components/ScreenPreloader';
-import Screen1Account from './components/Screen1Account';
-import Screen2AboutYou from './components/Screen2AboutYou';
-import Screen3StartingPoint from './components/Screen3StartingPoint';
-import Screen4HealthQuestions from './components/Screen4HealthQuestions';
-import Screen5GLP1History from './components/Screen5GLP1History';
-import Screen5aProducts from './components/Screen5aProducts';
-import Screen5bDosage from './components/Screen5bDosage';
-import Screen5cExperience from './components/Screen5cExperience';
-import Screen5dPrescription from './components/Screen5dPrescription';
-import Screen6InitialResult from './components/Screen6InitialResult';
-import Screen7MeetPhysician from './components/Screen7MeetPhysician';
-import Screen8TreatmentOptions from './components/Screen8TreatmentOptions';
-import Screen9TreatmentPlan from './components/Screen9TreatmentPlan';
-import Screen10Payment from './components/Screen10Payment';
-import Screen11PaymentConfirmed from './components/Screen11PaymentConfirmed';
-import Screen12HealthConditions from './components/Screen12HealthConditions';
-import Screen13Medications from './components/Screen13Medications';
-import Screen14Allergies from './components/Screen14Allergies';
-import Screen15WeightJourney from './components/Screen15WeightJourney';
-import Screen16WeightLossAttempts from './components/Screen16WeightLossAttempts';
-import Screen17WeightLossSurgery from './components/Screen17WeightLossSurgery';
-import Screen18Motivation from './components/Screen18Motivation';
-import Screen19DailyRoutine from './components/Screen19DailyRoutine';
-import Screen20Lifestyle from './components/Screen20Lifestyle';
-import Screen21Ethnicity from './components/Screen21Ethnicity';
-import Screen22PhotoID from './components/Screen22PhotoID';
-import Screen23Shipping from './components/Screen23Shipping';
-import Screen24Appointment from './components/Screen24Appointment';
-import Screen25IntakeConfirmed from './components/Screen25IntakeConfirmed';
-import { Smartphone, Monitor, Sparkles, CheckCheck, Sliders } from 'lucide-react';
-
-const SCREEN_LIST = [
-  // Phase 1: Get Started
-  { key: '1', label: 'Screen 1: Create Your Ongo Account' },
-  { key: '2', label: 'Screen 2: Tell Us About You' },
-  { key: '3', label: 'Screen 3: Check Your Starting Point' },
-  // Phase 2: Initial Clinical Screening
-  { key: '4', label: 'Screen 4: Important Health Questions' },
-  { key: '5', label: 'Screen 5: Have You Used a GLP-1 Before?' },
-  { key: '5.1', label: 'Branch 5.1: Which GLP-1 Medication?' },
-  { key: '5.2', label: 'Branch 5.2: GLP-1 Dose & Frequency' },
-  { key: '5.3', label: 'Branch 5.3: GLP-1 Experience' },
-  { key: '5.4', label: 'Branch 5.4: Upload Previous Prescription' },
-  // Phase 3: Confidence & Clinical Trust
-  { key: '6', label: 'Screen 6: Your Initial Result' },
-  { key: '7', label: 'Screen 7: Meet Your Physician' },
-  { key: '8', label: 'Screen 8: Explore Your Treatment Options' },
-  // Phase 4: Treatment Plan & Payment
-  { key: '9', label: 'Screen 9: Choose Your Treatment Plan' },
-  { key: '10', label: 'Screen 10: Complete Your Payment' },
-  { key: '11', label: 'Screen 11: Payment Confirmed' },
-  // Phase 5: Comprehensive Clinical Intake
-  { key: '12', label: 'Screen 12: Tell Us About Your Health' },
-  { key: '13', label: 'Screen 13: What Medications Are You Taking?' },
-  { key: '14', label: 'Screen 14: Do You Have Any Allergies?' },
-  { key: '15', label: 'Screen 15: Tell Us About Your Weight Journey' },
-  { key: '16', label: 'Screen 16: What Have You Tried Before?' },
-  { key: '17', label: 'Screen 17: Have You Had Weight-Loss Surgery?' },
-  // Phase 6: Goals & Motivation
-  { key: '18', label: "Screen 18: What's Driving You Right Now?" },
-  // Phase 7: Lifestyle
-  { key: '19', label: 'Screen 19: What Does a Typical Week Look Like?' },
-  { key: '20', label: 'Screen 20: Lifestyle' },
-  { key: '21', label: 'Screen 21: Ethnicity' },
-  // Phase 8: Verification & Fulfillment
-  { key: '22', label: 'Screen 22: Verify Your Identity' },
-  { key: '23', label: 'Screen 23: Shipping Information' },
-  // Phase 9: Appointment
-  { key: '24', label: 'Screen 24: Book Your Consultation' },
-  // Phase 10: Confirmation
-  { key: '25', label: 'Screen 25: Appointment Confirmed' },
-  // Independent Preloader Screen
-  { key: '26', label: 'Screen 26: Preloader Animation Studio' },
-];
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState(getInitialScreen);
-  const [isMobileFrame, setIsMobileFrame] = useState(getInitialMobile);
-  const [preloaderTarget, setPreloaderTarget] = useState(null);
-  const [preloaderConfig, setPreloaderConfig] = useState(null);
-  const headerRef = useRef(null);
-  const isFirstRender = useRef(true);
-
-  const transitionWithPreloader = (targetScreen, config = {}) => {
-    setPreloaderTarget(targetScreen);
-    setPreloaderConfig(config);
-  };
-
-  // Automatically scroll up to the header section whenever the next screen shows up on mobile
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
-    const checkIsMobile = () => {
-      if (typeof window === 'undefined') return false;
-      return (
-        window.innerWidth <= 768 ||
-        isMobileFrame ||
-        Boolean(window.matchMedia && window.matchMedia('(max-width: 768px)').matches) ||
-        ('ontouchstart' in window && window.innerWidth <= 1024) ||
-        /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-      );
-    };
-
-    const isMobile = checkIsMobile();
-
-    // Use a slight timeout (50ms) to ensure the new screen has finished rendering in DOM
-    const timer = setTimeout(() => {
-      const headerElement = headerRef.current || document.getElementById('header-section');
-      if (isMobile) {
-        if (headerElement) {
-          headerElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      } else if (typeof window !== 'undefined' && window.scrollY > 100) {
-        // Also support desktop if user scrolled down
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }, 50);
-
-    return () => clearTimeout(timer);
-  }, [currentScreen, isMobileFrame]);
+  const [project, setProject] = useState(getInitialProject);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('screen') !== currentScreen) {
-        params.set('screen', currentScreen);
+      if (params.get('project') !== project) {
+        params.set('project', project);
+        // Clear screen param if returning to welcome
+        if (project === 'welcome') {
+          params.delete('screen');
+        }
         const newUrl = `${window.location.pathname}?${params.toString()}`;
         window.history.replaceState({}, '', newUrl);
       }
     }
-  }, [currentScreen]);
-
-  const AUTOFILL_DATA = {
-    email: 'sarah.miller@example.com',
-    password: 'SecurePassword123!',
-    agreeTerms: true,
-    agreeMarketing: true,
-    firstName: 'Sarah',
-    lastName: 'Miller',
-    gender: 'Female',
-    dob: '1988-06-14',
-    state: 'California',
-    phone: '+1(888) 655–5267',
-    unit: 'Imperial',
-    feet: 5,
-    inches: 10,
-    lbs: 180,
-    calculatedBmi: '25.8',
-    safetyAnswers: {},
-    noneApply: true,
-    usedGLP1Before: true,
-    glp1Meds: ['Ozempic®'],
-    glp1Dose: '0.5 mg',
-    glp1UnitsAmount: '10 units',
-    glp1Frequency: 'Once weekly',
-    glp1Experience: 'Positive',
-    glp1StoppingReason: 'Cost',
-    glp1LastDate: '2024-05-15',
-    uploadedRxName: 'prescription_sample.jpg',
-    selectedTreatment: 'physician-recommend',
-    selectedTreatmentName: "Physician's Choice",
-    selectedPlanId: '3-months',
-    selectedPlan: {
-      id: '3-months',
-      duration: '3 MONTHS',
-      title: 'Momentum',
-      monthlyPrice: 199,
-      savingsText: 'Save $50/mo',
-      totalText: '$597 total billed for 3 months',
-      isRecommended: true
-    },
-    // Clinical Intake & Demographics
-    healthConditions: {
-      selected: ['pcos'],
-      noneApply: false,
-      otherCondition: ''
-    },
-    takesMedication: 'No',
-    medicationDetails: '',
-    hasAllergies: 'No',
-    allergyDetails: '',
-    highestWeight: '210',
-    lowestWeight: '150',
-    goalWeight: '140',
-    waistCircumference: '35',
-    weightLossAttempts: ['Keto', 'Intermittent Fasting'],
-    hadSurgery: 'No',
-    weightLossGoal: 'improve-health',
-    motivations: ['clothes-fit', 'more-energy'],
-    routine: { sleep: '7-8 hours', activity: 'Moderate' },
-    lifestyle: { smoking: 'No', alcohol: 'Occasional' },
-    stressLevel: 6,
-    ethnicity: 'White',
-    idPhotoName: 'driver_license.jpg',
-    idPhotoSize: '1.2 MB',
-    shippingAddress: {
-      street: '123 Market St',
-      apt: 'Suite 400',
-      city: 'San Francisco',
-      zip: '94105',
-      state: 'California'
-    },
-    appointmentDate: new Date(Date.now() + 86400000).toISOString(),
-    appointmentTime: '10:30 AM'
-  };
-
-  const getInitialFormData = () => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('autofill') === '1' || params.get('autofill') === 'true') {
-        return AUTOFILL_DATA;
-      }
-    }
-    return {
-      email: '',
-      password: '',
-      agreeTerms: true,
-      agreeMarketing: false,
-      firstName: 'Sarah',
-      lastName: 'Miller',
-      gender: 'Female',
-      dob: '1988-06-14',
-      state: 'California',
-      phone: '+1(888) 655–5267',
-      unit: 'Imperial',
-      feet: 5,
-      inches: 10,
-      lbs: 180,
-      calculatedBmi: '25.8',
-      safetyAnswers: {},
-      noneApply: true,
-      usedGLP1Before: true,
-      glp1Meds: [],
-      glp1Dose: '0.5 mg',
-      glp1UnitsAmount: '10 units (0.25 mL)',
-      glp1Frequency: 'Once weekly',
-      glp1Experience: 'Positive',
-      glp1StoppingReason: 'Cost',
-      glp1LastDate: '2024-04-10',
-      uploadedRxName: '',
-      selectedTreatment: 'physician-recommend',
-      selectedTreatmentName: "Physician's Choice",
-      selectedPlanId: '3-months',
-      selectedPlan: {
-        id: '3-months',
-        duration: '3 MONTHS',
-        title: 'Momentum',
-        monthlyPrice: 199,
-        savingsText: 'Save $50/mo',
-        totalText: '$597 total billed for 3 months',
-        isRecommended: true
-      }
-    };
-  };
-
-  const [formData, setFormData] = useState(getInitialFormData);
-
-  const updateFormData = (fields) => {
-    setFormData(prev => ({ ...prev, ...fields }));
-  };
-
-  const [autofillKey, setAutofillKey] = useState(0);
-
-  const handleAutofill = () => {
-    setFormData(AUTOFILL_DATA);
-    setAutofillKey(prev => prev + 1);
-  };
-
-  const getHeaderBackAction = () => {
-    if (preloaderTarget) return null;
-    switch (currentScreen) {
-      case '1': return null;
-      case '2': return () => setCurrentScreen('1');
-      case '3': return () => setCurrentScreen('2');
-      case '4': return () => setCurrentScreen('3'); // Bypassed 3T
-      case '5': return () => setCurrentScreen('4');
-      case '5.1': return () => setCurrentScreen('5');
-      case '5.2': return () => setCurrentScreen('5.1');
-      case '5.3': return () => setCurrentScreen('5.2');
-      case '5.4': return () => setCurrentScreen('5.3');
-      case '6': return () => setCurrentScreen(formData.usedGLP1Before ? '5.4' : '5');
-      case '7': return () => setCurrentScreen('6');
-      case '8': return () => setCurrentScreen('7');
-      case '9': return () => setCurrentScreen('8');
-      case '10': return () => setCurrentScreen('9');
-      case '11': return () => setCurrentScreen('10');
-      case '12': return () => setCurrentScreen('11');
-      case '13': return () => setCurrentScreen('12');
-      case '14': return () => setCurrentScreen('13');
-      case '15': return () => setCurrentScreen('14');
-      case '16': return () => setCurrentScreen('15');
-      case '17': return () => setCurrentScreen('16');
-      case '18': return () => setCurrentScreen('17');
-      case '19': return () => setCurrentScreen('18');
-      case '20': return () => setCurrentScreen('19');
-      case '21': return () => setCurrentScreen('20');
-      case '22': return () => setCurrentScreen('21');
-      case '23': return () => setCurrentScreen('22');
-      case '24': return () => setCurrentScreen('23');
-      case '25': return () => setCurrentScreen('24');
-      case '26': return () => setCurrentScreen('25');
-      default: return null;
-    }
-  };
-
-  const renderCurrentScreen = () => {
-    if (preloaderTarget) {
-      return (
-        <ScreenPreloader
-          duration={preloaderConfig?.duration || 2400}
-          title={preloaderConfig?.title || "Setting up your account..."}
-          subtitle={preloaderConfig?.subtitle || "Preparing your personalized clinical consultation"}
-          stepText={preloaderConfig?.stepText || "Step 1 of 25 • Account Initialized"}
-          initialRefine={Boolean(preloaderConfig?.initialRefine)}
-          onComplete={() => {
-            const next = preloaderTarget;
-            setPreloaderTarget(null);
-            setPreloaderConfig(null);
-            setCurrentScreen(next);
-          }}
-        />
-      );
-    }
-
-    switch (currentScreen) {
-      case '1':
-        return (
-          <Screen1Account 
-            formData={formData} 
-            updateFormData={updateFormData} 
-            onNext={() => transitionWithPreloader('2', {
-              duration: 2700,
-              title: "Setting up your account...",
-              subtitle: "Preparing your personalized clinical consultation",
-              stepText: "Step 1 of 25 • Account Created"
-            })} 
-          />
-        );
-      case '2':
-        return <Screen2AboutYou formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('3')} onBack={() => setCurrentScreen('1')} />;
-      case '3':
-        return <Screen3StartingPoint formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('4')} onBack={() => setCurrentScreen('2')} />;
-      case '4':
-        return <Screen4HealthQuestions formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('5')} onBack={() => setCurrentScreen('3')} />;
-      case '5':
-        return <Screen5GLP1History formData={formData} updateFormData={updateFormData} onNext={(branchAction) => {
-            if (branchAction === 'branch-products') {
-              setCurrentScreen('5.1');
-            } else {
-              setCurrentScreen('6');
-            }
-          }} onBack={() => setCurrentScreen('4')} />;
-      case '5.1':
-        return <Screen5aProducts formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('5.2')} onBack={() => setCurrentScreen('5')} />;
-      case '5.2':
-        return <Screen5bDosage formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('5.3')} onBack={() => setCurrentScreen('5.1')} />;
-      case '5.3':
-        return <Screen5cExperience formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('5.4')} onBack={() => setCurrentScreen('5.2')} />;
-      case '5.4':
-        return <Screen5dPrescription formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('6')} onBack={() => setCurrentScreen('5.3')} />;
-      case '6':
-        return <Screen6InitialResult formData={formData} onNext={() => setCurrentScreen('7')} onBack={() => setCurrentScreen(formData.usedGLP1Before ? '5.4' : '5')} />;
-      case '7':
-        return <Screen7MeetPhysician formData={formData} onNext={() => setCurrentScreen('8')} onBack={() => setCurrentScreen('6')} />;
-      case '8':
-        return <Screen8TreatmentOptions formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('9')} onBack={() => setCurrentScreen('7')} />;
-      case '9':
-        return <Screen9TreatmentPlan formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('10')} onBack={() => setCurrentScreen('8')} />;
-      case '10':
-        return <Screen10Payment formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('11')} onBack={() => setCurrentScreen('9')} />;
-      case '11':
-        return <Screen11PaymentConfirmed formData={formData} onNext={() => setCurrentScreen('12')} onRestart={() => setCurrentScreen('1')} />;
-      case '12':
-        return <Screen12HealthConditions formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('13')} onBack={() => setCurrentScreen('11')} />;
-      case '13':
-        return <Screen13Medications formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('14')} onBack={() => setCurrentScreen('12')} />;
-      case '14':
-        return <Screen14Allergies formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('15')} onBack={() => setCurrentScreen('13')} />;
-      case '15':
-        return <Screen15WeightJourney formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('16')} onBack={() => setCurrentScreen('14')} />;
-      case '16':
-        return <Screen16WeightLossAttempts formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('17')} onBack={() => setCurrentScreen('15')} />;
-      case '17':
-        return <Screen17WeightLossSurgery formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('18')} onBack={() => setCurrentScreen('16')} />;
-      case '18':
-        return <Screen18Motivation formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('19')} onBack={() => setCurrentScreen('17')} />;
-      case '19':
-        return <Screen19DailyRoutine formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('20')} onBack={() => setCurrentScreen('18')} />;
-      case '20':
-        return <Screen20Lifestyle formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('21')} onBack={() => setCurrentScreen('19')} />;
-      case '21':
-        return <Screen21Ethnicity formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('22')} onBack={() => setCurrentScreen('20')} />;
-      case '22':
-        return <Screen22PhotoID formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('23')} onBack={() => setCurrentScreen('21')} />;
-      case '23':
-        return <Screen23Shipping formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('24')} onBack={() => setCurrentScreen('22')} />;
-      case '24':
-        return <Screen24Appointment formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('25')} onBack={() => setCurrentScreen('23')} />;
-      case '25':
-        return <Screen25IntakeConfirmed formData={formData} onNext={() => setCurrentScreen('26')} onBack={() => setCurrentScreen('24')} />;
-      case '26':
-        return (
-          <ScreenPreloader
-            duration={2800}
-            title="Weight Scale Calibration Studio"
-            subtitle="Standalone Motion Calibration & State Refinement"
-            stepText="Screen 26 • Independent Preloader Studio"
-            initialRefine={true}
-            allowRefine={true}
-            onComplete={() => setCurrentScreen('1')}
-          />
-        );
-      default:
-        return <Screen1Account formData={formData} updateFormData={updateFormData} onNext={() => setCurrentScreen('2')} />;
-    }
-  };
-
-  const backAction = getHeaderBackAction();
+  }, [project]);
 
   return (
-    <div className="app-viewport">
-      <aside className="top-dev-toolbar" aria-label="Survey review and device controls">
-        <div className="toolbar-brand">
-          <Sparkles size={16} color="var(--color-primary-dark)" />
-          <span>Ongo Flow Inspector</span>
+    <div className="flow-study-app">
+      {/* Global Project Navigation Bar */}
+      <header style={{
+        background: '#111827',
+        color: '#FFFFFF',
+        padding: '10px 20px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '12px',
+        borderBottom: '1px solid rgba(255,255,255,0.1)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 9999
+      }}>
+        <div 
+          onClick={() => setProject('welcome')}
+          style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
+          title="Return to Welcome Screen"
+        >
+          <div style={{
+            width: '28px',
+            height: '28px',
+            borderRadius: '8px',
+            background: 'linear-gradient(135deg, #1F4F3D 0%, #2563EB 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#FFF'
+          }}>
+            <Layers size={16} />
+          </div>
+          <span style={{ fontWeight: 800, fontSize: '15px', letterSpacing: '-0.01em' }}>
+            Flow Study Hub
+          </span>
+          <span style={{ 
+            fontSize: '11px', 
+            background: 'rgba(255,255,255,0.12)', 
+            padding: '2px 8px', 
+            borderRadius: '10px', 
+            color: '#D1D5DB' 
+          }}>
+            Comparison
+          </span>
         </div>
 
-        <div className="toolbar-controls">
-          <select 
-            className="screen-select-dropdown" 
-            value={currentScreen} 
-            onChange={(e) => {
-              setPreloaderTarget(null);
-              setCurrentScreen(e.target.value);
-            }} 
-            aria-label="Select screen to view"
+        {/* Project Selector Dropdown & Quick Toggles */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <label htmlFor="project-picker" style={{ fontSize: '13px', color: '#9CA3AF', fontWeight: 500 }}>
+            Active Project:
+          </label>
+
+          <select
+            id="project-picker"
+            value={project}
+            onChange={(e) => setProject(e.target.value)}
+            style={{
+              background: '#1F2937',
+              color: '#FFFFFF',
+              border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '8px',
+              padding: '6px 14px',
+              fontSize: '13.5px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              outline: 'none'
+            }}
           >
-            {SCREEN_LIST.map((s) => (
-              <option key={s.key} value={s.key}>{s.label}</option>
-            ))}
+            <option value="welcome">🏠 Select Project (Welcome Screen)</option>
+            <option value="ongo">🌿 Ongo Weight Loss Flow (25 Screens)</option>
+            <option value="competitor">🏢 Competitor Survey (Study & Comparison)</option>
           </select>
-
-          <button type="button" className="toolbar-btn" onClick={handleAutofill} title="Auto-fill sample patient survey data">
-            <CheckCheck size={13} />
-            <span>Autofill Demo</span>
-          </button>
-
-          <button 
-            type="button" 
-            className="toolbar-btn" 
-            onClick={() => transitionWithPreloader('2', {
-              duration: 2800,
-              initialRefine: true,
-              title: "Weight Scale Calibration Studio",
-              subtitle: "8-Stage Motion Study & Calibration Inspector",
-              stepText: "Animation Refinement Studio"
-            })} 
-            title="Inspect & Refine all 8 Preloader Animation States"
-          >
-            <Sliders size={13} />
-            <span>Refine Animation</span>
-          </button>
-
-          <button type="button" className={`toolbar-btn ${isMobileFrame ? 'active' : ''}`} onClick={() => setIsMobileFrame(!isMobileFrame)} title="Toggle between mobile viewport frame and centered desktop layout">
-            {isMobileFrame ? <Monitor size={13} /> : <Smartphone size={13} />}
-            <span>{isMobileFrame ? 'Desktop (540px)' : 'Mobile Frame'}</span>
-          </button>
         </div>
-      </aside>
+      </header>
 
-      <main className={`onboarding-shell ${isMobileFrame ? 'device-frame-mobile' : ''}`}>
-        <Header 
-          ref={headerRef} 
-          showBack={backAction !== null} 
-          onBack={backAction} 
-          onLogoClick={() => {
-            setPreloaderTarget(null);
-            setCurrentScreen('1');
-          }} 
-        />
-        <div className="main-card-body" key={autofillKey}>
-          {renderCurrentScreen()}
-        </div>
-      </main>
+      {/* Main View Router */}
+      {project === 'welcome' && (
+        <WelcomeScreen onSelectProject={(p) => setProject(p)} />
+      )}
+
+      {project === 'ongo' && (
+        <OngoFlow onBackToWelcome={() => setProject('welcome')} />
+      )}
+
+      {project === 'competitor' && (
+        <CompetitorFlow onBackToWelcome={() => setProject('welcome')} />
+      )}
     </div>
   );
 }
-
-// Trigger HMR
-
-// Trigger HMR 2
-
-// Trigger HMR 3
-
-// Trigger HMR 4

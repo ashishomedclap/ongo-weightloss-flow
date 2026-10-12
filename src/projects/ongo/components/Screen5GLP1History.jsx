@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 
 export default function Screen5GLP1History({ formData, updateFormData, onNext, onBack }) {
-  const [usedBefore, setUsedBefore] = useState(formData.usedGLP1Before ?? null);
+  const [usedBefore, setUsedBefore] = useState(() => {
+    if (formData.usedGLP1Before === 'No' || formData.usedGLP1Before === false) return false;
+    if (formData.usedGLP1Before === 'Yes' || formData.usedGLP1Before === true) return true;
+    return null;
+  });
   const [error, setError] = useState('');
 
   const handleSelect = (val) => {

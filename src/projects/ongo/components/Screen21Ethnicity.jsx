@@ -12,7 +12,10 @@ const ETHNICITIES = [
 ];
 
 export default function Screen21Ethnicity({ formData, updateFormData, onNext, onBack }) {
-  const [selected, setSelected] = useState(formData.ethnicity || null);
+  const [selected, setSelected] = useState(() => {
+    if (formData.ethnicity === 'White') return 'caucasian';
+    return formData.ethnicity || null;
+  });
   const [otherEthnicity, setOtherEthnicity] = useState(formData.otherEthnicity || '');
   const [error, setError] = useState('');
 

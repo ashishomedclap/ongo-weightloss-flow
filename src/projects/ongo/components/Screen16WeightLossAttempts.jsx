@@ -12,7 +12,15 @@ const ATTEMPTS = [
 ];
 
 export default function Screen16WeightLossAttempts({ formData, updateFormData, onNext, onBack }) {
-  const [selected, setSelected] = useState(formData.weightLossAttempts || []);
+  const [selected, setSelected] = useState(() => {
+    if (!Array.isArray(formData.weightLossAttempts)) return [];
+    return formData.weightLossAttempts.map(item => {
+      if (item === 'Keto') return 'ketoDiets';
+      if (item === 'Intermittent Fasting') return 'intermittentFasting';
+      if (item === 'Regular Exercise' || item === 'Exercise') return 'regularExercise';
+      return item;
+    });
+  });
   const [error, setError] = useState('');
 
   const toggleOption = (id) => {
