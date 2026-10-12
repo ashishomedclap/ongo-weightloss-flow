@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import MochiScreen0, { mochiLogoImg, radioCheckedImg, radioUncheckedImg } from './MochiScreen0';
+import MochiScreen0, { mochiLogoImg } from './MochiScreen0';
+import MochiScreen1Importance from './MochiScreen1Importance';
 import { 
   ArrowLeft, 
   Monitor, 
@@ -7,27 +8,27 @@ import {
   CheckCheck, 
   ChevronLeft,
   ShieldCheck,
-  Sliders,
-  ChevronRight
+  Layers
 } from 'lucide-react';
 
 const MOCHI_SCREENS = [
-  { key: '0', label: 'Step 0: Primary Weight Loss Goal (Exact Match)' },
-  { key: '1', label: 'Step 1: Sex Assigned at Birth' },
-  { key: '2', label: 'Step 2: Measurements & BMI' },
-  { key: '3', label: 'Step 3: GLP-1 Medication History' },
-  { key: '4', label: 'Step 4: Clinical Eligibility Result' }
+  { key: '0', label: 'Screen 1: Primary Weight Loss Goal' },
+  { key: '1', label: 'Screen 2: Why Weight Management is Important' },
+  { key: '2', label: 'Screen 3: Sex Assigned at Birth' },
+  { key: '3', label: 'Screen 4: Measurements & BMI Target' },
+  { key: '4', label: 'Screen 5: GLP-1 Medication History' },
+  { key: '5', label: 'Screen 6: Clinical Care Plan & Pricing' }
 ];
 
 export default function CompetitorFlow({ onBackToWelcome }) {
   const [currentStep, setCurrentStep] = useState('0');
   const [isMobileFrame, setIsMobileFrame] = useState(false);
   const [language, setLanguage] = useState('en');
-  const [showDevControls, setShowDevControls] = useState(false);
 
   // Form State
   const [formData, setFormData] = useState({
-    goal: '50-plus', // Pre-selected matching screenshot ("Lose 50+ lbs")
+    goal: '50-plus', // Screen 1 goal
+    reasons: ['doctor-mentioned', 'feel-confident', 'more-energy'], // Screen 2 reasons
     gender: 'female',
     heightFt: '5',
     heightIn: '6',
@@ -38,9 +39,11 @@ export default function CompetitorFlow({ onBackToWelcome }) {
 
   const [autofillKey, setAutofillKey] = useState(0);
 
+  // Autofill Handler (populates all screens and checkmarks)
   const handleAutofill = () => {
     setFormData({
       goal: '50-plus',
+      reasons: ['doctor-mentioned', 'feel-confident', 'mental-health', 'family', 'more-energy'],
       gender: 'female',
       heightFt: '5',
       heightIn: '6',
@@ -54,12 +57,24 @@ export default function CompetitorFlow({ onBackToWelcome }) {
   const getProgressPercentage = () => {
     switch (currentStep) {
       case '0': return 12;
-      case '1': return 35;
-      case '2': return 58;
-      case '3': return 78;
-      case '4': return 100;
+      case '1': return 28;
+      case '2': return 46;
+      case '3': return 64;
+      case '4': return 82;
+      case '5': return 100;
       default: return 12;
     }
+  };
+
+  const toggleReason = (reasonId) => {
+    setFormData(prev => {
+      const current = prev.reasons || [];
+      if (current.includes(reasonId)) {
+        return { ...prev, reasons: current.filter(r => r !== reasonId) };
+      } else {
+        return { ...prev, reasons: [...current, reasonId] };
+      }
+    });
   };
 
   const renderContent = () => {
@@ -76,6 +91,16 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         );
 
       case '1':
+        return (
+          <MochiScreen1Importance
+            selectedReasons={formData.reasons}
+            onToggleReason={toggleReason}
+            onNext={() => setCurrentStep('2')}
+            onBack={() => setCurrentStep('0')}
+          />
+        );
+
+      case '2':
         return (
           <div style={{
             width: '100%',
@@ -107,7 +132,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                     type="button"
                     onClick={() => {
                       setFormData(prev => ({ ...prev, gender: opt.id }));
-                      setTimeout(() => setCurrentStep('2'), 200);
+                      setTimeout(() => setCurrentStep('3'), 200);
                     }}
                     style={{
                       minHeight: '60px',
@@ -120,19 +145,12 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                       fontSize: '15px',
                       fontWeight: 500,
                       cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
+                      textAlign: 'center',
                       fontFamily: 'inherit',
                       outline: 'none'
                     }}
                   >
-                    <span>{opt.label}</span>
-                    <img 
-                      src={isSelected ? radioCheckedImg : radioUncheckedImg} 
-                      alt={isSelected ? "Checked" : "Unchecked"}
-                      style={{ width: '22px', height: '22px', objectFit: 'contain' }}
-                    />
+                    {opt.label}
                   </button>
                 );
               })}
@@ -141,7 +159,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <button
                 type="button"
-                onClick={() => setCurrentStep('0')}
+                onClick={() => setCurrentStep('1')}
                 style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
               >
                 ← Back to previous question
@@ -150,7 +168,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           </div>
         );
 
-      case '2':
+      case '3':
         return (
           <div style={{
             width: '100%',
@@ -211,7 +229,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
 
             <button
               type="button"
-              onClick={() => setCurrentStep('3')}
+              onClick={() => setCurrentStep('4')}
               style={{
                 width: '100%',
                 height: '52px',
@@ -231,7 +249,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <button
                 type="button"
-                onClick={() => setCurrentStep('1')}
+                onClick={() => setCurrentStep('2')}
                 style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
               >
                 ← Back
@@ -240,7 +258,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           </div>
         );
 
-      case '3':
+      case '4':
         return (
           <div style={{
             width: '100%',
@@ -274,7 +292,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                     type="button"
                     onClick={() => {
                       setFormData(prev => ({ ...prev, glp1History: opt.id }));
-                      setTimeout(() => setCurrentStep('4'), 200);
+                      setTimeout(() => setCurrentStep('5'), 200);
                     }}
                     style={{
                       minHeight: '60px',
@@ -287,19 +305,12 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                       fontSize: '15px',
                       fontWeight: 500,
                       cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
+                      textAlign: 'center',
                       fontFamily: 'inherit',
                       outline: 'none'
                     }}
                   >
-                    <span>{opt.label}</span>
-                    <img 
-                      src={isSelected ? radioCheckedImg : radioUncheckedImg} 
-                      alt={isSelected ? "Checked" : "Unchecked"}
-                      style={{ width: '22px', height: '22px', objectFit: 'contain' }}
-                    />
+                    {opt.label}
                   </button>
                 );
               })}
@@ -308,7 +319,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <button
                 type="button"
-                onClick={() => setCurrentStep('2')}
+                onClick={() => setCurrentStep('3')}
                 style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
               >
                 ← Back
@@ -317,7 +328,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           </div>
         );
 
-      case '4':
+      case '5':
       default:
         return (
           <div style={{
@@ -407,162 +418,66 @@ export default function CompetitorFlow({ onBackToWelcome }) {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#FFFFFF', position: 'relative' }}>
+    <div className="app-viewport" style={{ minHeight: '100vh', backgroundColor: '#FFFFFF', position: 'relative' }}>
       
-      {/* Floating Demo Control Pill (Discreet, bottom-left, avoids breaking top bar layout) */}
-      <div style={{
-        position: 'fixed',
-        bottom: '20px',
-        left: '20px',
-        zIndex: 9999,
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px'
-      }}>
-        {!showDevControls ? (
-          <button
-            type="button"
-            onClick={() => setShowDevControls(true)}
-            style={{
-              background: '#000045',
-              color: '#FFFFFF',
-              border: '1px solid rgba(255,255,255,0.2)',
-              borderRadius: '24px',
-              padding: '8px 16px',
-              fontSize: '12.5px',
-              fontWeight: 600,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              cursor: 'pointer',
-              boxShadow: '0 4px 16px rgba(0,0,69,0.25)'
-            }}
-            title="Open Flow Study & Demo Tools"
+      {/* Top Review & Dev Control Toolbar (Exact match with Ongo Flow Toolbar styling) */}
+      <aside className="top-dev-toolbar" aria-label="Join Mochi survey and device controls">
+        <div className="toolbar-brand" style={{ cursor: onBackToWelcome ? 'pointer' : 'default' }} onClick={onBackToWelcome}>
+          {onBackToWelcome && (
+            <button 
+              type="button" 
+              className="toolbar-btn" 
+              onClick={onBackToWelcome}
+              title="Return to Select Project welcome screen"
+              style={{ marginRight: '6px', padding: '4px 8px' }}
+            >
+              <ArrowLeft size={13} />
+              <span>Projects</span>
+            </button>
+          )}
+          <span style={{ fontWeight: 800, color: '#000045', fontSize: '14px', letterSpacing: '-0.01em' }}>
+            Join Mochi
+          </span>
+          <span style={{ fontSize: '11px', background: '#EAEAF2', color: '#000045', padding: '2px 8px', borderRadius: '10px', fontWeight: 600 }}>
+            Competitor Study
+          </span>
+        </div>
+
+        <div className="toolbar-controls">
+          <select 
+            className="screen-select-dropdown" 
+            value={currentStep} 
+            onChange={(e) => setCurrentStep(e.target.value)} 
+            aria-label="Select Mochi survey screen"
           >
-            <Sliders size={14} />
-            <span>Study Tools</span>
+            {MOCHI_SCREENS.map((s) => (
+              <option key={s.key} value={s.key}>{s.label}</option>
+            ))}
+          </select>
+
+          <button 
+            type="button" 
+            className="toolbar-btn" 
+            onClick={handleAutofill} 
+            title="Auto-fill sample Mochi responses across all screens"
+          >
+            <CheckCheck size={13} />
+            <span>Autofill Demo</span>
           </button>
-        ) : (
-          <div style={{
-            background: 'rgba(0, 0, 69, 0.96)',
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255,255,255,0.2)',
-            borderRadius: '16px',
-            padding: '10px 14px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            boxShadow: '0 8px 32px rgba(0,0,69,0.3)',
-            color: '#FFFFFF'
-          }}>
-            {onBackToWelcome && (
-              <button
-                type="button"
-                onClick={onBackToWelcome}
-                style={{
-                  background: 'rgba(255,255,255,0.15)',
-                  border: 'none',
-                  color: '#FFFFFF',
-                  borderRadius: '8px',
-                  padding: '6px 10px',
-                  fontSize: '12px',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px'
-                }}
-              >
-                <ArrowLeft size={13} />
-                <span>Projects</span>
-              </button>
-            )}
 
-            <select
-              value={currentStep}
-              onChange={(e) => setCurrentStep(e.target.value)}
-              style={{
-                background: 'rgba(255,255,255,0.15)',
-                color: '#FFFFFF',
-                border: 'none',
-                borderRadius: '8px',
-                padding: '6px 10px',
-                fontSize: '12px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                outline: 'none'
-              }}
-            >
-              {MOCHI_SCREENS.map((s) => (
-                <option key={s.key} value={s.key} style={{ background: '#000045', color: '#FFF' }}>
-                  {s.label}
-                </option>
-              ))}
-            </select>
+          <button 
+            type="button" 
+            className={`toolbar-btn ${isMobileFrame ? 'active' : ''}`} 
+            onClick={() => setIsMobileFrame(!isMobileFrame)} 
+            title="Toggle between mobile viewport frame and centered desktop layout"
+          >
+            {isMobileFrame ? <Monitor size={13} /> : <Smartphone size={13} />}
+            <span>{isMobileFrame ? 'Desktop (Full)' : 'Mobile Frame'}</span>
+          </button>
+        </div>
+      </aside>
 
-            <button
-              type="button"
-              onClick={handleAutofill}
-              style={{
-                background: 'rgba(255,255,255,0.15)',
-                border: 'none',
-                color: '#FFFFFF',
-                borderRadius: '8px',
-                padding: '6px 10px',
-                fontSize: '12px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px'
-              }}
-            >
-              <CheckCheck size={13} />
-              <span>Autofill</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setIsMobileFrame(!isMobileFrame)}
-              style={{
-                background: isMobileFrame ? '#2563EB' : 'rgba(255,255,255,0.15)',
-                border: 'none',
-                color: '#FFFFFF',
-                borderRadius: '8px',
-                padding: '6px 10px',
-                fontSize: '12px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px'
-              }}
-            >
-              {isMobileFrame ? <Monitor size={13} /> : <Smartphone size={13} />}
-              <span>{isMobileFrame ? 'Desktop' : 'Mobile'}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setShowDevControls(false)}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                color: 'rgba(255,255,255,0.6)',
-                fontSize: '16px',
-                cursor: 'pointer',
-                padding: '0 4px',
-                lineHeight: 1
-              }}
-              title="Close Tools"
-            >
-              ✕
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Floating Right Report Bug Tab (Matches Join Mochi live site) */}
+      {/* Floating Right Report Bug Tab */}
       <div 
         title="Report an issue or feedback"
         style={{
@@ -610,7 +525,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
       </div>
 
       {/* Mochi Viewport Shell */}
-      <div style={{
+      <main className={`onboarding-shell ${isMobileFrame ? 'device-frame-mobile' : ''}`} style={{
         maxWidth: isMobileFrame ? '420px' : '100%',
         margin: isMobileFrame ? '24px auto' : '0 auto',
         border: isMobileFrame ? '1px solid #E2E2EA' : 'none',
@@ -621,7 +536,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         backgroundColor: '#FFFFFF'
       }}>
         
-        {/* Exact Mochi Top Bar: Centered layout with progress bar and logo on the right */}
+        {/* Exact Mochi Brand Header: Progress bar and logo */}
         <header style={{
           width: '100%',
           backgroundColor: '#FFFFFF',
@@ -680,7 +595,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               }} />
             </div>
 
-            {/* Right Mochi Official Brand SVG Logo */}
+            {/* Right Mochi Official Brand Logo */}
             <a 
               href="https://www.joinmochi.com" 
               target="_blank" 
@@ -698,10 +613,10 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         </header>
 
         {/* Content Body */}
-        <main key={autofillKey}>
+        <div key={autofillKey}>
           {renderContent()}
-        </main>
-      </div>
+        </div>
+      </main>
 
     </div>
   );
