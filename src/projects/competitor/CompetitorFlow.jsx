@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import MochiScreen0, { mochiLogoImg } from './MochiScreen0';
 import MochiScreen1Importance from './MochiScreen1Importance';
+import MochiScreen2Values from './MochiScreen2Values';
 import { 
   ArrowLeft, 
   Monitor, 
   Smartphone, 
   CheckCheck, 
   ChevronLeft,
-  ShieldCheck,
-  Layers
+  ShieldCheck
 } from 'lucide-react';
 
 const MOCHI_SCREENS = [
   { key: '0', label: 'Screen 1: Primary Weight Loss Goal' },
   { key: '1', label: 'Screen 2: Why Weight Management is Important' },
-  { key: '2', label: 'Screen 3: Sex Assigned at Birth' },
-  { key: '3', label: 'Screen 4: Measurements & BMI Target' },
-  { key: '4', label: 'Screen 5: GLP-1 Medication History' },
-  { key: '5', label: 'Screen 6: Clinical Care Plan & Pricing' }
+  { key: '2', label: 'Screen 3: Values in Weight Loss Medication' },
+  { key: '3', label: 'Screen 4: Sex Assigned at Birth' },
+  { key: '4', label: 'Screen 5: Measurements & BMI Target' },
+  { key: '5', label: 'Screen 6: GLP-1 Medication History' },
+  { key: '6', label: 'Screen 7: Clinical Care Plan & Pricing' }
 ];
 
 export default function CompetitorFlow({ onBackToWelcome }) {
@@ -27,8 +28,9 @@ export default function CompetitorFlow({ onBackToWelcome }) {
 
   // Form State
   const [formData, setFormData] = useState({
-    goal: '50-plus', // Screen 1 goal
-    reasons: ['doctor-mentioned', 'feel-confident', 'more-energy'], // Screen 2 reasons
+    goal: '50-plus', // Screen 1
+    reasons: ['doctor-mentioned', 'feel-confident', 'more-energy'], // Screen 2
+    medValues: ['max-weight-loss', 'lowest-side-effects'], // Screen 3
     gender: 'female',
     heightFt: '5',
     heightIn: '6',
@@ -44,6 +46,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
     setFormData({
       goal: '50-plus',
       reasons: ['doctor-mentioned', 'feel-confident', 'mental-health', 'family', 'more-energy'],
+      medValues: ['max-weight-loss', 'lowest-side-effects', 'multi-month-supplies'],
       gender: 'female',
       heightFt: '5',
       heightIn: '6',
@@ -56,13 +59,14 @@ export default function CompetitorFlow({ onBackToWelcome }) {
 
   const getProgressPercentage = () => {
     switch (currentStep) {
-      case '0': return 12;
-      case '1': return 28;
-      case '2': return 46;
-      case '3': return 64;
-      case '4': return 82;
-      case '5': return 100;
-      default: return 12;
+      case '0': return 10;
+      case '1': return 25;
+      case '2': return 40;
+      case '3': return 55;
+      case '4': return 70;
+      case '5': return 85;
+      case '6': return 100;
+      default: return 10;
     }
   };
 
@@ -73,6 +77,17 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         return { ...prev, reasons: current.filter(r => r !== reasonId) };
       } else {
         return { ...prev, reasons: [...current, reasonId] };
+      }
+    });
+  };
+
+  const toggleMedValue = (valId) => {
+    setFormData(prev => {
+      const current = prev.medValues || [];
+      if (current.includes(valId)) {
+        return { ...prev, medValues: current.filter(v => v !== valId) };
+      } else {
+        return { ...prev, medValues: [...current, valId] };
       }
     });
   };
@@ -101,6 +116,16 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         );
 
       case '2':
+        return (
+          <MochiScreen2Values
+            selectedValues={formData.medValues}
+            onToggleValue={toggleMedValue}
+            onNext={() => setCurrentStep('3')}
+            onBack={() => setCurrentStep('1')}
+          />
+        );
+
+      case '3':
         return (
           <div style={{
             width: '100%',
@@ -132,7 +157,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                     type="button"
                     onClick={() => {
                       setFormData(prev => ({ ...prev, gender: opt.id }));
-                      setTimeout(() => setCurrentStep('3'), 200);
+                      setTimeout(() => setCurrentStep('4'), 200);
                     }}
                     style={{
                       minHeight: '60px',
@@ -159,7 +184,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <button
                 type="button"
-                onClick={() => setCurrentStep('1')}
+                onClick={() => setCurrentStep('2')}
                 style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
               >
                 ← Back to previous question
@@ -168,7 +193,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           </div>
         );
 
-      case '3':
+      case '4':
         return (
           <div style={{
             width: '100%',
@@ -229,7 +254,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
 
             <button
               type="button"
-              onClick={() => setCurrentStep('4')}
+              onClick={() => setCurrentStep('5')}
               style={{
                 width: '100%',
                 height: '52px',
@@ -249,7 +274,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <button
                 type="button"
-                onClick={() => setCurrentStep('2')}
+                onClick={() => setCurrentStep('3')}
                 style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
               >
                 ← Back
@@ -258,7 +283,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           </div>
         );
 
-      case '4':
+      case '5':
         return (
           <div style={{
             width: '100%',
@@ -292,7 +317,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                     type="button"
                     onClick={() => {
                       setFormData(prev => ({ ...prev, glp1History: opt.id }));
-                      setTimeout(() => setCurrentStep('5'), 200);
+                      setTimeout(() => setCurrentStep('6'), 200);
                     }}
                     style={{
                       minHeight: '60px',
@@ -319,7 +344,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <button
                 type="button"
-                onClick={() => setCurrentStep('3')}
+                onClick={() => setCurrentStep('4')}
                 style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
               >
                 ← Back
@@ -328,7 +353,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           </div>
         );
 
-      case '5':
+      case '6':
       default:
         return (
           <div style={{
@@ -420,7 +445,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
   return (
     <div className="app-viewport" style={{ minHeight: '100vh', backgroundColor: '#FFFFFF', position: 'relative' }}>
       
-      {/* Top Review & Dev Control Toolbar (Exact match with Ongo Flow Toolbar styling) */}
+      {/* Top Review & Dev Control Toolbar (Ongo Flow Style) */}
       <aside className="top-dev-toolbar" aria-label="Join Mochi survey and device controls">
         <div className="toolbar-brand" style={{ cursor: onBackToWelcome ? 'pointer' : 'default' }} onClick={onBackToWelcome}>
           {onBackToWelcome && (
