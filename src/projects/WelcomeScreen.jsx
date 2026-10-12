@@ -185,10 +185,10 @@ export default function WelcomeScreen({ onSelectProject }) {
               </p>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}>
-                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Exact Match Step 0</span>
-                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Instrument Sans</span>
-                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Trustpilot Rating</span>
-                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Autofill Demo</span>
+                <span style={{ fontSize: '12px', background: '#000045', color: '#FFF', padding: '4px 10px', borderRadius: '12px', fontWeight: 700 }}>Frames 1–10 Complete</span>
+                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Real Transformation Results (Frame 7)</span>
+                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Treatment Selector (Frame 6)</span>
+                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>State & Demographics (Frames 8–10)</span>
               </div>
             </div>
 

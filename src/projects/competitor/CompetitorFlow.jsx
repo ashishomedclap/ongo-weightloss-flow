@@ -1,72 +1,131 @@
-import React, { useState } from 'react';
-import MochiScreen0, { mochiLogoImg } from './MochiScreen0';
-import MochiScreen1Importance from './MochiScreen1Importance';
-import MochiScreen2Values from './MochiScreen2Values';
+import React, { useState, useEffect } from 'react';
+import MochiLogo from './MochiLogo';
+import MochiFrame1OfferModal from './MochiFrame1OfferModal';
+import MochiFrame2Goal from './MochiFrame2Goal';
+import MochiFrame3Importance from './MochiFrame3Importance';
+import MochiFrame4MedValues from './MochiFrame4MedValues';
+import MochiFrame5DoctorPreference from './MochiFrame5DoctorPreference';
+import MochiFrame6Treatment from './MochiFrame6Treatment';
+import MochiFrame7Results from './MochiFrame7Results';
+import MochiFrame8State from './MochiFrame8State';
+import MochiFrame9DOB from './MochiFrame9DOB';
+import MochiFrame10Name from './MochiFrame10Name';
 import { 
   ArrowLeft, 
   Monitor, 
   Smartphone, 
   CheckCheck, 
   ChevronLeft,
-  ShieldCheck
+  ShieldCheck,
+  Gift
 } from 'lucide-react';
 
 const MOCHI_SCREENS = [
-  { key: '0', label: 'Screen 1: Primary Weight Loss Goal' },
-  { key: '1', label: 'Screen 2: Why Weight Management is Important' },
-  { key: '2', label: 'Screen 3: Values in Weight Loss Medication' },
-  { key: '3', label: 'Screen 4: Sex Assigned at Birth' },
-  { key: '4', label: 'Screen 5: Measurements & BMI Target' },
-  { key: '5', label: 'Screen 6: GLP-1 Medication History' },
-  { key: '6', label: 'Screen 7: Clinical Care Plan & Pricing' }
+  { key: 'frame-1', label: 'Frame 1: First Month Free Offer (Modal)', short: 'Frame 1' },
+  { key: 'frame-2', label: 'Frame 2: Primary Weight Loss Goal', short: 'Frame 2' },
+  { key: 'frame-3', label: 'Frame 3: Why Weight Management is Important', short: 'Frame 3' },
+  { key: 'frame-4', label: 'Frame 4: Medication Values & Priorities', short: 'Frame 4' },
+  { key: 'frame-5', label: 'Frame 5: Doctor Consultation Preference', short: 'Frame 5' },
+  { key: 'frame-6', label: 'Frame 6: Treatment in Mind Already', short: 'Frame 6' },
+  { key: 'frame-7', label: 'Frame 7: Real Member Results & Transformations', short: 'Frame 7' },
+  { key: 'frame-8', label: 'Frame 8: State of Residence', short: 'Frame 8' },
+  { key: 'frame-9', label: 'Frame 9: Date of Birth', short: 'Frame 9' },
+  { key: 'frame-10', label: 'Frame 10: Patient First & Last Name', short: 'Frame 10' },
+  { key: 'screen-11', label: 'Screen 11: Clinical Care Plan & Pricing', short: 'Screen 11' }
 ];
 
+const getInitialStep = () => {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const frame = params.get('frame');
+    if (frame && Number(frame) >= 1 && Number(frame) <= 10) {
+      return `frame-${frame}`;
+    }
+    const screen = params.get('screen');
+    if (screen) {
+      if (['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'].includes(screen)) {
+        return `frame-${screen}`;
+      }
+      if (screen === '11' || screen === 'screen-11') return 'screen-11';
+    }
+  }
+  return 'frame-1';
+};
+
 export default function CompetitorFlow({ onBackToWelcome }) {
-  const [currentStep, setCurrentStep] = useState('0');
+  const [currentStep, setCurrentStep] = useState(getInitialStep);
   const [isMobileFrame, setIsMobileFrame] = useState(false);
   const [language, setLanguage] = useState('en');
+  const [showOfferModal, setShowOfferModal] = useState(false);
 
-  // Form State
+  // Comprehensive Form State across Frames 1-10
   const [formData, setFormData] = useState({
-    goal: '50-plus', // Screen 1
-    reasons: ['doctor-mentioned', 'feel-confident', 'more-energy'], // Screen 2
-    medValues: ['max-weight-loss', 'lowest-side-effects'], // Screen 3
-    gender: 'female',
-    heightFt: '5',
-    heightIn: '6',
-    weightLbs: '215',
-    goalLbs: '155',
-    glp1History: 'semaglutide'
+    offerClaimed: false,
+    goal: '50-plus', // Frame 2
+    reasons: ['doctor-mentioned', 'feel-confident', 'more-energy'], // Frame 3
+    medValues: ['multi-month-supplies', 'max-weight-loss', 'lowest-side-effects'], // Frame 4
+    doctorPreference: 'video-when-needed-messaging', // Frame 5
+    treatments: ['compounded-semaglutide-inj', 'fda-injectable'], // Frame 6
+    selectedState: 'California', // Frame 8
+    birthMonth: '6', // Frame 9
+    birthDay: '15',
+    birthYear: '1992',
+    firstName: 'nicholas', // Frame 10
+    lastName: 'cage'
   });
 
   const [autofillKey, setAutofillKey] = useState(0);
 
-  // Autofill Handler (populates all screens and checkmarks)
+  // Sync step changes to URL
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      params.set('project', 'competitor');
+      if (currentStep.startsWith('frame-')) {
+        params.set('frame', currentStep.replace('frame-', ''));
+        params.delete('screen');
+      } else {
+        params.set('screen', currentStep);
+        params.delete('frame');
+      }
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, [currentStep]);
+
+  // Autofill Handler (populates all screens 1 to 10)
   const handleAutofill = () => {
     setFormData({
+      offerClaimed: true,
       goal: '50-plus',
       reasons: ['doctor-mentioned', 'feel-confident', 'mental-health', 'family', 'more-energy'],
-      medValues: ['max-weight-loss', 'lowest-side-effects', 'multi-month-supplies'],
-      gender: 'female',
-      heightFt: '5',
-      heightIn: '6',
-      weightLbs: '215',
-      goalLbs: '155',
-      glp1History: 'semaglutide'
+      medValues: ['multi-month-supplies', 'max-weight-loss', 'lowest-cost', 'lowest-side-effects'],
+      doctorPreference: 'video-when-needed-messaging',
+      treatments: ['compounded-semaglutide-inj', 'fda-injectable', 'provider-recommendation'],
+      selectedState: 'California',
+      birthMonth: '6',
+      birthDay: '15',
+      birthYear: '1992',
+      firstName: 'nicholas',
+      lastName: 'cage'
     });
     setAutofillKey(prev => prev + 1);
   };
 
   const getProgressPercentage = () => {
     switch (currentStep) {
-      case '0': return 10;
-      case '1': return 25;
-      case '2': return 40;
-      case '3': return 55;
-      case '4': return 70;
-      case '5': return 85;
-      case '6': return 100;
-      default: return 10;
+      case 'frame-1': return 15;
+      case 'frame-2': return 18;
+      case 'frame-3': return 25;
+      case 'frame-4': return 32;
+      case 'frame-5': return 38;
+      case 'frame-6': return 46;
+      case 'frame-7': return 54;
+      case 'frame-8': return 62;
+      case 'frame-9': return 70;
+      case 'frame-10': return 80;
+      case 'screen-11': return 100;
+      default: return 18;
     }
   };
 
@@ -92,275 +151,146 @@ export default function CompetitorFlow({ onBackToWelcome }) {
     });
   };
 
+  const toggleTreatment = (treatmentId) => {
+    setFormData(prev => {
+      const current = prev.treatments || [];
+      if (current.includes(treatmentId)) {
+        return { ...prev, treatments: current.filter(t => t !== treatmentId) };
+      } else {
+        return { ...prev, treatments: [...current, treatmentId] };
+      }
+    });
+  };
+
+  const handleClaimOffer = () => {
+    setFormData(prev => ({ ...prev, offerClaimed: true }));
+    setShowOfferModal(false);
+    setCurrentStep('frame-2');
+  };
+
   const renderContent = () => {
     switch (currentStep) {
-      case '0':
+      case 'frame-1':
         return (
-          <MochiScreen0
+          <div style={{ position: 'relative', width: '100%', minHeight: '680px' }}>
+            <div style={{ filter: 'blur(3px)', opacity: 0.35, pointerEvents: 'none' }}>
+              <MochiFrame2Goal
+                selectedGoal={formData.goal}
+                onSelectGoal={() => {}}
+                language={language}
+              />
+            </div>
+            <MochiFrame1OfferModal
+              isStandalone={false}
+              onClaim={handleClaimOffer}
+              onClose={() => setCurrentStep('frame-2')}
+            />
+          </div>
+        );
+
+      case 'frame-2':
+        return (
+          <MochiFrame2Goal
             selectedGoal={formData.goal}
             onSelectGoal={(goalId) => setFormData(prev => ({ ...prev, goal: goalId }))}
-            onNext={() => setCurrentStep('1')}
+            onNext={() => setCurrentStep('frame-3')}
             language={language}
             onToggleLanguage={() => setLanguage(l => l === 'en' ? 'es' : 'en')}
           />
         );
 
-      case '1':
+      case 'frame-3':
         return (
-          <MochiScreen1Importance
+          <MochiFrame3Importance
             selectedReasons={formData.reasons}
             onToggleReason={toggleReason}
-            onNext={() => setCurrentStep('2')}
-            onBack={() => setCurrentStep('0')}
+            onNext={() => setCurrentStep('frame-4')}
+            onBack={() => setCurrentStep('frame-2')}
           />
         );
 
-      case '2':
+      case 'frame-4':
         return (
-          <MochiScreen2Values
+          <MochiFrame4MedValues
             selectedValues={formData.medValues}
             onToggleValue={toggleMedValue}
-            onNext={() => setCurrentStep('3')}
-            onBack={() => setCurrentStep('1')}
+            onNext={() => setCurrentStep('frame-5')}
+            onBack={() => setCurrentStep('frame-3')}
           />
         );
 
-      case '3':
+      case 'frame-5':
         return (
-          <div style={{
-            width: '100%',
-            maxWidth: '560px',
-            margin: '0 auto',
-            padding: '40px 20px 60px',
-            boxSizing: 'border-box',
-            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
-            color: '#000045'
-          }}>
-            <div style={{ marginBottom: '32px', textAlign: 'left' }}>
-              <h1 style={{ fontSize: '26px', fontWeight: 600, lineHeight: '1.28', color: '#000045', margin: '0 0 8px' }}>
-                What was your sex assigned at birth?
-              </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.45' }}>
-                This is required for calculating accurate body metabolic indexes and medication dosing guidelines.
-              </p>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', marginBottom: '36px' }}>
-              {[
-                { id: 'female', label: 'Female' },
-                { id: 'male', label: 'Male' }
-              ].map(opt => {
-                const isSelected = formData.gender === opt.id;
-                return (
-                  <button
-                    key={opt.id}
-                    type="button"
-                    onClick={() => {
-                      setFormData(prev => ({ ...prev, gender: opt.id }));
-                      setTimeout(() => setCurrentStep('4'), 200);
-                    }}
-                    style={{
-                      minHeight: '60px',
-                      width: '100%',
-                      border: isSelected ? '1.5px solid #000045' : '1px solid #D5D6E0',
-                      borderRadius: '12px',
-                      padding: '16px 24px',
-                      backgroundColor: '#FFFFFF',
-                      color: '#000045',
-                      fontSize: '15px',
-                      fontWeight: 500,
-                      cursor: 'pointer',
-                      textAlign: 'center',
-                      fontFamily: 'inherit',
-                      outline: 'none'
-                    }}
-                  >
-                    {opt.label}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <button
-                type="button"
-                onClick={() => setCurrentStep('2')}
-                style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
-              >
-                ← Back to previous question
-              </button>
-            </div>
-          </div>
+          <MochiFrame5DoctorPreference
+            selectedPreference={formData.doctorPreference}
+            onSelectPreference={(prefId) => setFormData(prev => ({ ...prev, doctorPreference: prefId }))}
+            onNext={() => setCurrentStep('frame-6')}
+            onBack={() => setCurrentStep('frame-4')}
+          />
         );
 
-      case '4':
+      case 'frame-6':
         return (
-          <div style={{
-            width: '100%',
-            maxWidth: '560px',
-            margin: '0 auto',
-            padding: '40px 20px 60px',
-            boxSizing: 'border-box',
-            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
-            color: '#000045'
-          }}>
-            <div style={{ marginBottom: '32px', textAlign: 'left' }}>
-              <h1 style={{ fontSize: '26px', fontWeight: 600, lineHeight: '1.28', color: '#000045', margin: '0 0 8px' }}>
-                What are your measurements?
-              </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.45' }}>
-                Used by our licensed clinical team to calculate your Body Mass Index (BMI).
-              </p>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', width: '100%', marginBottom: '24px' }}>
-              <div>
-                <label style={{ fontSize: '13px', fontWeight: 600, color: '#000045', display: 'block', marginBottom: '6px' }}>Height</label>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  <input
-                    type="number"
-                    value={formData.heightFt}
-                    onChange={(e) => setFormData({ ...formData, heightFt: e.target.value })}
-                    style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
-                    placeholder="Ft"
-                  />
-                  <input
-                    type="number"
-                    value={formData.heightIn}
-                    onChange={(e) => setFormData({ ...formData, heightIn: e.target.value })}
-                    style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
-                    placeholder="In"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label style={{ fontSize: '13px', fontWeight: 600, color: '#000045', display: 'block', marginBottom: '6px' }}>Current Weight (lbs)</label>
-                <input
-                  type="number"
-                  value={formData.weightLbs}
-                  onChange={(e) => setFormData({ ...formData, weightLbs: e.target.value })}
-                  style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
-                />
-              </div>
-            </div>
-
-            <div style={{ width: '100%', padding: '16px 20px', borderRadius: '12px', background: '#F4F4FA', border: '1px solid #E2E2EA', marginBottom: '28px', boxSizing: 'border-box' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '14px', fontWeight: 500, color: '#000045' }}>Calculated BMI</span>
-                <span style={{ fontSize: '16px', fontWeight: 700, color: '#000045' }}>34.7 · Eligible for GLP-1 Care</span>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setCurrentStep('5')}
-              style={{
-                width: '100%',
-                height: '52px',
-                borderRadius: '12px',
-                background: '#000045',
-                color: '#FFF',
-                border: 'none',
-                fontSize: '15px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                marginBottom: '16px'
-              }}
-            >
-              Continue
-            </button>
-
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <button
-                type="button"
-                onClick={() => setCurrentStep('3')}
-                style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
-              >
-                ← Back
-              </button>
-            </div>
-          </div>
+          <MochiFrame6Treatment
+            selectedTreatments={formData.treatments}
+            onToggleTreatment={toggleTreatment}
+            onNext={() => setCurrentStep('frame-7')}
+            onBack={() => setCurrentStep('frame-5')}
+          />
         );
 
-      case '5':
+      case 'frame-7':
         return (
-          <div style={{
-            width: '100%',
-            maxWidth: '560px',
-            margin: '0 auto',
-            padding: '40px 20px 60px',
-            boxSizing: 'border-box',
-            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
-            color: '#000045'
-          }}>
-            <div style={{ marginBottom: '32px', textAlign: 'left' }}>
-              <h1 style={{ fontSize: '26px', fontWeight: 600, lineHeight: '1.28', color: '#000045', margin: '0 0 8px' }}>
-                Have you taken GLP-1 medications in the past 12 months?
-              </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.45' }}>
-                This informs whether our medical team titrates or maintains your active dosage.
-              </p>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', marginBottom: '32px' }}>
-              {[
-                { id: 'first-time', label: 'No, this would be my first time' },
-                { id: 'semaglutide', label: 'Yes, Semaglutide (Ozempic / Wegovy)' },
-                { id: 'tirzepatide', label: 'Yes, Tirzepatide (Mounjaro / Zepbound)' },
-                { id: 'other', label: 'Yes, another weight loss prescription' }
-              ].map(opt => {
-                const isSelected = formData.glp1History === opt.id;
-                return (
-                  <button
-                    key={opt.id}
-                    type="button"
-                    onClick={() => {
-                      setFormData(prev => ({ ...prev, glp1History: opt.id }));
-                      setTimeout(() => setCurrentStep('6'), 200);
-                    }}
-                    style={{
-                      minHeight: '60px',
-                      width: '100%',
-                      border: isSelected ? '1.5px solid #000045' : '1px solid #D5D6E0',
-                      borderRadius: '12px',
-                      padding: '16px 24px',
-                      backgroundColor: '#FFFFFF',
-                      color: '#000045',
-                      fontSize: '15px',
-                      fontWeight: 500,
-                      cursor: 'pointer',
-                      textAlign: 'center',
-                      fontFamily: 'inherit',
-                      outline: 'none'
-                    }}
-                  >
-                    {opt.label}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <button
-                type="button"
-                onClick={() => setCurrentStep('4')}
-                style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
-              >
-                ← Back
-              </button>
-            </div>
-          </div>
+          <MochiFrame7Results
+            onNext={() => setCurrentStep('frame-8')}
+            onBack={() => setCurrentStep('frame-6')}
+          />
         );
 
-      case '6':
+      case 'frame-8':
+        return (
+          <MochiFrame8State
+            selectedState={formData.selectedState}
+            onSelectState={(st) => setFormData(prev => ({ ...prev, selectedState: st }))}
+            onNext={() => setCurrentStep('frame-9')}
+            onBack={() => setCurrentStep('frame-7')}
+          />
+        );
+
+      case 'frame-9':
+        return (
+          <MochiFrame9DOB
+            birthMonth={formData.birthMonth}
+            birthDay={formData.birthDay}
+            birthYear={formData.birthYear}
+            onChangeMonth={(m) => setFormData(prev => ({ ...prev, birthMonth: m }))}
+            onChangeDay={(d) => setFormData(prev => ({ ...prev, birthDay: d }))}
+            onChangeYear={(y) => setFormData(prev => ({ ...prev, birthYear: y }))}
+            onNext={() => setCurrentStep('frame-10')}
+            onBack={() => setCurrentStep('frame-8')}
+          />
+        );
+
+      case 'frame-10':
+        return (
+          <MochiFrame10Name
+            firstName={formData.firstName}
+            lastName={formData.lastName}
+            onChangeFirstName={(fn) => setFormData(prev => ({ ...prev, firstName: fn }))}
+            onChangeLastName={(ln) => setFormData(prev => ({ ...prev, lastName: ln }))}
+            onNext={() => setCurrentStep('screen-11')}
+            onBack={() => setCurrentStep('frame-9')}
+          />
+        );
+
+      case 'screen-11':
       default:
         return (
           <div style={{
             width: '100%',
             maxWidth: '560px',
             margin: '0 auto',
-            padding: '40px 20px 60px',
+            padding: '32px 20px 60px',
             boxSizing: 'border-box',
             fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
             color: '#000045'
@@ -381,10 +311,10 @@ export default function CompetitorFlow({ onBackToWelcome }) {
 
             <div style={{ textAlign: 'center', marginBottom: '28px' }}>
               <h1 style={{ fontSize: '24px', fontWeight: 600, color: '#000045', margin: '0 0 8px' }}>
-                You are clinically eligible for Mochi Health
+                {formData.firstName ? `${formData.firstName}, you are clinically eligible!` : 'You are clinically eligible for Mochi Health'}
               </h1>
               <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.45' }}>
-                Based on your goal to lose 50+ lbs and your health profile, you qualify for physician-guided GLP-1 care.
+                Based on your health profile in {formData.selectedState || 'your state'}, you qualify for physician-guided GLP-1 weight loss care.
               </p>
             </div>
 
@@ -411,11 +341,11 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               
               <button
                 type="button"
-                onClick={() => alert("Mochi Flow Demo Complete!")}
+                onClick={() => alert("Mochi Survey benchmark walkthrough (Frames 1-10) completed!")}
                 style={{
                   width: '100%',
                   height: '52px',
-                  borderRadius: '12px',
+                  borderRadius: '999px',
                   background: '#000045',
                   color: '#FFF',
                   border: 'none',
@@ -431,10 +361,10 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <button
                 type="button"
-                onClick={() => setCurrentStep('0')}
+                onClick={() => setCurrentStep('frame-1')}
                 style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
               >
-                Restart Survey
+                Restart Survey from Frame 1
               </button>
             </div>
           </div>
@@ -445,7 +375,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
   return (
     <div className="app-viewport" style={{ minHeight: '100vh', backgroundColor: '#FFFFFF', position: 'relative' }}>
       
-      {/* Top Review & Dev Control Toolbar (Ongo Flow Style) */}
+      {/* Top Review & Dev Control Toolbar */}
       <aside className="top-dev-toolbar" aria-label="Join Mochi survey and device controls">
         <div className="toolbar-brand" style={{ cursor: onBackToWelcome ? 'pointer' : 'default' }} onClick={onBackToWelcome}>
           {onBackToWelcome && (
@@ -464,8 +394,43 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             Join Mochi
           </span>
           <span style={{ fontSize: '11px', background: '#EAEAF2', color: '#000045', padding: '2px 8px', borderRadius: '10px', fontWeight: 600 }}>
-            Competitor Study
+            Frames 1–10
           </span>
+        </div>
+
+        {/* Quick Frame Switcher Buttons (Frames 1 - 10) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}>
+          {[
+            { id: 'frame-1', label: '1: Offer' },
+            { id: 'frame-2', label: '2: Goal' },
+            { id: 'frame-3', label: '3: Reasons' },
+            { id: 'frame-4', label: '4: Meds' },
+            { id: 'frame-5', label: '5: Visit' },
+            { id: 'frame-6', label: '6: Treatment' },
+            { id: 'frame-7', label: '7: Results' },
+            { id: 'frame-8', label: '8: State' },
+            { id: 'frame-9', label: '9: DOB' },
+            { id: 'frame-10', label: '10: Name' }
+          ].map((f) => (
+            <button
+              key={f.id}
+              type="button"
+              onClick={() => setCurrentStep(f.id)}
+              style={{
+                fontSize: '11px',
+                fontWeight: currentStep === f.id ? 700 : 500,
+                padding: '3px 8px',
+                borderRadius: '6px',
+                border: currentStep === f.id ? '1px solid #000045' : '1px solid #D5D6E0',
+                backgroundColor: currentStep === f.id ? '#000045' : '#FFFFFF',
+                color: currentStep === f.id ? '#FFFFFF' : '#000045',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              {f.label}
+            </button>
+          ))}
         </div>
 
         <div className="toolbar-controls">
@@ -497,7 +462,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             title="Toggle between mobile viewport frame and centered desktop layout"
           >
             {isMobileFrame ? <Monitor size={13} /> : <Smartphone size={13} />}
-            <span>{isMobileFrame ? 'Desktop (Full)' : 'Mobile Frame'}</span>
+            <span>{isMobileFrame ? 'Desktop' : 'Mobile'}</span>
           </button>
         </div>
       </aside>
@@ -510,26 +475,26 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           right: 0,
           top: '52%',
           transform: 'translateY(-50%)',
-          backgroundColor: '#000045',
+          backgroundColor: '#000033',
           color: '#FFFFFF',
-          padding: '10px 6px',
-          borderTopLeftRadius: '8px',
-          borderBottomLeftRadius: '8px',
+          padding: '12px 6px',
+          borderTopLeftRadius: '10px',
+          borderBottomLeftRadius: '10px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           gap: '8px',
           cursor: 'pointer',
           zIndex: 9998,
-          boxShadow: '0 2px 10px rgba(0,0,69,0.25)'
+          boxShadow: '0 2px 10px rgba(0,0,51,0.25)'
         }}
-        onClick={() => alert("Join Mochi Bug Reporter")}
+        onClick={() => alert("Mochi Bug Reporter")}
       >
         <span style={{ 
           writingMode: 'vertical-rl', 
           transform: 'rotate(180deg)', 
           fontSize: '11px', 
-          fontWeight: 600, 
+          fontWeight: 700, 
           letterSpacing: '0.04em' 
         }}>
           Report
@@ -549,6 +514,40 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         </svg>
       </div>
 
+      {/* Trigger to Open Frame 1 Offer Modal anytime */}
+      {currentStep !== 'frame-1' && (
+        <div style={{
+          position: 'fixed',
+          bottom: '16px',
+          left: '16px',
+          zIndex: 9990
+        }}>
+          <button
+            type="button"
+            onClick={() => setCurrentStep('frame-1')}
+            style={{
+              backgroundColor: '#004874',
+              color: '#FFFFFF',
+              border: 'none',
+              borderRadius: '999px',
+              padding: '8px 16px',
+              fontSize: '12.5px',
+              fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              cursor: 'pointer',
+              boxShadow: '0 4px 14px rgba(0, 72, 116, 0.35)',
+              transition: 'transform 0.15s ease'
+            }}
+            title="View Frame 1 Offer Modal"
+          >
+            <Gift size={14} />
+            <span>View Offer Modal (Frame 1)</span>
+          </button>
+        </div>
+      )}
+
       {/* Mochi Viewport Shell */}
       <main className={`onboarding-shell ${isMobileFrame ? 'device-frame-mobile' : ''}`} style={{
         maxWidth: isMobileFrame ? '420px' : '100%',
@@ -561,11 +560,11 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         backgroundColor: '#FFFFFF'
       }}>
         
-        {/* Exact Mochi Brand Header: Progress bar and logo */}
+        {/* Exact Mochi Brand Header */}
         <header style={{
           width: '100%',
           backgroundColor: '#FFFFFF',
-          paddingTop: '36px',
+          paddingTop: '32px',
           paddingBottom: '20px',
           paddingLeft: '24px',
           paddingRight: '24px',
@@ -574,17 +573,22 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           <div style={{
             display: 'flex',
             width: '100%',
-            maxWidth: '740px',
+            maxWidth: '680px',
             margin: '0 auto',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: '32px'
+            gap: '24px'
           }}>
-            {/* Left Back Arrow or Balanced Invisible Spacer */}
-            {currentStep !== '0' ? (
+            {/* Left Back Arrow or Spacer */}
+            {currentStep !== 'frame-1' && currentStep !== 'frame-2' ? (
               <button
                 type="button"
-                onClick={() => setCurrentStep(String(Math.max(0, Number(currentStep) - 1)))}
+                onClick={() => {
+                  const idx = MOCHI_SCREENS.findIndex(s => s.key === currentStep);
+                  if (idx > 1) {
+                    setCurrentStep(MOCHI_SCREENS[idx - 1].key);
+                  }
+                }}
                 style={{
                   background: 'none',
                   border: 'none',
@@ -606,7 +610,8 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             {/* Center Progress Bar Line */}
             <div style={{
               flex: 1,
-              height: '5px',
+              maxWidth: '360px',
+              height: '4px',
               backgroundColor: '#EAEAF2',
               borderRadius: '999px',
               overflow: 'hidden'
@@ -614,26 +619,16 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               <div style={{
                 width: `${getProgressPercentage()}%`,
                 height: '100%',
-                backgroundColor: '#000045',
+                backgroundColor: '#1E1B4B',
                 borderRadius: '999px',
                 transition: 'width 0.3s ease'
               }} />
             </div>
 
-            {/* Right Mochi Official Brand Logo */}
-            <a 
-              href="https://www.joinmochi.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              style={{ flexShrink: 0, display: 'flex', alignItems: 'center', textDecoration: 'none' }}
-              title="Join Mochi"
-            >
-              <img 
-                src={mochiLogoImg} 
-                alt="mochi HEALTH" 
-                style={{ height: '36px', width: 'auto', display: 'block' }} 
-              />
-            </a>
+            {/* Right Mochi Official Brand Mark */}
+            <div style={{ flexShrink: 0 }}>
+              <MochiLogo width={55} height={28} />
+            </div>
           </div>
         </header>
 
@@ -642,6 +637,14 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           {renderContent()}
         </div>
       </main>
+
+      {/* Frame 1 Modal Overlay (when opened from banner button) */}
+      {showOfferModal && currentStep !== 'frame-1' && (
+        <MochiFrame1OfferModal
+          onClaim={handleClaimOffer}
+          onClose={() => setShowOfferModal(false)}
+        />
+      )}
 
     </div>
   );
