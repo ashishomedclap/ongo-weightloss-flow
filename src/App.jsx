@@ -105,7 +105,7 @@ export default function App() {
           >
             <option value="welcome">🏠 Select Project (Welcome Screen)</option>
             <option value="ongo">🌿 Ongo Weight Loss Flow (25 Screens)</option>
-            <option value="competitor">🏢 Competitor Survey (Study & Comparison)</option>
+            <option value="competitor">🟣 Join Mochi Flow (Competitor Benchmark)</option>
           </select>
         </div>
       </header>

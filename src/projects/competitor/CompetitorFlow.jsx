@@ -1,362 +1,408 @@
 import React, { useState } from 'react';
+import MochiScreen0 from './MochiScreen0';
 import { 
-  Building2, 
-  Smartphone, 
-  Monitor, 
-  CheckCheck, 
   ArrowLeft, 
-  Scale, 
-  ShieldAlert, 
-  Sparkles, 
-  Check, 
+  Monitor, 
+  Smartphone, 
+  CheckCheck, 
+  Bug, 
   ChevronRight,
-  TrendingUp,
-  FileSpreadsheet,
-  Target
+  TrendingDown,
+  ShieldCheck,
+  Calendar,
+  Sparkles
 } from 'lucide-react';
 
-const COMPETITOR_SCREENS = [
-  { key: '1', label: 'Screen 1: Competitor Onboarding & Motivation' },
-  { key: '2', label: 'Screen 2: Weight & Health Milestones' },
-  { key: '3', label: 'Screen 3: Treatment Route Preference' },
-  { key: '4', label: 'Screen 4: Competitor Pricing & Commitment' },
-  { key: '5', label: 'Screen 5: Head-to-Head UX Comparison Analysis' }
+const MOCHI_SCREENS = [
+  { key: '0', label: 'Step 0: Primary Weight Loss Goal (Live Match)' },
+  { key: '1', label: 'Step 1: Gender Assigned at Birth' },
+  { key: '2', label: 'Step 2: Height & Weight (BMI Calculation)' },
+  { key: '3', label: 'Step 3: GLP-1 Medication History' },
+  { key: '4', label: 'Step 4: Clinical Eligibility & Care Plan' }
 ];
 
 export default function CompetitorFlow({ onBackToWelcome }) {
-  const [currentScreen, setCurrentScreen] = useState('1');
+  const [currentStep, setCurrentStep] = useState('0');
   const [isMobileFrame, setIsMobileFrame] = useState(false);
+  const [language, setLanguage] = useState('en');
+
+  // Form State
   const [formData, setFormData] = useState({
-    motivation: 'lose-30-plus',
-    currentWeight: '195',
-    goalWeight: '155',
-    treatmentType: 'weekly-injection',
-    planType: 'membership-plus-rx',
-    experienceRating: 'fast-onboarding'
+    goal: '50-plus', // Pre-selected matching screenshot: "Lose 50+ lbs"
+    gender: 'female',
+    heightFt: '5',
+    heightIn: '6',
+    weightLbs: '215',
+    goalLbs: '155',
+    glp1History: 'first-time'
   });
+
   const [autofillKey, setAutofillKey] = useState(0);
 
   const handleAutofill = () => {
     setFormData({
-      motivation: 'lose-30-plus',
-      currentWeight: '195',
-      goalWeight: '155',
-      treatmentType: 'weekly-injection',
-      planType: 'membership-plus-rx',
-      experienceRating: 'fast-onboarding'
+      goal: '50-plus',
+      gender: 'female',
+      heightFt: '5',
+      heightIn: '6',
+      weightLbs: '215',
+      goalLbs: '155',
+      glp1History: 'semaglutide'
     });
     setAutofillKey(prev => prev + 1);
   };
 
-  const renderScreen = () => {
-    switch (currentScreen) {
+  const getProgressPercentage = () => {
+    switch (currentStep) {
+      case '0': return 12;
+      case '1': return 32;
+      case '2': return 54;
+      case '3': return 76;
+      case '4': return 100;
+      default: return 12;
+    }
+  };
+
+  const renderContent = () => {
+    switch (currentStep) {
+      case '0':
+        return (
+          <MochiScreen0
+            selectedGoal={formData.goal}
+            onSelectGoal={(goalId) => setFormData(prev => ({ ...prev, goal: goalId }))}
+            onNext={() => setCurrentStep('1')}
+            language={language}
+            onToggleLanguage={() => setLanguage(l => l === 'en' ? 'es' : 'en')}
+          />
+        );
+
       case '1':
         return (
-          <div className="content-inner fade-in">
-            <div style={{ display: 'inline-block', padding: '4px 10px', borderRadius: '12px', background: '#F0F4FF', color: '#1E40AF', fontSize: '11px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '14px' }}>
-              COMPETITOR BENCHMARK · STEP 1 OF 5
-            </div>
-            <div className="heading-section">
-              <h1 className="page-title" style={{ fontSize: '26px' }}>What brings you to our program today?</h1>
-              <p className="page-subtitle">
-                Select your primary goal to help customize your clinical medical weight-loss trajectory.
+          <div style={{
+            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
+            color: '#000045',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            maxWidth: '560px',
+            margin: '0 auto',
+            padding: '40px 20px 60px'
+          }}>
+            <div style={{ width: '100%', textAlign: 'left', marginBottom: '32px' }}>
+              <h1 style={{ fontSize: '28px', fontWeight: 600, color: '#000045', margin: '0 0 8px', letterSpacing: '-0.015em' }}>
+                What was your sex assigned at birth?
+              </h1>
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0 }}>
+                This is required for calculating accurate body metabolic indexes and medication dosing guidelines.
               </p>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', marginBottom: '32px' }}>
               {[
-                { id: 'lose-15-30', title: 'Lose 15–30 lbs', desc: 'Jumpstart healthier habits with metabolic treatment support' },
-                { id: 'lose-30-plus', title: 'Lose 30+ lbs', desc: 'Comprehensive medical titration for significant long-term transformation' },
-                { id: 'maintain', title: 'Maintain previous GLP-1 weight loss', desc: 'Transition plan for patients switching from another clinic or telehealth provider' },
-                { id: 'energy-health', title: 'Improve metabolic lab markers', desc: 'Focus on blood sugar stability, cholesterol, and cardiovascular vitality' },
+                { id: 'female', label: 'Female' },
+                { id: 'male', label: 'Male' }
               ].map(opt => {
-                const isSelected = formData.motivation === opt.id;
+                const isSelected = formData.gender === opt.id;
                 return (
-                  <div
+                  <button
                     key={opt.id}
-                    onClick={() => setFormData({ ...formData, motivation: opt.id })}
+                    type="button"
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, gender: opt.id }));
+                      setTimeout(() => setCurrentStep('2'), 200);
+                    }}
                     style={{
-                      padding: '16px 18px',
-                      borderRadius: '16px',
-                      border: isSelected ? '2px solid #2563EB' : '1px solid #E2E8F0',
-                      background: isSelected ? '#EFF6FF' : '#FFFFFF',
+                      width: '100%',
+                      minHeight: '58px',
+                      padding: '16px 20px',
+                      borderRadius: '12px',
+                      border: isSelected ? '1.8px solid #000045' : '1px solid #D5D6E0',
+                      background: '#FFFFFF',
+                      color: '#000045',
+                      fontSize: '15px',
+                      fontWeight: 500,
                       cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '14px',
-                      transition: 'all 0.2s ease'
+                      textAlign: 'center'
                     }}
                   >
-                    <div style={{
-                      width: '20px',
-                      height: '20px',
-                      borderRadius: '50%',
-                      border: isSelected ? '2px solid #2563EB' : '2px solid #CBD5E1',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      background: '#FFF'
-                    }}>
-                      {isSelected && <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#2563EB' }} />}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontWeight: 700, fontSize: '15px', color: '#0F172A' }}>{opt.title}</div>
-                      <div style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>{opt.desc}</div>
-                    </div>
-                  </div>
+                    {opt.label}
+                  </button>
                 );
               })}
             </div>
 
             <button
               type="button"
-              className="cta-button-pill active"
-              onClick={() => setCurrentScreen('2')}
-              style={{ background: '#0F172A', color: '#FFF' }}
+              onClick={() => setCurrentStep('0')}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: '#606069',
+                fontSize: '14px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}
             >
-              <span>Next Question</span>
-              <span className="cta-arrow" aria-hidden="true">→</span>
+              ← Back to previous question
             </button>
           </div>
         );
 
       case '2':
         return (
-          <div className="content-inner fade-in">
-            <div style={{ display: 'inline-block', padding: '4px 10px', borderRadius: '12px', background: '#F0F4FF', color: '#1E40AF', fontSize: '11px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '14px' }}>
-              COMPETITOR BENCHMARK · STEP 2 OF 5
-            </div>
-            <div className="heading-section">
-              <h1 className="page-title" style={{ fontSize: '26px' }}>Your starting point & target</h1>
-              <p className="page-subtitle">
-                Most competitor flows ask for basic numbers before providing an estimated loss graph.
+          <div style={{
+            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
+            color: '#000045',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            maxWidth: '560px',
+            margin: '0 auto',
+            padding: '40px 20px 60px'
+          }}>
+            <div style={{ width: '100%', textAlign: 'left', marginBottom: '32px' }}>
+              <h1 style={{ fontSize: '28px', fontWeight: 600, color: '#000045', margin: '0 0 8px', letterSpacing: '-0.015em' }}>
+                What are your measurements?
+              </h1>
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0 }}>
+                Used by our licensed clinical team to calculate your Body Mass Index (BMI).
               </p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', width: '100%', marginBottom: '20px' }}>
               <div>
-                <label className="field-top-label">Current Weight (lbs)</label>
-                <input
-                  type="number"
-                  className="input-capsule"
-                  value={formData.currentWeight}
-                  onChange={(e) => setFormData({ ...formData, currentWeight: e.target.value })}
-                />
+                <label style={{ fontSize: '13px', fontWeight: 600, color: '#000045', display: 'block', marginBottom: '6px' }}>Height</label>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <input
+                    type="number"
+                    value={formData.heightFt}
+                    onChange={(e) => setFormData({ ...formData, heightFt: e.target.value })}
+                    style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
+                    placeholder="Ft"
+                  />
+                  <input
+                    type="number"
+                    value={formData.heightIn}
+                    onChange={(e) => setFormData({ ...formData, heightIn: e.target.value })}
+                    style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
+                    placeholder="In"
+                  />
+                </div>
               </div>
+
               <div>
-                <label className="field-top-label">Goal Weight (lbs)</label>
+                <label style={{ fontSize: '13px', fontWeight: 600, color: '#000045', display: 'block', marginBottom: '6px' }}>Current Weight (lbs)</label>
                 <input
                   type="number"
-                  className="input-capsule"
-                  value={formData.goalWeight}
-                  onChange={(e) => setFormData({ ...formData, goalWeight: e.target.value })}
+                  value={formData.weightLbs}
+                  onChange={(e) => setFormData({ ...formData, weightLbs: e.target.value })}
+                  style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
                 />
               </div>
             </div>
 
-            <div style={{ padding: '16px', borderRadius: '14px', background: '#F8FAFC', border: '1px solid #E2E8F0', marginBottom: '24px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0F172A', fontWeight: 700, fontSize: '14px', marginBottom: '4px' }}>
-                <TrendingUp size={16} color="#2563EB" /> Target: {Number(formData.currentWeight) - Number(formData.goalWeight)} lbs reduction
-              </div>
-              <div style={{ fontSize: '13px', color: '#64748B' }}>
-                Estimated timeframe: 16–24 weeks with GLP-1 therapy titration and diet support.
+            <div style={{ width: '100%', padding: '16px 20px', borderRadius: '12px', background: '#F4F4FA', border: '1px solid #E2E2EA', marginBottom: '28px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: '14px', fontWeight: 600, color: '#000045' }}>Estimated BMI</span>
+                <span style={{ fontSize: '18px', fontWeight: 700, color: '#000045' }}>34.7 · Eligible for GLP-1</span>
               </div>
             </div>
 
             <button
               type="button"
-              className="cta-button-pill active"
-              onClick={() => setCurrentScreen('3')}
-              style={{ background: '#0F172A', color: '#FFF' }}
+              onClick={() => setCurrentStep('3')}
+              style={{
+                width: '100%',
+                height: '54px',
+                borderRadius: '12px',
+                background: '#000045',
+                color: '#FFF',
+                border: 'none',
+                fontSize: '15px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                marginBottom: '16px'
+              }}
             >
-              <span>Continue</span>
-              <span className="cta-arrow" aria-hidden="true">→</span>
+              Continue
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setCurrentStep('1')}
+              style={{ background: 'transparent', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer' }}
+            >
+              ← Back
             </button>
           </div>
         );
 
       case '3':
         return (
-          <div className="content-inner fade-in">
-            <div style={{ display: 'inline-block', padding: '4px 10px', borderRadius: '12px', background: '#F0F4FF', color: '#1E40AF', fontSize: '11px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '14px' }}>
-              COMPETITOR BENCHMARK · STEP 3 OF 5
-            </div>
-            <div className="heading-section">
-              <h1 className="page-title" style={{ fontSize: '26px' }}>Preferred administration method</h1>
-              <p className="page-subtitle">
-                Competitors often bifurcate early between subcutaneous injections and sublingual/oral tablets.
+          <div style={{
+            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
+            color: '#000045',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            maxWidth: '560px',
+            margin: '0 auto',
+            padding: '40px 20px 60px'
+          }}>
+            <div style={{ width: '100%', textAlign: 'left', marginBottom: '32px' }}>
+              <h1 style={{ fontSize: '28px', fontWeight: 600, color: '#000045', margin: '0 0 8px', letterSpacing: '-0.015em' }}>
+                Have you taken GLP-1 medications in the past 12 months?
+              </h1>
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0 }}>
+                This informs whether our medical team titrates or keeps your existing dosage.
               </p>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', marginBottom: '32px' }}>
               {[
-                { id: 'weekly-injection', title: 'Once-Weekly Subcutaneous Injection', desc: 'Highest clinical efficacy in trials (Semaglutide / Tirzepatide)' },
-                { id: 'daily-oral', title: 'Daily Sublingual Drops / Chewables', desc: 'Needle-free alternatives for patients seeking needleless options' },
-                { id: 'doctor-decide', title: 'Let Clinical Provider Recommend', desc: 'Physician decides after telehealth medical intake review' }
-              ].map(item => {
-                const isSelected = formData.treatmentType === item.id;
+                { id: 'first-time', label: 'No, this would be my first time' },
+                { id: 'semaglutide', label: 'Yes, Semaglutide (Ozempic / Wegovy)' },
+                { id: 'tirzepatide', label: 'Yes, Tirzepatide (Mounjaro / Zepbound)' },
+                { id: 'other', label: 'Yes, another weight loss prescription' }
+              ].map(opt => {
+                const isSelected = formData.glp1History === opt.id;
                 return (
-                  <div
-                    key={item.id}
-                    onClick={() => setFormData({ ...formData, treatmentType: item.id })}
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, glp1History: opt.id }));
+                      setTimeout(() => setCurrentStep('4'), 200);
+                    }}
                     style={{
-                      padding: '16px 18px',
-                      borderRadius: '16px',
-                      border: isSelected ? '2px solid #2563EB' : '1px solid #E2E8F0',
-                      background: isSelected ? '#EFF6FF' : '#FFFFFF',
+                      width: '100%',
+                      minHeight: '58px',
+                      padding: '16px 20px',
+                      borderRadius: '12px',
+                      border: isSelected ? '1.8px solid #000045' : '1px solid #D5D6E0',
+                      background: '#FFFFFF',
+                      color: '#000045',
+                      fontSize: '15px',
+                      fontWeight: 500,
                       cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '14px'
+                      textAlign: 'center'
                     }}
                   >
-                    <div style={{
-                      width: '20px',
-                      height: '20px',
-                      borderRadius: '50%',
-                      border: isSelected ? '2px solid #2563EB' : '2px solid #CBD5E1',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      background: '#FFF'
-                    }}>
-                      {isSelected && <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#2563EB' }} />}
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '15px', color: '#0F172A' }}>{item.title}</div>
-                      <div style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>{item.desc}</div>
-                    </div>
-                  </div>
+                    {opt.label}
+                  </button>
                 );
               })}
             </div>
 
             <button
               type="button"
-              className="cta-button-pill active"
-              onClick={() => setCurrentScreen('4')}
-              style={{ background: '#0F172A', color: '#FFF' }}
+              onClick={() => setCurrentStep('2')}
+              style={{ background: 'transparent', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer' }}
             >
-              <span>View Competitor Pricing Screen</span>
-              <span className="cta-arrow" aria-hidden="true">→</span>
+              ← Back
             </button>
           </div>
         );
 
       case '4':
+      default:
         return (
-          <div className="content-inner fade-in">
-            <div style={{ display: 'inline-block', padding: '4px 10px', borderRadius: '12px', background: '#F0F4FF', color: '#1E40AF', fontSize: '11px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '14px' }}>
-              COMPETITOR BENCHMARK · STEP 4 OF 5
+          <div style={{
+            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
+            color: '#000045',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            maxWidth: '560px',
+            margin: '0 auto',
+            padding: '40px 20px 60px'
+          }}>
+            <div style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '50%',
+              background: '#00B67A',
+              color: '#FFF',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '20px'
+            }}>
+              <ShieldCheck size={28} />
             </div>
-            <div className="heading-section">
-              <h1 className="page-title" style={{ fontSize: '26px' }}>Membership & Treatment Pricing</h1>
-              <p className="page-subtitle">
-                Typical competitor billing structure uses recurring monthly platform subscriptions with medication add-ons.
+
+            <div style={{ width: '100%', textAlign: 'center', marginBottom: '28px' }}>
+              <h1 style={{ fontSize: '26px', fontWeight: 600, color: '#000045', margin: '0 0 8px' }}>
+                You are clinically eligible for Mochi Health
+              </h1>
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0 }}>
+                Based on your goal to lose 50+ lbs and your health inputs, you qualify for physician-managed GLP-1 care.
               </p>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
-              <div style={{ border: '2px solid #2563EB', borderRadius: '16px', padding: '20px', background: '#F8FAFC' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ fontWeight: 800, fontSize: '18px', color: '#0F172A' }}>Competitor Subscription</span>
-                  <span style={{ fontWeight: 800, fontSize: '20px', color: '#2563EB' }}>$299<span style={{ fontSize: '13px', fontWeight: 500, color: '#64748B' }}>/mo</span></span>
-                </div>
-                <div style={{ fontSize: '13.5px', color: '#475569', lineHeight: '1.4' }}>
-                  Includes provider portal, async messaging, initial lab order review, and prescription fulfillment.
-                </div>
+            {/* Pricing Card */}
+            <div style={{
+              width: '100%',
+              borderRadius: '16px',
+              border: '1.5px solid #000045',
+              padding: '24px',
+              background: '#FFFFFF',
+              boxShadow: '0 4px 16px rgba(0,0,69,0.06)',
+              marginBottom: '24px'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '12px' }}>
+                <span style={{ fontSize: '18px', fontWeight: 700, color: '#000045' }}>Mochi Membership</span>
+                <span style={{ fontSize: '24px', fontWeight: 800, color: '#000045' }}>$79<span style={{ fontSize: '14px', fontWeight: 500, color: '#606069' }}>/month</span></span>
               </div>
-
-              <div style={{ border: '1px solid #E2E8F0', borderRadius: '16px', padding: '20px', background: '#FFFFFF' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ fontWeight: 800, fontSize: '18px', color: '#0F172A' }}>Ongo Flow Model (Comparison)</span>
-                  <span style={{ fontWeight: 800, fontSize: '20px', color: '#1F4F3D' }}>$199<span style={{ fontSize: '13px', fontWeight: 500, color: '#64748B' }}>/mo</span></span>
-                </div>
-                <div style={{ fontSize: '13.5px', color: '#475569', lineHeight: '1.4' }}>
-                  Ongo's bundled transparent pricing with 3-month commitment, free consultation, and zero hidden shipping charges.
-                </div>
-              </div>
+              <ul style={{ margin: '0 0 20px', paddingLeft: '20px', color: '#404050', fontSize: '14px', lineHeight: '1.7' }}>
+                <li>Dedicated licensed physician & registered dietitian</li>
+                <li>Unlimited telehealth follow-ups & medical advice</li>
+                <li>Prescription coordination for Semaglutide ($99/mo) or Tirzepatide ($199/mo)</li>
+                <li>No lock-in contracts; cancel anytime</li>
+              </ul>
+              
+              <button
+                type="button"
+                onClick={() => alert("Mochi Competitor Flow Demo Completed!")}
+                style={{
+                  width: '100%',
+                  height: '52px',
+                  borderRadius: '12px',
+                  background: '#000045',
+                  color: '#FFF',
+                  border: 'none',
+                  fontSize: '15px',
+                  fontWeight: 600,
+                  cursor: 'pointer'
+                }}
+              >
+                Proceed to Provider Selection
+              </button>
             </div>
 
             <button
               type="button"
-              className="cta-button-pill active"
-              onClick={() => setCurrentScreen('5')}
-              style={{ background: '#0F172A', color: '#FFF' }}
+              onClick={() => setCurrentStep('0')}
+              style={{ background: 'transparent', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer' }}
             >
-              <span>See UX Comparison Matrix</span>
-              <span className="cta-arrow" aria-hidden="true">→</span>
+              Restart Mochi Survey
             </button>
-          </div>
-        );
-
-      case '5':
-      default:
-        return (
-          <div className="content-inner fade-in">
-            <div style={{ display: 'inline-block', padding: '4px 10px', borderRadius: '12px', background: '#ECFDF5', color: '#065F46', fontSize: '11px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '14px' }}>
-              STUDY & ANALYSIS MATRIX
-            </div>
-            <div className="heading-section">
-              <h1 className="page-title" style={{ fontSize: '26px' }}>Ongo vs Competitor Analysis</h1>
-              <p className="page-subtitle">
-                Side-by-side study comparing conversion friction, medical safety gates, and user trust.
-              </p>
-            </div>
-
-            <div style={{ background: '#FFF', borderRadius: '16px', border: '1px solid #E2E8F0', overflow: 'hidden', marginBottom: '24px' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13.5px' }}>
-                <thead>
-                  <tr style={{ background: '#F8FAFC', borderBottom: '1px solid #E2E8F0', textAlign: 'left' }}>
-                    <th style={{ padding: '12px 14px', fontWeight: 700 }}>Feature</th>
-                    <th style={{ padding: '12px 14px', fontWeight: 700, color: '#1F4F3D' }}>Ongo Flow</th>
-                    <th style={{ padding: '12px 14px', fontWeight: 700, color: '#2563EB' }}>Competitor Flow</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
-                    <td style={{ padding: '12px 14px', fontWeight: 600 }}>Screen Count</td>
-                    <td style={{ padding: '12px 14px', color: '#1F4F3D' }}>25 Focused Steps</td>
-                    <td style={{ padding: '12px 14px', color: '#64748B' }}>5–8 Generic Steps</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
-                    <td style={{ padding: '12px 14px', fontWeight: 600 }}>Doctor Match</td>
-                    <td style={{ padding: '12px 14px', color: '#1F4F3D' }}>State-Licensed MD Profile</td>
-                    <td style={{ padding: '12px 14px', color: '#64748B' }}>Anonymous Clinical Team</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
-                    <td style={{ padding: '12px 14px', fontWeight: 600 }}>Pre-Auth / Safety</td>
-                    <td style={{ padding: '12px 14px', color: '#1F4F3D' }}>Deep Clinical Intake (13 Steps)</td>
-                    <td style={{ padding: '12px 14px', color: '#64748B' }}>Shallow 3-Question Screener</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
-                    <td style={{ padding: '12px 14px', fontWeight: 600 }}>Live Booking</td>
-                    <td style={{ padding: '12px 14px', color: '#1F4F3D' }}>Calendar & Time Slots</td>
-                    <td style={{ padding: '12px 14px', color: '#64748B' }}>Async Messaging Waitlist</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <button
-                type="button"
-                className="cta-button-pill active"
-                onClick={onBackToWelcome}
-                style={{ background: '#0F172A', color: '#FFF', flex: 1 }}
-              >
-                <span>Switch to Ongo Project</span>
-                <span className="cta-arrow" aria-hidden="true">→</span>
-              </button>
-            </div>
           </div>
         );
     }
   };
 
   return (
-    <div className="app-viewport">
-      <aside className="top-dev-toolbar" aria-label="Competitor flow controls" style={{ borderBottom: '2px solid #2563EB' }}>
+    <div style={{ minHeight: '100vh', background: '#FFFFFF', position: 'relative' }}>
+      
+      {/* Dev Study Bar */}
+      <aside className="top-dev-toolbar" aria-label="Join Mochi flow controls" style={{ borderBottom: '2px solid #000045' }}>
         <div className="toolbar-brand" style={{ cursor: onBackToWelcome ? 'pointer' : 'default' }} onClick={onBackToWelcome}>
           {onBackToWelcome && (
             <button 
@@ -370,56 +416,146 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               <span>Projects</span>
             </button>
           )}
-          <Building2 size={16} color="#2563EB" />
-          <span>Competitor Survey Study</span>
+          <span style={{ fontWeight: 800, color: '#000045' }}>Join Mochi</span>
+          <span style={{ fontSize: '11px', background: '#EAEAF2', color: '#000045', padding: '2px 6px', borderRadius: '6px', fontWeight: 600 }}>
+            Competitor Flow
+          </span>
         </div>
 
         <div className="toolbar-controls">
           <select 
             className="screen-select-dropdown" 
-            value={currentScreen} 
-            onChange={(e) => setCurrentScreen(e.target.value)} 
-            aria-label="Select competitor survey screen"
+            value={currentStep} 
+            onChange={(e) => setCurrentStep(e.target.value)} 
+            aria-label="Select Mochi survey screen"
+            style={{ maxWidth: '340px' }}
           >
-            {COMPETITOR_SCREENS.map((s) => (
+            {MOCHI_SCREENS.map((s) => (
               <option key={s.key} value={s.key}>{s.label}</option>
             ))}
           </select>
 
-          <button type="button" className="toolbar-btn" onClick={handleAutofill} title="Auto-fill sample competitor responses">
+          <button type="button" className="toolbar-btn" onClick={handleAutofill} title="Autofill Mochi flow demo data">
             <CheckCheck size={13} />
             <span>Autofill Demo</span>
           </button>
 
           <button type="button" className={`toolbar-btn ${isMobileFrame ? 'active' : ''}`} onClick={() => setIsMobileFrame(!isMobileFrame)}>
             {isMobileFrame ? <Monitor size={13} /> : <Smartphone size={13} />}
-            <span>{isMobileFrame ? 'Desktop (540px)' : 'Mobile Frame'}</span>
+            <span>{isMobileFrame ? 'Desktop (Full)' : 'Mobile Frame'}</span>
           </button>
         </div>
       </aside>
 
-      <main className={`onboarding-shell ${isMobileFrame ? 'device-frame-mobile' : ''}`}>
-        <div style={{ 
-          background: '#0F172A', 
-          color: '#FFF', 
-          padding: '16px 20px', 
-          borderTopLeftRadius: '24px', 
-          borderTopRightRadius: '24px', 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center' 
+      {/* Floating Right Report Badge (Matches Join Mochi live site) */}
+      <div 
+        title="Report an issue or feedback"
+        style={{
+          position: 'fixed',
+          right: 0,
+          top: '52%',
+          transform: 'translateY(-50%)',
+          backgroundColor: '#000045',
+          color: '#FFFFFF',
+          padding: '10px 7px',
+          borderTopLeftRadius: '8px',
+          borderBottomLeftRadius: '8px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '8px',
+          cursor: 'pointer',
+          zIndex: 9998,
+          boxShadow: '0 2px 12px rgba(0,0,69,0.25)'
+        }}
+        onClick={() => alert("Join Mochi Bug/Feedback Reporter")}
+      >
+        <span style={{ 
+          writingMode: 'vertical-rl', 
+          transform: 'rotate(180deg)', 
+          fontSize: '11px', 
+          fontWeight: 600, 
+          letterSpacing: '0.05em' 
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Building2 size={18} color="#60A5FA" />
-            <span style={{ fontWeight: 800, fontSize: '15px', letterSpacing: '-0.01em' }}>Telehealth GLP-1 Competitor Survey</span>
-          </div>
-          <span style={{ fontSize: '11px', background: '#1E293B', padding: '3px 8px', borderRadius: '8px', color: '#94A3B8' }}>Study Mode</span>
-        </div>
+          Report
+        </span>
+        <Bug size={14} style={{ transform: 'rotate(90deg)' }} />
+      </div>
 
-        <div className="main-card-body" key={autofillKey} style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
-          {renderScreen()}
-        </div>
-      </main>
+      {/* Mochi Shell */}
+      <div style={{
+        maxWidth: isMobileFrame ? '420px' : '100%',
+        margin: isMobileFrame ? '24px auto' : '0 auto',
+        border: isMobileFrame ? '1px solid #E2E2EA' : 'none',
+        borderRadius: isMobileFrame ? '24px' : '0',
+        overflow: 'hidden',
+        boxShadow: isMobileFrame ? '0 12px 32px rgba(0,0,69,0.08)' : 'none',
+        minHeight: isMobileFrame ? '720px' : 'auto'
+      }}>
+        {/* Top Header with Progress Bar and Mochi Logo */}
+        <header style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '24px 32px 12px',
+          maxWidth: '960px',
+          margin: '0 auto',
+          width: '100%',
+          boxSizing: 'border-box'
+        }}>
+          {/* Centered / Left Progress Bar */}
+          <div style={{
+            flex: '0 1 360px',
+            height: '5px',
+            backgroundColor: '#EAEAF2',
+            borderRadius: '999px',
+            overflow: 'hidden'
+          }}>
+            <div style={{
+              width: `${getProgressPercentage()}%`,
+              height: '100%',
+              backgroundColor: '#000045',
+              borderRadius: '999px',
+              transition: 'width 0.3s ease'
+            }} />
+          </div>
+
+          {/* Mochi Health Brand Logo */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            color: '#000045',
+            userSelect: 'none'
+          }}>
+            <span style={{
+              fontSize: '22px',
+              fontWeight: 800,
+              letterSpacing: '-0.04em',
+              lineHeight: '1',
+              fontFamily: "'Instrument Sans', sans-serif"
+            }}>
+              mochi
+            </span>
+            <span style={{
+              fontSize: '7px',
+              fontWeight: 700,
+              letterSpacing: '0.22em',
+              marginTop: '2px',
+              color: '#000045',
+              textTransform: 'uppercase'
+            }}>
+              HEALTH
+            </span>
+          </div>
+        </header>
+
+        {/* Content Body */}
+        <main key={autofillKey}>
+          {renderContent()}
+        </main>
+      </div>
+
     </div>
   );
 }

@@ -156,8 +156,8 @@ export default function WelcomeScreen({ onSelectProject }) {
               e.currentTarget.style.boxShadow = '0 8px 24px rgba(15, 23, 42, 0.05)';
             }}
           >
-            <div style={{ position: 'absolute', top: '16px', right: '16px', background: '#EFF6FF', color: '#1E40AF', padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 800, letterSpacing: '0.04em' }}>
-              STUDY & COMPARISON
+            <div style={{ position: 'absolute', top: '16px', right: '16px', background: '#EAEAF2', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 800, letterSpacing: '0.04em' }}>
+              COMPETITOR BENCHMARK
             </div>
 
             <div>
@@ -165,28 +165,30 @@ export default function WelcomeScreen({ onSelectProject }) {
                 width: '52px',
                 height: '52px',
                 borderRadius: '16px',
-                background: '#0F172A',
+                background: '#000045',
                 color: '#FFF',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginBottom: '20px'
               }}>
-                <Building2 size={26} color="#60A5FA" />
+                <span style={{ fontSize: '18px', fontWeight: 800, letterSpacing: '-0.03em', fontFamily: "'Instrument Sans', sans-serif" }}>
+                  mochi
+                </span>
               </div>
 
-              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#111827', margin: '0 0 8px' }}>
-                Competitor Survey Study
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#000045', margin: '0 0 8px' }}>
+                Join Mochi Flow
               </h2>
               <p style={{ fontSize: '14.5px', color: '#4B5563', lineHeight: '1.5', margin: '0 0 20px' }}>
-                Benchmarked intake survey modeled after leading telehealth competitors (Ro, Hims, Found) for side-by-side study, question comparison, and conversion analysis.
+                Exact 1:1 replica of Join Mochi's clinical eligibility survey, matching their deep navy theme, Instrument Sans typography, progress bar, Trustpilot rating, and step-by-step logic.
               </p>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}>
-                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#374151', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>5 Benchmark Steps</span>
-                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#374151', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Pricing Contrast</span>
-                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#374151', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>UX Matrix</span>
-                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#374151', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Ready for Editing</span>
+                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Exact Match Step 0</span>
+                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Instrument Sans</span>
+                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Trustpilot Rating</span>
+                <span style={{ fontSize: '12px', background: '#F3F4F6', color: '#000045', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Autofill Demo</span>
               </div>
             </div>
 
@@ -195,7 +197,7 @@ export default function WelcomeScreen({ onSelectProject }) {
               className="cta-button-pill active"
               style={{
                 width: '100%',
-                background: '#0F172A',
+                background: '#000045',
                 color: '#FFF',
                 border: 'none',
                 height: '50px',
@@ -207,7 +209,7 @@ export default function WelcomeScreen({ onSelectProject }) {
                 fontSize: '15px'
               }}
             >
-              <span>Launch Competitor Survey</span>
+              <span>Launch Join Mochi Flow</span>
               <ArrowRight size={17} />
             </button>
           </div>
