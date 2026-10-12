@@ -1,5 +1,25 @@
 import React from 'react';
 
+// Exact SVG logo path extracted directly from Mochi's live CDN asset (mochi-health-NDFOLH-M.js)
+export function MochiLogoSvg({ width = 55, height = 52, className = '' }) {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      fill="none" 
+      viewBox="0 0 184 80" 
+      width={width} 
+      height={height}
+      className={className}
+      style={{ display: 'block' }}
+    >
+      <path 
+        fill="#000045" 
+        d="M183.164 5.813c-.059.203-.124.405-.177.61-.628 2.415-2.769 3.9-5.254 3.642-2.141-.223-4.053-2.269-4.186-4.478C173.391 3 174.933.822 177.302.283c2.622-.596 5.178 1.113 5.758 3.847.021.1.069.194.104.29zM93.974 31.675c.274-1.288.466-2.672.866-3.99 1.75-5.778 5.417-9.84 10.688-12.402a19.4 19.4 0 0 1 7.892-1.967c2.506-.087 4.931.269 7.23 1.332 1.114.515 2.018 1.278 2.429 2.527.741 2.254-.731 4.683-3.095 5.155-1.082.217-2.101-.06-3.084-.416-6.272-2.271-13.238 1.767-14.565 8.862-1.287 6.887 3.331 13.876 10.012 15.123 5.12.955 10.328-2.115 12.144-7.142.271-.75.556-1.507.934-2.203.824-1.519 2.162-2.144 3.804-2.037 1.46.094 2.482.923 3.113 2.258.429.905.387 1.86.161 2.811-.96 4.035-3.166 7.238-6.274 9.8-3.142 2.59-6.728 4.197-10.738 4.554-7.333.652-13.213-2.176-17.598-8.245-1.974-2.732-3.169-5.833-3.667-9.21-.018-.118-.063-.231-.093-.34-.213 1.145-.35 2.306-.65 3.42-1.818 6.742-5.689 11.714-12.106 14.247-5.825 2.298-11.504 1.544-16.873-1.584-4.955-2.885-8.202-7.215-9.385-12.974-1.427-6.947.35-13.12 4.87-18.41 3.135-3.669 7.146-5.822 11.86-6.346 6.348-.705 11.884 1.318 16.493 5.84 3.251 3.188 4.67 6.26 5.632 11.337M74.79 22.3l-.02-.114c-1.028.19-2.082.283-3.079.583-6.372 1.917-10.216 9.153-8.45 15.835 1.732 6.555 8.427 10.128 14.604 7.794 5.462-2.065 8.947-8.404 7.973-14.322-.988-6-5.882-9.749-11.028-9.777M25.755 20.13c1.154-1.986 2.68-3.424 4.636-4.373 1.328-.645 2.731-1.015 4.185-1.17 2.62-.28 5.182-.018 7.619 1.068 4.197 1.87 6.697 5.213 7.819 9.721.382 1.537.51 3.108.513 4.686.01 6.76.015 13.52-.011 20.28-.003.695-.115 1.434-.364 2.075a3.94 3.94 0 0 1-4.51 2.454c-1.905-.413-3.252-2.096-3.254-4.114-.007-7.023.016-14.046-.023-21.069a11.3 11.3 0 0 0-.459-3.097c-.862-2.914-3.381-4.526-6.319-4.309-3.124.232-5.175 2.364-5.64 5.702-.084.61-.114 1.231-.114 1.848-.008 6.868-.005 13.737-.005 20.605 0 1.365-.402 2.564-1.429 3.466-1.299 1.142-2.78 1.378-4.32.654-1.553-.731-2.386-2.052-2.39-3.825-.018-6.962.008-13.923-.026-20.884a12.2 12.2 0 0 0-.401-3.015c-.686-2.6-2.66-4.336-5.44-4.547-2.851-.215-5.28 1.333-6.26 4.1-.385 1.086-.529 2.213-.529 3.366q.002 10.417 0 20.837c0 2.13-1.261 3.806-3.193 4.263-2.482.587-4.936-1.39-4.94-4.014C.89 43.614.824 36.39.923 29.166c.062-4.585 1.603-8.595 5.147-11.579 2.227-1.876 4.822-2.82 7.678-3.043 1.9-.149 3.77 0 5.605.548 2.514.754 4.509 2.252 6.005 4.464.117.174.239.345.397.574M144.9 17.833c.212-.15.344-.24.472-.334 2.848-2.115 6.032-3.142 9.532-3.005 7.175.282 12.803 5.02 14.56 12.193q.665 2.707.662 5.503c-.008 6.156-.002 12.313-.004 18.469-.001 2.056-1.274 3.727-3.169 4.182-2.463.59-4.93-1.409-4.933-4.018-.007-6.218.003-12.436-.005-18.655-.002-1.92-.272-3.791-1.163-5.513-1.376-2.66-3.58-4.036-6.448-4.33-1.993-.206-3.89.138-5.604 1.247-2.208 1.43-3.311 3.597-3.713 6.18a17 17 0 0 0-.18 2.538c-.014 6.141-.004 12.282-.009 18.423-.002 2.042-1.293 3.695-3.211 4.144-2.32.544-4.66-1.2-4.876-3.637a15 15 0 0 1-.056-1.25q-.003-22.714-.003-45.43c0-1.412.374-2.667 1.484-3.571 1.335-1.086 2.832-1.25 4.355-.539 1.536.718 2.297 2.039 2.303 3.773.016 4.33.005 8.662.006 12.993zM174.27 34.703q-.001-7.98 0-15.96c.001-2.213 1.497-3.897 3.692-4.166 1.977-.243 3.841 1.117 4.322 3.169.076.327.118.671.118 1.008q.009 15.96.003 31.92c0 2.135-1.462 3.94-3.399 4.224-2.147.315-4.029-.943-4.589-3.092a4.8 4.8 0 0 1-.141-1.19c-.009-5.304-.006-10.609-.006-15.913M66.584 73.956q.001 2.457 0 4.916c-.002.771-.325 1.097-1.073 1.094-.742-.004-1.061-.334-1.062-1.104-.001-1.16-.01-2.319.005-3.478.004-.326-.103-.43-.416-.427q-1.799.023-3.598 0c-.32-.004-.416.116-.413.431.012 1.144.01 2.288.002 3.432-.005.824-.312 1.144-1.069 1.146-.75.001-1.081-.345-1.082-1.146q-.001-4.893-.001-9.787c0-.398.026-.797.424-.998.455-.228.957-.265 1.364.049.2.154.337.514.347.787.039 1.127.037 2.257.01 3.385-.01.447.125.589.559.578a66 66 0 0 1 3.328 0c.443.011.56-.148.549-.586-.028-1.113-.011-2.226-.009-3.34.002-.703.367-1.05 1.084-1.04.698.011 1.047.346 1.05 1.032.004 1.685.001 3.37.001 5.056M117.459 73.95c0-1.654.004-3.308-.002-4.963-.002-.407.037-.793.45-.973.462-.201.962-.243 1.362.093.185.156.304.498.312.76.033 1.158.026 2.319.007 3.478-.006.365.104.49.46.485q1.754-.025 3.508 0c.356.005.468-.124.462-.485a147 147 0 0 1-.003-3.386c.006-.762.355-1.103 1.083-1.091.729.011 1.066.357 1.067 1.121.003 3.294 0 6.587.002 9.88 0 .43-.084.818-.517.986-.471.182-.974.207-1.355-.16-.177-.17-.262-.517-.269-.786a67 67 0 0 1-.005-3.386c.011-.45-.126-.582-.559-.57a76 76 0 0 1-3.418.001c-.363-.007-.462.119-.456.479.019 1.16.009 2.32.006 3.479-.001.723-.337 1.051-1.066 1.053-.731.002-1.066-.321-1.067-1.051-.004-1.654-.002-3.309-.002-4.963M71.622 73.912q-.002-2.436.001-4.873c.002-.799.286-1.101 1.051-1.104q2.677-.008 5.355 0c.7.003 1.042.378 1.038 1.099-.005.7-.333 1.06-1.02 1.067-1.275.012-2.55.018-3.825-.004-.383-.007-.492.125-.473.503q.04.811 0 1.623c-.016.357.117.447.443.441 1.065-.017 2.13-.008 3.195-.005.704.002 1.055.366 1.05 1.078-.006.708-.328 1.05-1.022 1.056-1.065.009-2.13.013-3.195-.003-.336-.004-.489.078-.472.465.029.68.024 1.362.001 2.041-.01.347.102.458.436.454 1.305-.015 2.61-.01 3.915-.003.909.005 1.312.555 1.086 1.453-.108.429-.374.674-.8.676-1.98.008-3.96.012-5.94-.003-.547-.004-.82-.357-.822-.995-.005-1.655-.001-3.31-.002-4.966M91.303 79.965c-.368-.01-.688-.203-.846-.625a27 27 0 0 1-.502-1.437c-.09-.292-.238-.424-.549-.42q-1.845.02-3.688 0c-.308-.004-.466.122-.558.413-.143.455-.302.905-.468 1.35-.24.643-.732.863-1.375.63-.588-.214-.82-.692-.598-1.328 1.094-3.135 2.187-6.271 3.304-9.399.395-1.107.886-1.387 1.904-1.237.568.084.853.49 1.05.97.246.595.453 1.208.667 1.817a2972 2972 0 0 1 2.718 7.748c.295.846-.143 1.502-1.059 1.518m-5.286-4.634h3.085l-1.471-4.67-.153.02zM110.123 74.73q.002 2.017-.001 4.035c-.002 1.016-.788 1.513-1.689 1.076-.368-.179-.448-.496-.447-.881.007-2.242.003-4.485.003-6.727 0-.541-.014-1.083.005-1.623.013-.37-.096-.534-.484-.513-.553.03-1.109.015-1.664.006-.707-.012-1.068-.385-1.067-1.083.002-.7.366-1.083 1.063-1.085q3.195-.009 6.388 0c.683.002 1.029.362 1.043 1.052.015.716-.331 1.1-1.024 1.115-.554.012-1.111.026-1.664-.005-.388-.023-.475.13-.469.504.019 1.376.007 2.752.007 4.128M96.495 73.81v-4.775c-.001-.398.024-.797.422-.999.455-.23.945-.254 1.367.043.178.125.316.42.335.651.05.599.029 1.204.03 1.806 0 2.21.014 4.42-.011 6.63-.006.485.145.602.589.588 1.033-.03 2.068-.007 3.102-.008.383 0 .727.095.886.495.171.432.213.896-.075 1.277-.137.182-.42.342-.639.346-1.708.028-3.417.025-5.125.01-.586-.004-.876-.384-.879-1.103-.007-1.653-.002-3.307-.002-4.96" 
+      />
+    </svg>
+  );
+}
+
 export default function MochiScreen0({ 
   selectedGoal, 
   onSelectGoal, 
@@ -23,47 +43,44 @@ export default function MochiScreen0({
 
   return (
     <div style={{
-      fontFamily: "'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-      color: '#000045',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
       width: '100%',
-      maxWidth: '560px',
+      maxWidth: '580px',
       margin: '0 auto',
-      padding: '40px 20px 60px',
-      boxSizing: 'border-box'
+      padding: '48px 24px 64px',
+      boxSizing: 'border-box',
+      fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
+      color: '#000045'
     }}>
-      {/* Title & Subtitle */}
-      <div style={{ width: '100%', textAlign: 'left', marginBottom: '32px' }}>
+      {/* Title & Subtitle - Exact matching TextStack */}
+      <div style={{ marginBottom: '32px', textAlign: 'left' }}>
         <h1 style={{
-          fontSize: '28px',
-          fontWeight: 600,
-          lineHeight: '1.25',
+          fontSize: '24px',
+          fontWeight: 500,
+          lineHeight: '1.3',
           color: '#000045',
-          margin: '0 0 8px',
-          letterSpacing: '-0.015em'
+          margin: '0 0 8px 0',
+          letterSpacing: '-0.01em'
         }}>
           {isEs ? '¿Cuál es tu objetivo principal de pérdida de peso?' : "What's your primary weight loss goal?"}
         </h1>
         <p style={{
           fontSize: '15px',
-          color: '#606069',
-          margin: 0,
           fontWeight: 400,
-          lineHeight: '1.4'
+          lineHeight: '1.5',
+          color: '#606069',
+          margin: 0
         }}>
           {isEs ? 'Esto nos ayuda a personalizar tu plan de atención.' : 'This helps us personalize your care plan.'}
         </p>
       </div>
 
-      {/* Option Buttons */}
+      {/* Immediate Radio Button Options - Matching Mochi index-DhoTSAfb.js */}
       <div style={{
         display: 'flex',
         flexDirection: 'column',
         gap: '12px',
         width: '100%',
-        marginBottom: '36px'
+        marginBottom: '40px'
       }}>
         {options.map((opt) => {
           const isSelected = selectedGoal === opt.id;
@@ -71,38 +88,36 @@ export default function MochiScreen0({
             <button
               key={opt.id}
               type="button"
+              data-value={opt.id}
               onClick={() => {
                 onSelectGoal(opt.id);
                 if (onNext) {
-                  // Mochi auto-advances on click or allows selection
                   setTimeout(() => {
                     onNext(opt.id);
-                  }, 240);
+                  }, 220);
                 }
               }}
               style={{
+                minHeight: '68px',
                 width: '100%',
-                minHeight: '58px',
+                position: 'relative',
+                border: isSelected ? '1.5px solid #000045' : '1px solid #D5D6E0',
+                borderRadius: '16px',
                 padding: '16px 20px',
-                borderRadius: '12px',
-                border: isSelected ? '1.8px solid #000045' : '1px solid #D5D6E0',
-                background: '#FFFFFF',
+                backgroundColor: '#FFFFFF',
                 color: '#000045',
-                fontSize: '15px',
-                fontWeight: 500,
-                fontFamily: 'inherit',
                 cursor: 'pointer',
-                textAlign: 'center',
-                boxShadow: isSelected ? '0 1px 3px rgba(0,0,69,0.06)' : 'none',
-                transition: 'border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease',
+                userSelect: 'none',
                 outline: 'none',
+                transition: 'border-color 0.15s ease, background-color 0.15s ease',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                fontFamily: 'inherit'
               }}
               onMouseEnter={(e) => {
                 if (!isSelected) {
-                  e.currentTarget.style.borderColor = '#9C9EB2';
+                  e.currentTarget.style.borderColor = '#B0B2C4';
                   e.currentTarget.style.backgroundColor = '#FAFAFD';
                 }
               }}
@@ -113,36 +128,43 @@ export default function MochiScreen0({
                 }
               }}
             >
-              {opt.label}
+              <span style={{
+                fontSize: '15px',
+                fontWeight: 500,
+                textAlign: 'center',
+                color: '#000045'
+              }}>
+                {opt.label}
+              </span>
             </button>
           );
         })}
       </div>
 
-      {/* Language Switcher */}
-      <button
-        type="button"
-        onClick={onToggleLanguage}
-        style={{
-          background: 'transparent',
-          border: 'none',
-          color: '#000045',
-          fontSize: '14px',
-          fontWeight: 500,
-          cursor: 'pointer',
-          padding: '6px 12px',
-          marginBottom: '28px',
-          fontFamily: 'inherit',
-          textDecoration: 'none',
-          outline: 'none'
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
-        onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
-      >
-        {isEs ? 'Switch to English' : 'Cambiar a español'}
-      </button>
+      {/* Language Switcher - Mochi Tertiary button */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+        <button
+          type="button"
+          onClick={onToggleLanguage}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#000045',
+            fontSize: '14px',
+            fontWeight: 500,
+            cursor: 'pointer',
+            padding: '4px 8px',
+            fontFamily: 'inherit',
+            textDecoration: 'none'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+          onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+        >
+          {isEs ? 'Switch to English' : 'Cambiar a español'}
+        </button>
+      </div>
 
-      {/* Trustpilot Review Section */}
+      {/* Exact Trustpilot Widget */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -151,11 +173,13 @@ export default function MochiScreen0({
         gap: '8px',
         fontSize: '13px',
         color: '#000045',
-        fontWeight: 500
+        fontWeight: 400
       }}>
-        <span style={{ fontWeight: 600, fontSize: '14px', color: '#000045' }}>Excellent</span>
-        
-        {/* 5 Trustpilot Green Stars */}
+        <span style={{ fontWeight: 600, fontSize: '14px', color: '#000045' }}>
+          Excellent
+        </span>
+
+        {/* 5 Green Rating Star Blocks */}
         <div style={{ display: 'inline-flex', gap: '2px', alignItems: 'center' }}>
           {[1, 2, 3, 4, 5].map((star) => (
             <div
@@ -163,7 +187,7 @@ export default function MochiScreen0({
               style={{
                 width: '18px',
                 height: '18px',
-                background: '#00B67A',
+                backgroundColor: '#00B67A',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -177,7 +201,7 @@ export default function MochiScreen0({
           ))}
         </div>
 
-        {/* Review Count and Trustpilot text */}
+        {/* Underlined Review Count */}
         <span style={{
           textDecoration: 'underline',
           cursor: 'pointer',
@@ -188,11 +212,11 @@ export default function MochiScreen0({
         </span>
 
         {/* Trustpilot Brand Mark */}
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', fontWeight: 700 }}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="#00B67A">
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#00B67A">
             <path d="M12 0l3.09 9.51h10l-8.09 5.88 3.09 9.51L12 19l-8.09 5.9 3.09-9.51L0 9.51h10L12 0z" />
           </svg>
-          <span style={{ fontSize: '13px', fontWeight: 700, color: '#000045', letterSpacing: '-0.02em' }}>
+          <span style={{ fontSize: '13.5px', fontWeight: 700, color: '#000045', letterSpacing: '-0.02em' }}>
             Trustpilot
           </span>
         </div>

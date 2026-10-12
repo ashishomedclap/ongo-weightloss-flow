@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
-import MochiScreen0 from './MochiScreen0';
+import MochiScreen0, { MochiLogoSvg } from './MochiScreen0';
 import { 
   ArrowLeft, 
   Monitor, 
   Smartphone, 
   CheckCheck, 
-  Bug, 
   ChevronRight,
-  TrendingDown,
   ShieldCheck,
-  Calendar,
-  Sparkles
+  ChevronLeft
 } from 'lucide-react';
 
 const MOCHI_SCREENS = [
-  { key: '0', label: 'Step 0: Primary Weight Loss Goal (Live Match)' },
-  { key: '1', label: 'Step 1: Gender Assigned at Birth' },
-  { key: '2', label: 'Step 2: Height & Weight (BMI Calculation)' },
+  { key: '0', label: 'Step 0: Primary Weight Loss Goal (Exact Match)' },
+  { key: '1', label: 'Step 1: Sex Assigned at Birth' },
+  { key: '2', label: 'Step 2: Measurements & BMI' },
   { key: '3', label: 'Step 3: GLP-1 Medication History' },
-  { key: '4', label: 'Step 4: Clinical Eligibility & Care Plan' }
+  { key: '4', label: 'Step 4: Clinical Eligibility Result' }
 ];
 
 export default function CompetitorFlow({ onBackToWelcome }) {
@@ -28,13 +25,13 @@ export default function CompetitorFlow({ onBackToWelcome }) {
 
   // Form State
   const [formData, setFormData] = useState({
-    goal: '50-plus', // Pre-selected matching screenshot: "Lose 50+ lbs"
+    goal: '50-plus', // Pre-selected matching user screenshot ("Lose 50+ lbs")
     gender: 'female',
     heightFt: '5',
     heightIn: '6',
     weightLbs: '215',
     goalLbs: '155',
-    glp1History: 'first-time'
+    glp1History: 'semaglutide'
   });
 
   const [autofillKey, setAutofillKey] = useState(0);
@@ -54,12 +51,12 @@ export default function CompetitorFlow({ onBackToWelcome }) {
 
   const getProgressPercentage = () => {
     switch (currentStep) {
-      case '0': return 12;
-      case '1': return 32;
-      case '2': return 54;
-      case '3': return 76;
+      case '0': return 10;
+      case '1': return 30;
+      case '2': return 55;
+      case '3': return 75;
       case '4': return 100;
-      default: return 12;
+      default: return 10;
     }
   };
 
@@ -79,26 +76,24 @@ export default function CompetitorFlow({ onBackToWelcome }) {
       case '1':
         return (
           <div style={{
-            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
-            color: '#000045',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
             width: '100%',
-            maxWidth: '560px',
+            maxWidth: '580px',
             margin: '0 auto',
-            padding: '40px 20px 60px'
+            padding: '48px 24px 64px',
+            boxSizing: 'border-box',
+            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
+            color: '#000045'
           }}>
-            <div style={{ width: '100%', textAlign: 'left', marginBottom: '32px' }}>
-              <h1 style={{ fontSize: '28px', fontWeight: 600, color: '#000045', margin: '0 0 8px', letterSpacing: '-0.015em' }}>
+            <div style={{ marginBottom: '32px', textAlign: 'left' }}>
+              <h1 style={{ fontSize: '24px', fontWeight: 500, lineHeight: '1.3', color: '#000045', margin: '0 0 8px' }}>
                 What was your sex assigned at birth?
               </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0 }}>
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.5' }}>
                 This is required for calculating accurate body metabolic indexes and medication dosing guidelines.
               </p>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', marginBottom: '32px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', marginBottom: '36px' }}>
               {[
                 { id: 'female', label: 'Female' },
                 { id: 'male', label: 'Male' }
@@ -113,17 +108,19 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                       setTimeout(() => setCurrentStep('2'), 200);
                     }}
                     style={{
+                      minHeight: '68px',
                       width: '100%',
-                      minHeight: '58px',
+                      border: isSelected ? '1.5px solid #000045' : '1px solid #D5D6E0',
+                      borderRadius: '16px',
                       padding: '16px 20px',
-                      borderRadius: '12px',
-                      border: isSelected ? '1.8px solid #000045' : '1px solid #D5D6E0',
-                      background: '#FFFFFF',
+                      backgroundColor: '#FFFFFF',
                       color: '#000045',
                       fontSize: '15px',
                       fontWeight: 500,
                       cursor: 'pointer',
-                      textAlign: 'center'
+                      textAlign: 'center',
+                      fontFamily: 'inherit',
+                      outline: 'none'
                     }}
                   >
                     {opt.label}
@@ -132,83 +129,74 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               })}
             </div>
 
-            <button
-              type="button"
-              onClick={() => setCurrentStep('0')}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                color: '#606069',
-                fontSize: '14px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px'
-              }}
-            >
-              ← Back to previous question
-            </button>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <button
+                type="button"
+                onClick={() => setCurrentStep('0')}
+                style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
+              >
+                ← Back to previous question
+              </button>
+            </div>
           </div>
         );
 
       case '2':
         return (
           <div style={{
-            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
-            color: '#000045',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
             width: '100%',
-            maxWidth: '560px',
+            maxWidth: '580px',
             margin: '0 auto',
-            padding: '40px 20px 60px'
+            padding: '48px 24px 64px',
+            boxSizing: 'border-box',
+            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
+            color: '#000045'
           }}>
-            <div style={{ width: '100%', textAlign: 'left', marginBottom: '32px' }}>
-              <h1 style={{ fontSize: '28px', fontWeight: 600, color: '#000045', margin: '0 0 8px', letterSpacing: '-0.015em' }}>
+            <div style={{ marginBottom: '32px', textAlign: 'left' }}>
+              <h1 style={{ fontSize: '24px', fontWeight: 500, lineHeight: '1.3', color: '#000045', margin: '0 0 8px' }}>
                 What are your measurements?
               </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0 }}>
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.5' }}>
                 Used by our licensed clinical team to calculate your Body Mass Index (BMI).
               </p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', width: '100%', marginBottom: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', width: '100%', marginBottom: '24px' }}>
               <div>
-                <label style={{ fontSize: '13px', fontWeight: 600, color: '#000045', display: 'block', marginBottom: '6px' }}>Height</label>
+                <label style={{ fontSize: '13px', fontWeight: 500, color: '#000045', display: 'block', marginBottom: '6px' }}>Height</label>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <input
                     type="number"
                     value={formData.heightFt}
                     onChange={(e) => setFormData({ ...formData, heightFt: e.target.value })}
-                    style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
+                    style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
                     placeholder="Ft"
                   />
                   <input
                     type="number"
                     value={formData.heightIn}
                     onChange={(e) => setFormData({ ...formData, heightIn: e.target.value })}
-                    style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
+                    style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
                     placeholder="In"
                   />
                 </div>
               </div>
 
               <div>
-                <label style={{ fontSize: '13px', fontWeight: 600, color: '#000045', display: 'block', marginBottom: '6px' }}>Current Weight (lbs)</label>
+                <label style={{ fontSize: '13px', fontWeight: 500, color: '#000045', display: 'block', marginBottom: '6px' }}>Current Weight (lbs)</label>
                 <input
                   type="number"
                   value={formData.weightLbs}
                   onChange={(e) => setFormData({ ...formData, weightLbs: e.target.value })}
-                  style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
+                  style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
                 />
               </div>
             </div>
 
-            <div style={{ width: '100%', padding: '16px 20px', borderRadius: '12px', background: '#F4F4FA', border: '1px solid #E2E2EA', marginBottom: '28px' }}>
+            <div style={{ width: '100%', padding: '16px 20px', borderRadius: '14px', background: '#F4F4FA', border: '1px solid #E2E2EA', marginBottom: '28px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '14px', fontWeight: 600, color: '#000045' }}>Estimated BMI</span>
-                <span style={{ fontSize: '18px', fontWeight: 700, color: '#000045' }}>34.7 · Eligible for GLP-1</span>
+                <span style={{ fontSize: '14px', fontWeight: 500, color: '#000045' }}>Calculated BMI</span>
+                <span style={{ fontSize: '16px', fontWeight: 700, color: '#000045' }}>34.7 · Eligible for GLP-1 Care</span>
               </div>
             </div>
 
@@ -217,8 +205,8 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               onClick={() => setCurrentStep('3')}
               style={{
                 width: '100%',
-                height: '54px',
-                borderRadius: '12px',
+                height: '52px',
+                borderRadius: '16px',
                 background: '#000045',
                 color: '#FFF',
                 border: 'none',
@@ -231,35 +219,35 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               Continue
             </button>
 
-            <button
-              type="button"
-              onClick={() => setCurrentStep('1')}
-              style={{ background: 'transparent', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer' }}
-            >
-              ← Back
-            </button>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <button
+                type="button"
+                onClick={() => setCurrentStep('1')}
+                style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
+              >
+                ← Back
+              </button>
+            </div>
           </div>
         );
 
       case '3':
         return (
           <div style={{
-            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
-            color: '#000045',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
             width: '100%',
-            maxWidth: '560px',
+            maxWidth: '580px',
             margin: '0 auto',
-            padding: '40px 20px 60px'
+            padding: '48px 24px 64px',
+            boxSizing: 'border-box',
+            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
+            color: '#000045'
           }}>
-            <div style={{ width: '100%', textAlign: 'left', marginBottom: '32px' }}>
-              <h1 style={{ fontSize: '28px', fontWeight: 600, color: '#000045', margin: '0 0 8px', letterSpacing: '-0.015em' }}>
+            <div style={{ marginBottom: '32px', textAlign: 'left' }}>
+              <h1 style={{ fontSize: '24px', fontWeight: 500, lineHeight: '1.3', color: '#000045', margin: '0 0 8px' }}>
                 Have you taken GLP-1 medications in the past 12 months?
               </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0 }}>
-                This informs whether our medical team titrates or keeps your existing dosage.
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.5' }}>
+                This informs whether our medical team titrates or maintains your active dosage.
               </p>
             </div>
 
@@ -280,17 +268,19 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                       setTimeout(() => setCurrentStep('4'), 200);
                     }}
                     style={{
+                      minHeight: '68px',
                       width: '100%',
-                      minHeight: '58px',
+                      border: isSelected ? '1.5px solid #000045' : '1px solid #D5D6E0',
+                      borderRadius: '16px',
                       padding: '16px 20px',
-                      borderRadius: '12px',
-                      border: isSelected ? '1.8px solid #000045' : '1px solid #D5D6E0',
-                      background: '#FFFFFF',
+                      backgroundColor: '#FFFFFF',
                       color: '#000045',
                       fontSize: '15px',
                       fontWeight: 500,
                       cursor: 'pointer',
-                      textAlign: 'center'
+                      textAlign: 'center',
+                      fontFamily: 'inherit',
+                      outline: 'none'
                     }}
                   >
                     {opt.label}
@@ -299,13 +289,15 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               })}
             </div>
 
-            <button
-              type="button"
-              onClick={() => setCurrentStep('2')}
-              style={{ background: 'transparent', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer' }}
-            >
-              ← Back
-            </button>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <button
+                type="button"
+                onClick={() => setCurrentStep('2')}
+                style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
+              >
+                ← Back
+              </button>
+            </div>
           </div>
         );
 
@@ -313,15 +305,13 @@ export default function CompetitorFlow({ onBackToWelcome }) {
       default:
         return (
           <div style={{
-            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
-            color: '#000045',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
             width: '100%',
-            maxWidth: '560px',
+            maxWidth: '580px',
             margin: '0 auto',
-            padding: '40px 20px 60px'
+            padding: '48px 24px 64px',
+            boxSizing: 'border-box',
+            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
+            color: '#000045'
           }}>
             <div style={{
               width: '48px',
@@ -332,21 +322,20 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              marginBottom: '20px'
+              margin: '0 auto 20px'
             }}>
               <ShieldCheck size={28} />
             </div>
 
-            <div style={{ width: '100%', textAlign: 'center', marginBottom: '28px' }}>
-              <h1 style={{ fontSize: '26px', fontWeight: 600, color: '#000045', margin: '0 0 8px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+              <h1 style={{ fontSize: '24px', fontWeight: 500, color: '#000045', margin: '0 0 8px' }}>
                 You are clinically eligible for Mochi Health
               </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0 }}>
-                Based on your goal to lose 50+ lbs and your health inputs, you qualify for physician-managed GLP-1 care.
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.5' }}>
+                Based on your goal to lose 50+ lbs and your health profile, you qualify for physician-guided GLP-1 care.
               </p>
             </div>
 
-            {/* Pricing Card */}
             <div style={{
               width: '100%',
               borderRadius: '16px',
@@ -354,26 +343,27 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               padding: '24px',
               background: '#FFFFFF',
               boxShadow: '0 4px 16px rgba(0,0,69,0.06)',
-              marginBottom: '24px'
+              marginBottom: '24px',
+              boxSizing: 'border-box'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '12px' }}>
                 <span style={{ fontSize: '18px', fontWeight: 700, color: '#000045' }}>Mochi Membership</span>
-                <span style={{ fontSize: '24px', fontWeight: 800, color: '#000045' }}>$79<span style={{ fontSize: '14px', fontWeight: 500, color: '#606069' }}>/month</span></span>
+                <span style={{ fontSize: '24px', fontWeight: 800, color: '#000045' }}>$79<span style={{ fontSize: '14px', fontWeight: 500, color: '#606069' }}>/mo</span></span>
               </div>
               <ul style={{ margin: '0 0 20px', paddingLeft: '20px', color: '#404050', fontSize: '14px', lineHeight: '1.7' }}>
-                <li>Dedicated licensed physician & registered dietitian</li>
-                <li>Unlimited telehealth follow-ups & medical advice</li>
-                <li>Prescription coordination for Semaglutide ($99/mo) or Tirzepatide ($199/mo)</li>
-                <li>No lock-in contracts; cancel anytime</li>
+                <li>Dedicated physician & registered dietitian</li>
+                <li>Unlimited medical follow-ups</li>
+                <li>Prescription coordination for Semaglutide or Tirzepatide</li>
+                <li>Cancel anytime</li>
               </ul>
               
               <button
                 type="button"
-                onClick={() => alert("Mochi Competitor Flow Demo Completed!")}
+                onClick={() => alert("Mochi Flow Demo Complete!")}
                 style={{
                   width: '100%',
                   height: '52px',
-                  borderRadius: '12px',
+                  borderRadius: '14px',
                   background: '#000045',
                   color: '#FFF',
                   border: 'none',
@@ -386,23 +376,25 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               </button>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setCurrentStep('0')}
-              style={{ background: 'transparent', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer' }}
-            >
-              Restart Mochi Survey
-            </button>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <button
+                type="button"
+                onClick={() => setCurrentStep('0')}
+                style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
+              >
+                Restart Survey
+              </button>
+            </div>
           </div>
         );
     }
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#FFFFFF', position: 'relative' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#FFFFFF', position: 'relative' }}>
       
       {/* Dev Study Bar */}
-      <aside className="top-dev-toolbar" aria-label="Join Mochi flow controls" style={{ borderBottom: '2px solid #000045' }}>
+      <aside className="top-dev-toolbar" aria-label="Join Mochi flow controls" style={{ borderBottom: '1px solid #D5D6E0' }}>
         <div className="toolbar-brand" style={{ cursor: onBackToWelcome ? 'pointer' : 'default' }} onClick={onBackToWelcome}>
           {onBackToWelcome && (
             <button 
@@ -418,7 +410,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           )}
           <span style={{ fontWeight: 800, color: '#000045' }}>Join Mochi</span>
           <span style={{ fontSize: '11px', background: '#EAEAF2', color: '#000045', padding: '2px 6px', borderRadius: '6px', fontWeight: 600 }}>
-            Competitor Flow
+            Exact Mochi Architecture
           </span>
         </div>
 
@@ -447,7 +439,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         </div>
       </aside>
 
-      {/* Floating Right Report Badge (Matches Join Mochi live site) */}
+      {/* Floating Right Report / Usersnap Bug Button */}
       <div 
         title="Report an issue or feedback"
         style={{
@@ -457,7 +449,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           transform: 'translateY(-50%)',
           backgroundColor: '#000045',
           color: '#FFFFFF',
-          padding: '10px 7px',
+          padding: '10px 6px',
           borderTopLeftRadius: '8px',
           borderBottomLeftRadius: '8px',
           display: 'flex',
@@ -466,20 +458,32 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           gap: '8px',
           cursor: 'pointer',
           zIndex: 9998,
-          boxShadow: '0 2px 12px rgba(0,0,69,0.25)'
+          boxShadow: '0 2px 10px rgba(0,0,69,0.25)'
         }}
-        onClick={() => alert("Join Mochi Bug/Feedback Reporter")}
+        onClick={() => alert("Mochi Feedback Reporter")}
       >
         <span style={{ 
           writingMode: 'vertical-rl', 
           transform: 'rotate(180deg)', 
           fontSize: '11px', 
           fontWeight: 600, 
-          letterSpacing: '0.05em' 
+          letterSpacing: '0.04em' 
         }}>
           Report
         </span>
-        <Bug size={14} style={{ transform: 'rotate(90deg)' }} />
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(90deg)' }}>
+          <path d="m8 2 1.88 1.88" />
+          <path d="M14.12 3.88 16 2" />
+          <path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" />
+          <path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6" />
+          <path d="M12 20v-9" />
+          <path d="M6.53 9C4.6 8.8 3 7.1 3 5" />
+          <path d="M6 13H2" />
+          <path d="M3 21c0-2.1 1.7-3.9 3.8-4" />
+          <path d="M20.97 5c0 2.1-1.6 3.8-3.5 4" />
+          <path d="M22 13h-4" />
+          <path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" />
+        </svg>
       </div>
 
       {/* Mochi Shell */}
@@ -490,63 +494,78 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         borderRadius: isMobileFrame ? '24px' : '0',
         overflow: 'hidden',
         boxShadow: isMobileFrame ? '0 12px 32px rgba(0,0,69,0.08)' : 'none',
-        minHeight: isMobileFrame ? '720px' : 'auto'
+        minHeight: isMobileFrame ? '740px' : 'auto',
+        backgroundColor: '#FFFFFF'
       }}>
-        {/* Top Header with Progress Bar and Mochi Logo */}
+        {/* Exact Mochi Top Header with Progress Bar and Mochi Logo */}
         <header style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '24px 32px 12px',
-          maxWidth: '960px',
-          margin: '0 auto',
+          justifyContent: 'center',
           width: '100%',
+          backgroundColor: '#FFFFFF',
+          borderBottom: '1px solid #E7E7F0',
+          padding: '16px 24px',
           boxSizing: 'border-box'
         }}>
-          {/* Centered / Left Progress Bar */}
-          <div style={{
-            flex: '0 1 360px',
-            height: '5px',
-            backgroundColor: '#EAEAF2',
-            borderRadius: '999px',
-            overflow: 'hidden'
-          }}>
-            <div style={{
-              width: `${getProgressPercentage()}%`,
-              height: '100%',
-              backgroundColor: '#000045',
-              borderRadius: '999px',
-              transition: 'width 0.3s ease'
-            }} />
-          </div>
-
-          {/* Mochi Health Brand Logo */}
           <div style={{
             display: 'flex',
-            flexDirection: 'column',
+            width: '100%',
+            maxWidth: '700px',
             alignItems: 'center',
-            color: '#000045',
-            userSelect: 'none'
+            justifyContent: 'space-between',
+            gap: '24px'
           }}>
-            <span style={{
-              fontSize: '22px',
-              fontWeight: 800,
-              letterSpacing: '-0.04em',
-              lineHeight: '1',
-              fontFamily: "'Instrument Sans', sans-serif"
+            {/* Left Back Arrow or Invisible Balancer */}
+            {currentStep !== '0' ? (
+              <button
+                type="button"
+                onClick={() => setCurrentStep(String(Math.max(0, Number(currentStep) - 1)))}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: '#606069',
+                  flexShrink: 0
+                }}
+                title="Previous step"
+              >
+                <ChevronLeft size={24} />
+              </button>
+            ) : (
+              <div style={{ width: '24px', height: '24px', opacity: 0, flexShrink: 0 }} />
+            )}
+
+            {/* Center Progress Track */}
+            <div style={{
+              flex: 1,
+              height: '6px',
+              backgroundColor: '#E7E7F0',
+              borderRadius: '999px',
+              overflow: 'hidden'
             }}>
-              mochi
-            </span>
-            <span style={{
-              fontSize: '7px',
-              fontWeight: 700,
-              letterSpacing: '0.22em',
-              marginTop: '2px',
-              color: '#000045',
-              textTransform: 'uppercase'
-            }}>
-              HEALTH
-            </span>
+              <div style={{
+                width: `${getProgressPercentage()}%`,
+                height: '100%',
+                backgroundColor: '#000045',
+                borderRadius: '999px',
+                transition: 'width 0.3s ease'
+              }} />
+            </div>
+
+            {/* Right Mochi Official SVG Logo */}
+            <a 
+              href="https://www.joinmochi.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ flexShrink: 0, display: 'block' }}
+              title="Join Mochi"
+            >
+              <MochiLogoSvg width={55} height={52} />
+            </a>
           </div>
         </header>
 
