@@ -10,43 +10,79 @@ import MochiFrame7Results from './MochiFrame7Results';
 import MochiFrame8State from './MochiFrame8State';
 import MochiFrame9DOB from './MochiFrame9DOB';
 import MochiFrame10Name from './MochiFrame10Name';
+import MochiFrame11Gender from './MochiFrame11Gender';
+import MochiFrame12HeightWeight from './MochiFrame12HeightWeight';
+import MochiFrame13Projection from './MochiFrame13Projection';
+import MochiFrame14MedHistory from './MochiFrame14MedHistory';
+import MochiFrame15Conditions from './MochiFrame15Conditions';
+import MochiFrame16SafetyChecks from './MochiFrame16SafetyChecks';
+import MochiFrame17Candidate from './MochiFrame17Candidate';
+import MochiFrame18CareBeyond from './MochiFrame18CareBeyond';
+import MochiFrame19InsuranceSavings from './MochiFrame19InsuranceSavings';
+import MochiFrame20InsuranceUpload from './MochiFrame20InsuranceUpload';
+import MochiFrame21ConfirmInsurance from './MochiFrame21ConfirmInsurance';
+import MochiFrame22CheckingCoverage from './MochiFrame22CheckingCoverage';
+import MochiFrame23NotEligible from './MochiFrame23NotEligible';
+import MochiFrame24GoodHands from './MochiFrame24GoodHands';
+import MochiFrame25EveryStep from './MochiFrame25EveryStep';
+import MochiFrame26AccountSetup from './MochiFrame26AccountSetup';
+import MochiFrame27WhatHappensNext from './MochiFrame27WhatHappensNext';
+import MochiFrame28PlanSelection from './MochiFrame28PlanSelection';
+import MochiFrame29Checkout from './MochiFrame29Checkout';
 import { 
   ArrowLeft, 
   Monitor, 
   Smartphone, 
   CheckCheck, 
   ChevronLeft,
-  ShieldCheck,
-  Gift
+  Gift,
+  Sparkles
 } from 'lucide-react';
 
 const MOCHI_SCREENS = [
-  { key: 'frame-1', label: 'Frame 1: First Month Free Offer (Modal)', short: 'Frame 1' },
-  { key: 'frame-2', label: 'Frame 2: Primary Weight Loss Goal', short: 'Frame 2' },
-  { key: 'frame-3', label: 'Frame 3: Why Weight Management is Important', short: 'Frame 3' },
-  { key: 'frame-4', label: 'Frame 4: Medication Values & Priorities', short: 'Frame 4' },
-  { key: 'frame-5', label: 'Frame 5: Doctor Consultation Preference', short: 'Frame 5' },
-  { key: 'frame-6', label: 'Frame 6: Treatment in Mind Already', short: 'Frame 6' },
-  { key: 'frame-7', label: 'Frame 7: Real Member Results & Transformations', short: 'Frame 7' },
-  { key: 'frame-8', label: 'Frame 8: State of Residence', short: 'Frame 8' },
-  { key: 'frame-9', label: 'Frame 9: Date of Birth', short: 'Frame 9' },
-  { key: 'frame-10', label: 'Frame 10: Patient First & Last Name', short: 'Frame 10' },
-  { key: 'screen-11', label: 'Screen 11: Clinical Care Plan & Pricing', short: 'Screen 11' }
+  { key: 'frame-1', label: 'Screen 1: First Month Free Offer (Modal)', short: 'Screen 1' },
+  { key: 'frame-2', label: 'Screen 2: Primary Weight Loss Goal', short: 'Screen 2' },
+  { key: 'frame-3', label: 'Screen 3: Why Weight Management is Important', short: 'Screen 3' },
+  { key: 'frame-4', label: 'Screen 4: Medication Values & Priorities', short: 'Screen 4' },
+  { key: 'frame-5', label: 'Screen 5: Doctor Consultation Preference', short: 'Screen 5' },
+  { key: 'frame-6', label: 'Screen 6: Treatment in Mind Already', short: 'Screen 6' },
+  { key: 'frame-7', label: 'Screen 7: Real Member Results & Transformations', short: 'Screen 7' },
+  { key: 'frame-8', label: 'Screen 8: State of Residence', short: 'Screen 8' },
+  { key: 'frame-9', label: 'Screen 9: Date of Birth', short: 'Screen 9' },
+  { key: 'frame-10', label: 'Screen 10: Patient First & Last Name', short: 'Screen 10' },
+  { key: 'frame-11', label: 'Screen 11: Birth-Assigned Gender', short: 'Screen 11' },
+  { key: 'frame-12', label: 'Screen 12: Height & Weight (BMI)', short: 'Screen 12' },
+  { key: 'frame-13', label: 'Screen 13: 6-Month Weight Loss Projection', short: 'Screen 13' },
+  { key: 'frame-14', label: 'Screen 14: Prior Weight Loss Meds (6 Mos)', short: 'Screen 14' },
+  { key: 'frame-15', label: 'Screen 15: Medical Conditions History', short: 'Screen 15' },
+  { key: 'frame-16', label: 'Screen 16: Safety Checks (Contraindications)', short: 'Screen 16' },
+  { key: 'frame-17', label: 'Screen 17: Candidate Approval Estimate', short: 'Screen 17' },
+  { key: 'frame-18', label: 'Screen 18: Care Beyond Weight Loss', short: 'Screen 18' },
+  { key: 'frame-19', label: 'Screen 19: Save $389 with Insurance', short: 'Screen 19' },
+  { key: 'frame-20', label: 'Screen 20: Add Insurance Information', short: 'Screen 20' },
+  { key: 'frame-21', label: 'Screen 21: Confirm Insurance Details', short: 'Screen 21' },
+  { key: 'frame-22', label: 'Screen 22: Checking Coverage (Live Lookup)', short: 'Screen 22' },
+  { key: 'frame-23', label: 'Screen 23: Standard Membership Notice', short: 'Screen 23' },
+  { key: 'frame-24', label: 'Screen 24: You\'re in Good Hands (Doctors)', short: 'Screen 24' },
+  { key: 'frame-25', label: 'Screen 25: With You Every Step (Results)', short: 'Screen 25' },
+  { key: 'frame-26', label: 'Screen 26: Account Setup / Sign in', short: 'Screen 26' },
+  { key: 'frame-27', label: 'Screen 27: What Happens Next (Roadmap)', short: 'Screen 27' },
+  { key: 'frame-28', label: 'Screen 28: Plan Selection & Pricing', short: 'Screen 28' },
+  { key: 'frame-29', label: 'Screen 29: Payment & Checkout', short: 'Screen 29' }
 ];
 
 const getInitialStep = () => {
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
     const frame = params.get('frame');
-    if (frame && Number(frame) >= 1 && Number(frame) <= 10) {
+    if (frame && Number(frame) >= 1 && Number(frame) <= 29) {
       return `frame-${frame}`;
     }
     const screen = params.get('screen');
     if (screen) {
-      if (['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'].includes(screen)) {
+      if (Array.from({ length: 29 }, (_, i) => String(i + 1)).includes(screen)) {
         return `frame-${screen}`;
       }
-      if (screen === '11' || screen === 'screen-11') return 'screen-11';
     }
   }
   return 'frame-1';
@@ -58,7 +94,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
   const [language, setLanguage] = useState('en');
   const [showOfferModal, setShowOfferModal] = useState(false);
 
-  // Comprehensive Form State across Frames 1-10
+  // Comprehensive Form State across Frames 1-29
   const [formData, setFormData] = useState({
     offerClaimed: false,
     goal: '50-plus', // Frame 2
@@ -66,15 +102,35 @@ export default function CompetitorFlow({ onBackToWelcome }) {
     medValues: ['multi-month-supplies', 'max-weight-loss', 'lowest-side-effects'], // Frame 4
     doctorPreference: 'video-when-needed-messaging', // Frame 5
     treatments: ['compounded-semaglutide-inj', 'fda-injectable'], // Frame 6
-    selectedState: 'California', // Frame 8
-    birthMonth: '6', // Frame 9
-    birthDay: '15',
+    selectedState: 'Colorado', // Frame 8 & 21
+    birthMonth: 'April', // Frame 9 & 21
+    birthDay: '09',
     birthYear: '1992',
-    firstName: 'nicholas', // Frame 10
-    lastName: 'cage'
+    firstName: 'nicholas', // Frame 10 & 21
+    lastName: 'cage',
+    gender: 'Male', // Frame 11 & 21
+    heightFeet: '5', // Frame 12
+    heightInches: '8',
+    weightLbs: '220',
+    medHistory: 'no', // Frame 14
+    conditions: ['prediabetes', 'hypertension'], // Frame 15
+    safetyChecks: ['none-of-these'], // Frame 16
+    careBeyond: ['skincare', 'mental-health'], // Frame 18
+    insurance: { // Frame 20 & 21
+      insuranceType: 'Commercial / Employer-sponsored',
+      relationship: 'Self',
+      insuranceProvider: 'Blue Cross Blue Shield',
+      method: 'photo',
+      frontUploaded: true,
+      backUploaded: true,
+      memberId: 'W123456789',
+      groupId: 'GRP-10293'
+    },
+    email: 'nicholas.cage@mochihealth.com', // Frame 26
+    selectedPlan: '3-months' // Frame 28
   });
 
-  const [autofillKey, setAutofillKey] = useState(0);
+  const [_autofillKey, setAutofillKey] = useState(0);
 
   // Sync step changes to URL
   useEffect(() => {
@@ -93,7 +149,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
     }
   }, [currentStep]);
 
-  // Autofill Handler (populates all screens 1 to 10)
+  // Autofill Handler (populates all screens 1 to 29)
   const handleAutofill = () => {
     setFormData({
       offerClaimed: true,
@@ -102,29 +158,67 @@ export default function CompetitorFlow({ onBackToWelcome }) {
       medValues: ['multi-month-supplies', 'max-weight-loss', 'lowest-cost', 'lowest-side-effects'],
       doctorPreference: 'video-when-needed-messaging',
       treatments: ['compounded-semaglutide-inj', 'fda-injectable', 'provider-recommendation'],
-      selectedState: 'California',
-      birthMonth: '6',
-      birthDay: '15',
+      selectedState: 'Colorado',
+      birthMonth: 'April',
+      birthDay: '09',
       birthYear: '1992',
       firstName: 'nicholas',
-      lastName: 'cage'
+      lastName: 'cage',
+      gender: 'Male',
+      heightFeet: '5',
+      heightInches: '8',
+      weightLbs: '220',
+      medHistory: 'no',
+      conditions: ['prediabetes', 'hypertension'],
+      safetyChecks: ['none-of-these'],
+      careBeyond: ['skincare', 'mental-health', 'longevity'],
+      insurance: {
+        insuranceType: 'Commercial / Employer-sponsored',
+        relationship: 'Self',
+        insuranceProvider: 'Blue Cross Blue Shield',
+        method: 'photo',
+        frontUploaded: true,
+        backUploaded: true,
+        memberId: 'W123456789',
+        groupId: 'GRP-10293'
+      },
+      email: 'nicholas.cage@mochihealth.com',
+      selectedPlan: '3-months'
     });
     setAutofillKey(prev => prev + 1);
   };
 
   const getProgressPercentage = () => {
     switch (currentStep) {
-      case 'frame-1': return 15;
-      case 'frame-2': return 18;
-      case 'frame-3': return 25;
-      case 'frame-4': return 32;
-      case 'frame-5': return 38;
-      case 'frame-6': return 46;
-      case 'frame-7': return 54;
-      case 'frame-8': return 62;
-      case 'frame-9': return 70;
-      case 'frame-10': return 80;
-      case 'screen-11': return 100;
+      case 'frame-1': return 3;
+      case 'frame-2': return 6;
+      case 'frame-3': return 10;
+      case 'frame-4': return 14;
+      case 'frame-5': return 18;
+      case 'frame-6': return 22;
+      case 'frame-7': return 26;
+      case 'frame-8': return 30;
+      case 'frame-9': return 34;
+      case 'frame-10': return 38;
+      case 'frame-11': return 42;
+      case 'frame-12': return 46;
+      case 'frame-13': return 50;
+      case 'frame-14': return 54;
+      case 'frame-15': return 58;
+      case 'frame-16': return 62;
+      case 'frame-17': return 66;
+      case 'frame-18': return 70;
+      case 'frame-19': return 74;
+      case 'frame-20': return 78;
+      case 'frame-21': return 82;
+      case 'frame-22': return 86;
+      case 'frame-23': return 90;
+      case 'frame-24': return 93;
+      case 'frame-25': return 95;
+      case 'frame-26': return 96;
+      case 'frame-27': return 97;
+      case 'frame-28': return 98;
+      case 'frame-29': return 100;
       default: return 18;
     }
   };
@@ -158,6 +252,66 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         return { ...prev, treatments: current.filter(t => t !== treatmentId) };
       } else {
         return { ...prev, treatments: [...current, treatmentId] };
+      }
+    });
+  };
+
+  const toggleCondition = (condId) => {
+    setFormData(prev => {
+      const current = prev.conditions || [];
+      if (condId === 'none-of-these') {
+        if (current.includes('none-of-these')) {
+          return { ...prev, conditions: [] };
+        } else {
+          return { ...prev, conditions: ['none-of-these'] };
+        }
+      } else {
+        const withoutNone = current.filter(c => c !== 'none-of-these');
+        if (withoutNone.includes(condId)) {
+          return { ...prev, conditions: withoutNone.filter(c => c !== condId) };
+        } else {
+          return { ...prev, conditions: [...withoutNone, condId] };
+        }
+      }
+    });
+  };
+
+  const toggleSafetyCheck = (safetyId) => {
+    setFormData(prev => {
+      const current = prev.safetyChecks || [];
+      if (safetyId === 'none-of-these') {
+        if (current.includes('none-of-these')) {
+          return { ...prev, safetyChecks: [] };
+        } else {
+          return { ...prev, safetyChecks: ['none-of-these'] };
+        }
+      } else {
+        const withoutNone = current.filter(s => s !== 'none-of-these');
+        if (withoutNone.includes(safetyId)) {
+          return { ...prev, safetyChecks: withoutNone.filter(s => s !== safetyId) };
+        } else {
+          return { ...prev, safetyChecks: [...withoutNone, safetyId] };
+        }
+      }
+    });
+  };
+
+  const toggleTopic = (topicId) => {
+    setFormData(prev => {
+      const current = prev.careBeyond || [];
+      if (topicId === 'none-of-these') {
+        if (current.includes('none-of-these')) {
+          return { ...prev, careBeyond: [] };
+        } else {
+          return { ...prev, careBeyond: ['none-of-these'] };
+        }
+      } else {
+        const withoutNone = current.filter(t => t !== 'none-of-these');
+        if (withoutNone.includes(topicId)) {
+          return { ...prev, careBeyond: withoutNone.filter(t => t !== topicId) };
+        } else {
+          return { ...prev, careBeyond: [...withoutNone, topicId] };
+        }
       }
     });
   };
@@ -278,105 +432,203 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             lastName={formData.lastName}
             onChangeFirstName={(fn) => setFormData(prev => ({ ...prev, firstName: fn }))}
             onChangeLastName={(ln) => setFormData(prev => ({ ...prev, lastName: ln }))}
-            onNext={() => setCurrentStep('screen-11')}
+            onNext={() => setCurrentStep('frame-11')}
             onBack={() => setCurrentStep('frame-9')}
           />
         );
 
-      case 'screen-11':
+      case 'frame-11':
+        return (
+          <MochiFrame11Gender
+            selectedGender={formData.gender}
+            onSelectGender={(g) => setFormData(prev => ({ ...prev, gender: g }))}
+            onNext={() => setCurrentStep('frame-12')}
+            onBack={() => setCurrentStep('frame-10')}
+          />
+        );
+
+      case 'frame-12':
+        return (
+          <MochiFrame12HeightWeight
+            heightFeet={formData.heightFeet}
+            heightInches={formData.heightInches}
+            weightLbs={formData.weightLbs}
+            onChangeHeightFeet={(ft) => setFormData(prev => ({ ...prev, heightFeet: ft }))}
+            onChangeHeightInches={(inc) => setFormData(prev => ({ ...prev, heightInches: inc }))}
+            onChangeWeight={(wt) => setFormData(prev => ({ ...prev, weightLbs: wt }))}
+            onNext={() => setCurrentStep('frame-13')}
+            onBack={() => setCurrentStep('frame-11')}
+          />
+        );
+
+      case 'frame-13':
+        return (
+          <MochiFrame13Projection
+            weightLbs={formData.weightLbs}
+            onNext={() => setCurrentStep('frame-14')}
+            onBack={() => setCurrentStep('frame-12')}
+          />
+        );
+
+      case 'frame-14':
+        return (
+          <MochiFrame14MedHistory
+            selectedMedHistory={formData.medHistory}
+            onSelectMedHistory={(h) => setFormData(prev => ({ ...prev, medHistory: h }))}
+            onNext={() => setCurrentStep('frame-15')}
+            onBack={() => setCurrentStep('frame-13')}
+          />
+        );
+
+      case 'frame-15':
+        return (
+          <MochiFrame15Conditions
+            selectedConditions={formData.conditions}
+            onToggleCondition={toggleCondition}
+            onNext={() => setCurrentStep('frame-16')}
+            onBack={() => setCurrentStep('frame-14')}
+          />
+        );
+
+      case 'frame-16':
+        return (
+          <MochiFrame16SafetyChecks
+            selectedSafetyChecks={formData.safetyChecks}
+            onToggleSafetyCheck={toggleSafetyCheck}
+            onNext={() => setCurrentStep('frame-17')}
+            onBack={() => setCurrentStep('frame-15')}
+          />
+        );
+
+      case 'frame-17':
+        return (
+          <MochiFrame17Candidate
+            targetLoss="10-20 lbs"
+            onNext={() => setCurrentStep('frame-18')}
+            onBack={() => setCurrentStep('frame-16')}
+          />
+        );
+
+      case 'frame-18':
+        return (
+          <MochiFrame18CareBeyond
+            selectedTopics={formData.careBeyond}
+            onToggleTopic={toggleTopic}
+            onNext={() => setCurrentStep('frame-19')}
+            onBack={() => setCurrentStep('frame-17')}
+          />
+        );
+
+      case 'frame-19':
+        return (
+          <MochiFrame19InsuranceSavings
+            onCheckCoverage={() => setCurrentStep('frame-20')}
+            onSkip={() => setCurrentStep('frame-26')}
+            onBack={() => setCurrentStep('frame-18')}
+          />
+        );
+
+      case 'frame-20':
+        return (
+          <MochiFrame20InsuranceUpload
+            insuranceData={formData.insurance}
+            onChangeInsuranceData={(ins) => setFormData(prev => ({ ...prev, insurance: ins }))}
+            onNext={() => setCurrentStep('frame-21')}
+            onBack={() => setCurrentStep('frame-19')}
+          />
+        );
+
+      case 'frame-21':
+        return (
+          <MochiFrame21ConfirmInsurance
+            formData={{ ...formData, ...formData.insurance }}
+            onConfirmInsurance={(confirmed) => setFormData(prev => ({ ...prev, insurance: { ...prev.insurance, ...confirmed } }))}
+            onNext={() => setCurrentStep('frame-22')}
+            onBack={() => setCurrentStep('frame-20')}
+          />
+        );
+
+      case 'frame-22':
+        return (
+          <MochiFrame22CheckingCoverage
+            onNext={() => setCurrentStep('frame-23')}
+            onBack={() => setCurrentStep('frame-21')}
+          />
+        );
+
+      case 'frame-23':
+        return (
+          <MochiFrame23NotEligible
+            onNext={() => setCurrentStep('frame-24')}
+            onBack={() => setCurrentStep('frame-22')}
+          />
+        );
+
+      case 'frame-24':
+        return (
+          <MochiFrame24GoodHands
+            onNext={() => setCurrentStep('frame-25')}
+            onBack={() => setCurrentStep('frame-23')}
+          />
+        );
+
+      case 'frame-25':
+        return (
+          <MochiFrame25EveryStep
+            onNext={() => setCurrentStep('frame-26')}
+            onBack={() => setCurrentStep('frame-24')}
+          />
+        );
+
+      case 'frame-26':
+        return (
+          <MochiFrame26AccountSetup
+            email={formData.email}
+            onChangeEmail={(em) => setFormData(prev => ({ ...prev, email: em }))}
+            onNext={() => setCurrentStep('frame-27')}
+            onBack={() => setCurrentStep('frame-25')}
+          />
+        );
+
+      case 'frame-27':
+        return (
+          <MochiFrame27WhatHappensNext
+            firstName={formData.firstName}
+            onNext={() => setCurrentStep('frame-28')}
+            onBack={() => setCurrentStep('frame-26')}
+          />
+        );
+
+      case 'frame-28':
+        return (
+          <MochiFrame28PlanSelection
+            selectedPlan={formData.selectedPlan}
+            onSelectPlan={(pl) => setFormData(prev => ({ ...prev, selectedPlan: pl }))}
+            onNext={() => setCurrentStep('frame-29')}
+            onBack={() => setCurrentStep('frame-27')}
+            onSignOut={() => setCurrentStep('frame-26')}
+          />
+        );
+
+      case 'frame-29':
       default:
         return (
-          <div style={{
-            width: '100%',
-            maxWidth: '560px',
-            margin: '0 auto',
-            padding: '32px 20px 60px',
-            boxSizing: 'border-box',
-            fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
-            color: '#000045'
-          }}>
-            <div style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '50%',
-              background: '#00B67A',
-              color: '#FFF',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 20px'
-            }}>
-              <ShieldCheck size={28} />
-            </div>
-
-            <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-              <h1 style={{ fontSize: '24px', fontWeight: 600, color: '#000045', margin: '0 0 8px' }}>
-                {formData.firstName ? `${formData.firstName}, you are clinically eligible!` : 'You are clinically eligible for Mochi Health'}
-              </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.45' }}>
-                Based on your health profile in {formData.selectedState || 'your state'}, you qualify for physician-guided GLP-1 weight loss care.
-              </p>
-            </div>
-
-            <div style={{
-              width: '100%',
-              borderRadius: '16px',
-              border: '1.5px solid #000045',
-              padding: '24px',
-              background: '#FFFFFF',
-              boxShadow: '0 4px 16px rgba(0,0,69,0.06)',
-              marginBottom: '24px',
-              boxSizing: 'border-box'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '12px' }}>
-                <span style={{ fontSize: '18px', fontWeight: 700, color: '#000045' }}>Mochi Membership</span>
-                <span style={{ fontSize: '24px', fontWeight: 800, color: '#000045' }}>$79<span style={{ fontSize: '14px', fontWeight: 500, color: '#606069' }}>/mo</span></span>
-              </div>
-              <ul style={{ margin: '0 0 20px', paddingLeft: '20px', color: '#404050', fontSize: '14px', lineHeight: '1.7' }}>
-                <li>Dedicated physician & registered dietitian</li>
-                <li>Unlimited medical follow-ups</li>
-                <li>Prescription coordination for Semaglutide or Tirzepatide</li>
-                <li>Cancel anytime</li>
-              </ul>
-              
-              <button
-                type="button"
-                onClick={() => alert("Mochi Survey benchmark walkthrough (Frames 1-10) completed!")}
-                style={{
-                  width: '100%',
-                  height: '52px',
-                  borderRadius: '999px',
-                  background: '#000045',
-                  color: '#FFF',
-                  border: 'none',
-                  fontSize: '15px',
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
-              >
-                Proceed to Provider Selection
-              </button>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <button
-                type="button"
-                onClick={() => setCurrentStep('frame-1')}
-                style={{ background: 'none', border: 'none', color: '#606069', fontSize: '14px', cursor: 'pointer', fontFamily: 'inherit' }}
-              >
-                Restart Survey from Frame 1
-              </button>
-            </div>
-          </div>
+          <MochiFrame29Checkout
+            selectedPlan={formData.selectedPlan}
+            onCompletePayment={() => alert("🎉 Payment successful! Welcome to Mochi Health.")}
+            onBack={() => setCurrentStep('frame-28')}
+          />
         );
     }
   };
 
   return (
-    <div className="app-viewport" style={{ minHeight: '100vh', backgroundColor: '#FFFFFF', position: 'relative' }}>
-      
-      {/* Top Review & Dev Control Toolbar */}
-      <aside className="top-dev-toolbar" aria-label="Join Mochi survey and device controls">
+    <div className="app-viewport" style={{ 
+      minHeight: '100vh', 
+      fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif"
+    }}>
+      {/* Top Benchmark Inspection Toolbar */}
+      <aside className="top-dev-toolbar" aria-label="Survey review and device controls">
         <div className="toolbar-brand" style={{ cursor: onBackToWelcome ? 'pointer' : 'default' }} onClick={onBackToWelcome}>
           {onBackToWelcome && (
             <button 
@@ -390,47 +642,8 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               <span>Projects</span>
             </button>
           )}
-          <span style={{ fontWeight: 800, color: '#000045', fontSize: '14px', letterSpacing: '-0.01em' }}>
-            Join Mochi
-          </span>
-          <span style={{ fontSize: '11px', background: '#EAEAF2', color: '#000045', padding: '2px 8px', borderRadius: '10px', fontWeight: 600 }}>
-            Frames 1–10
-          </span>
-        </div>
-
-        {/* Quick Frame Switcher Buttons (Frames 1 - 10) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}>
-          {[
-            { id: 'frame-1', label: '1: Offer' },
-            { id: 'frame-2', label: '2: Goal' },
-            { id: 'frame-3', label: '3: Reasons' },
-            { id: 'frame-4', label: '4: Meds' },
-            { id: 'frame-5', label: '5: Visit' },
-            { id: 'frame-6', label: '6: Treatment' },
-            { id: 'frame-7', label: '7: Results' },
-            { id: 'frame-8', label: '8: State' },
-            { id: 'frame-9', label: '9: DOB' },
-            { id: 'frame-10', label: '10: Name' }
-          ].map((f) => (
-            <button
-              key={f.id}
-              type="button"
-              onClick={() => setCurrentStep(f.id)}
-              style={{
-                fontSize: '11px',
-                fontWeight: currentStep === f.id ? 700 : 500,
-                padding: '3px 8px',
-                borderRadius: '6px',
-                border: currentStep === f.id ? '1px solid #000045' : '1px solid #D5D6E0',
-                backgroundColor: currentStep === f.id ? '#000045' : '#FFFFFF',
-                color: currentStep === f.id ? '#FFFFFF' : '#000045',
-                cursor: 'pointer',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              {f.label}
-            </button>
-          ))}
+          <Sparkles size={16} color="var(--color-primary-dark)" />
+          <span>Join Mochi Flow (29 Screens)</span>
         </div>
 
         <div className="toolbar-controls">
@@ -438,7 +651,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             className="screen-select-dropdown" 
             value={currentStep} 
             onChange={(e) => setCurrentStep(e.target.value)} 
-            aria-label="Select Mochi survey screen"
+            aria-label="Select screen to view"
           >
             {MOCHI_SCREENS.map((s) => (
               <option key={s.key} value={s.key}>{s.label}</option>
@@ -449,7 +662,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             type="button" 
             className="toolbar-btn" 
             onClick={handleAutofill} 
-            title="Auto-fill sample Mochi responses across all screens"
+            title="Auto-fill sample patient survey data"
           >
             <CheckCheck size={13} />
             <span>Autofill Demo</span>
@@ -462,7 +675,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             title="Toggle between mobile viewport frame and centered desktop layout"
           >
             {isMobileFrame ? <Monitor size={13} /> : <Smartphone size={13} />}
-            <span>{isMobileFrame ? 'Desktop' : 'Mobile'}</span>
+            <span>{isMobileFrame ? 'Desktop (540px)' : 'Mobile Frame'}</span>
           </button>
         </div>
       </aside>
@@ -518,46 +731,57 @@ export default function CompetitorFlow({ onBackToWelcome }) {
       {currentStep !== 'frame-1' && (
         <div style={{
           position: 'fixed',
-          bottom: '16px',
-          left: '16px',
-          zIndex: 9990
+          bottom: '24px',
+          right: '24px',
+          zIndex: 900
         }}>
           <button
             type="button"
-            onClick={() => setCurrentStep('frame-1')}
+            onClick={() => setShowOfferModal(true)}
             style={{
-              backgroundColor: '#004874',
-              color: '#FFFFFF',
-              border: 'none',
-              borderRadius: '999px',
-              padding: '8px 16px',
-              fontSize: '12.5px',
-              fontWeight: 600,
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
+              gap: '8px',
+              padding: '10px 16px',
+              backgroundColor: '#005580',
+              color: '#FFFFFF',
+              borderRadius: '999px',
+              border: 'none',
+              fontSize: '13px',
+              fontWeight: 700,
               cursor: 'pointer',
-              boxShadow: '0 4px 14px rgba(0, 72, 116, 0.35)',
+              boxShadow: '0 4px 14px rgba(0,85,128,0.25)',
               transition: 'transform 0.15s ease'
             }}
-            title="View Frame 1 Offer Modal"
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
           >
-            <Gift size={14} />
-            <span>View Offer Modal (Frame 1)</span>
+            <Gift size={15} />
+            <span>View First Month Offer</span>
           </button>
         </div>
       )}
 
+      {/* Standalone Offer Modal when triggered from floating button */}
+      {showOfferModal && (
+        <MochiFrame1OfferModal
+          isStandalone={true}
+          onClaim={handleClaimOffer}
+          onClose={() => setShowOfferModal(false)}
+        />
+      )}
+
       {/* Mochi Viewport Shell */}
       <main className={`onboarding-shell ${isMobileFrame ? 'device-frame-mobile' : ''}`} style={{
-        maxWidth: isMobileFrame ? '420px' : '100%',
-        margin: isMobileFrame ? '24px auto' : '0 auto',
-        border: isMobileFrame ? '1px solid #E2E2EA' : 'none',
-        borderRadius: isMobileFrame ? '24px' : '0',
+        maxWidth: isMobileFrame ? '410px' : '860px',
+        width: '100%',
+        margin: '0 auto',
+        borderRadius: isMobileFrame ? '36px' : '20px',
         overflow: 'hidden',
-        boxShadow: isMobileFrame ? '0 12px 32px rgba(0,0,69,0.08)' : 'none',
+        boxShadow: isMobileFrame ? '0 20px 50px rgba(0, 0, 69, 0.15), 0 0 0 10px #1a1a1a' : '0 4px 30px rgba(0, 0, 0, 0.04)',
         minHeight: isMobileFrame ? '740px' : 'auto',
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
+        transition: 'all 0.3s ease'
       }}>
         
         {/* Exact Mochi Brand Header */}
@@ -619,33 +843,25 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               <div style={{
                 width: `${getProgressPercentage()}%`,
                 height: '100%',
-                backgroundColor: '#1E1B4B',
+                backgroundColor: '#000045',
                 borderRadius: '999px',
-                transition: 'width 0.3s ease'
+                transition: 'width 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
               }} />
             </div>
 
-            {/* Right Mochi Official Brand Mark */}
+            {/* Right Mochi Official Vector Logo */}
             <div style={{ flexShrink: 0 }}>
-              <MochiLogo width={55} height={28} />
+              <MochiLogo width={68} height={30} />
             </div>
           </div>
         </header>
 
-        {/* Content Body */}
-        <div key={autofillKey}>
+        {/* Dynamic Content Area */}
+        <div className="step-content-scroll" style={{ width: '100%', minHeight: '520px' }}>
           {renderContent()}
         </div>
+
       </main>
-
-      {/* Frame 1 Modal Overlay (when opened from banner button) */}
-      {showOfferModal && currentStep !== 'frame-1' && (
-        <MochiFrame1OfferModal
-          onClaim={handleClaimOffer}
-          onClose={() => setShowOfferModal(false)}
-        />
-      )}
-
     </div>
   );
 }
