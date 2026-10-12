@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronDown, Image as ImageIcon, Plus, Check } from 'lucide-react';
 
 export default function MochiFrame21ConfirmInsurance({
@@ -12,7 +12,7 @@ export default function MochiFrame21ConfirmInsurance({
   const [insuranceProvider, setInsuranceProvider] = useState(formData.insuranceProvider || 'Blue Cross Blue Shield');
   const [state, setState] = useState(formData.selectedState || 'Colorado');
   const [memberId, setMemberId] = useState(formData.memberId || 'W123456789');
-  const [groupId, setGroupId] = useState(formData.groupId || '');
+  const [groupId, setGroupId] = useState(formData.groupId || 'GRP-10293');
   const [firstName, setFirstName] = useState(formData.firstName || 'nicholas');
   const [lastName, setLastName] = useState(formData.lastName || 'cage');
   const [birthMonth, setBirthMonth] = useState(formData.birthMonth || 'April');
@@ -21,6 +21,21 @@ export default function MochiFrame21ConfirmInsurance({
   const [gender, setGender] = useState(formData.gender || 'Male');
   const [frontCard, setFrontCard] = useState(true);
   const [backCard, setBackCard] = useState(true);
+
+  useEffect(() => {
+    if (formData.insuranceType) setInsuranceType(formData.insuranceType);
+    if (formData.relationship) setRelationship(formData.relationship);
+    if (formData.insuranceProvider) setInsuranceProvider(formData.insuranceProvider);
+    if (formData.selectedState) setState(formData.selectedState);
+    if (formData.memberId) setMemberId(formData.memberId);
+    if (formData.groupId) setGroupId(formData.groupId);
+    if (formData.firstName) setFirstName(formData.firstName);
+    if (formData.lastName) setLastName(formData.lastName);
+    if (formData.birthMonth) setBirthMonth(formData.birthMonth);
+    if (formData.birthDay) setBirthDay(formData.birthDay);
+    if (formData.birthYear) setBirthYear(formData.birthYear);
+    if (formData.gender) setGender(formData.gender);
+  }, [formData]);
 
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',

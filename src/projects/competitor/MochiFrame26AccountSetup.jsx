@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function MochiFrame26AccountSetup({
   email = '',
@@ -7,6 +7,12 @@ export default function MochiFrame26AccountSetup({
   onBack
 }) {
   const [inputEmail, setInputEmail] = useState(email || 'nicholas.cage@mochihealth.com');
+
+  useEffect(() => {
+    if (email) {
+      setInputEmail(email);
+    }
+  }, [email]);
 
   const handleSubmit = (e) => {
     if (e) e.preventDefault();

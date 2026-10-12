@@ -130,7 +130,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
     selectedPlan: '3-months' // Frame 28
   });
 
-  const [_autofillKey, setAutofillKey] = useState(0);
+  const [autofillKey, setAutofillKey] = useState(0);
 
   // Sync step changes to URL
   useEffect(() => {
@@ -857,7 +857,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         </header>
 
         {/* Dynamic Content Area */}
-        <div className="step-content-scroll" style={{ width: '100%', minHeight: '520px' }}>
+        <div className="step-content-scroll" key={autofillKey} style={{ width: '100%', minHeight: '520px' }}>
           {renderContent()}
         </div>
 

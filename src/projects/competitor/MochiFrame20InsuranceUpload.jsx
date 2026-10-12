@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image as ImageIcon, Check, ChevronDown, Plus } from 'lucide-react';
 
 export default function MochiFrame20InsuranceUpload({
@@ -7,13 +7,23 @@ export default function MochiFrame20InsuranceUpload({
   onNext,
   onBack
 }) {
-  const [method, setMethod] = useState('photo'); // 'photo' | 'manual'
+  const [method, setMethod] = useState(insuranceData.method || 'photo');
   const [relationship, setRelationship] = useState(insuranceData.relationship || 'Self');
-  const [frontUploaded, setFrontUploaded] = useState(insuranceData.frontUploaded || false);
-  const [backUploaded, setBackUploaded] = useState(insuranceData.backUploaded || false);
-  const [providerName, setProviderName] = useState(insuranceData.providerName || '');
-  const [memberId, setMemberId] = useState(insuranceData.memberId || '');
-  const [groupNumber, setGroupNumber] = useState(insuranceData.groupNumber || '');
+  const [frontUploaded, setFrontUploaded] = useState(insuranceData.frontUploaded ?? true);
+  const [backUploaded, setBackUploaded] = useState(insuranceData.backUploaded ?? true);
+  const [providerName, setProviderName] = useState(insuranceData.providerName || insuranceData.insuranceProvider || 'Blue Cross Blue Shield');
+  const [memberId, setMemberId] = useState(insuranceData.memberId || 'W123456789');
+  const [groupNumber, setGroupNumber] = useState(insuranceData.groupNumber || insuranceData.groupId || 'GRP-10293');
+
+  useEffect(() => {
+    if (insuranceData.relationship) setRelationship(insuranceData.relationship);
+    if (insuranceData.method) setMethod(insuranceData.method);
+    if (insuranceData.frontUploaded !== undefined) setFrontUploaded(insuranceData.frontUploaded);
+    if (insuranceData.backUploaded !== undefined) setBackUploaded(insuranceData.backUploaded);
+    if (insuranceData.providerName || insuranceData.insuranceProvider) setProviderName(insuranceData.providerName || insuranceData.insuranceProvider);
+    if (insuranceData.memberId) setMemberId(insuranceData.memberId);
+    if (insuranceData.groupNumber || insuranceData.groupId) setGroupNumber(insuranceData.groupNumber || insuranceData.groupId);
+  }, [insuranceData]);
 
   const hasPhoto = frontUploaded;
   const hasManual = Boolean(providerName.trim() && memberId.trim());

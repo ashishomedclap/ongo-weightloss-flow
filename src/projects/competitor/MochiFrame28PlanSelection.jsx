@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import medicationVial from '../../assets/mochi/medication_vial.jpg';
 import { LogOut } from 'lucide-react';
 
@@ -10,6 +10,12 @@ export default function MochiFrame28PlanSelection({
   onSignOut
 }) {
   const [currentPlan, setCurrentPlan] = useState(selectedPlan || '3-months');
+
+  useEffect(() => {
+    if (selectedPlan) {
+      setCurrentPlan(selectedPlan);
+    }
+  }, [selectedPlan]);
 
   const plans = [
     {
