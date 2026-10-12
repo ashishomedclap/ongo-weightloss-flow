@@ -9,11 +9,11 @@ export default function MochiFrame20InsuranceUpload({
 }) {
   const [method, setMethod] = useState(insuranceData.method || 'photo');
   const [relationship, setRelationship] = useState(insuranceData.relationship || 'Self');
-  const [frontUploaded, setFrontUploaded] = useState(insuranceData.frontUploaded ?? true);
-  const [backUploaded, setBackUploaded] = useState(insuranceData.backUploaded ?? true);
-  const [providerName, setProviderName] = useState(insuranceData.providerName || insuranceData.insuranceProvider || 'Blue Cross Blue Shield');
-  const [memberId, setMemberId] = useState(insuranceData.memberId || 'W123456789');
-  const [groupNumber, setGroupNumber] = useState(insuranceData.groupNumber || insuranceData.groupId || 'GRP-10293');
+  const [frontUploaded, setFrontUploaded] = useState(Boolean(insuranceData.frontUploaded));
+  const [backUploaded, setBackUploaded] = useState(Boolean(insuranceData.backUploaded));
+  const [providerName, setProviderName] = useState(insuranceData.providerName || insuranceData.insuranceProvider || '');
+  const [memberId, setMemberId] = useState(insuranceData.memberId || '');
+  const [groupNumber, setGroupNumber] = useState(insuranceData.groupNumber || insuranceData.groupId || '');
 
   useEffect(() => {
     if (insuranceData.relationship) setRelationship(insuranceData.relationship);

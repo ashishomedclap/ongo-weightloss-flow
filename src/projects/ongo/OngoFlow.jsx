@@ -51,42 +51,42 @@ import { Smartphone, Monitor, Sparkles, CheckCheck, ArrowLeft } from 'lucide-rea
 
 const SCREEN_LIST = [
   // Phase 1: Get Started
-  { key: '1', label: 'Screen 1: Create Your Ongo Account' },
-  { key: '2', label: 'Screen 2: Tell Us About You' },
-  { key: '3', label: 'Screen 3: Check Your Starting Point' },
+  { key: '1', label: 'Screen 1: Start Your Ongo Weight-Loss Journey' },
+  { key: '2', label: 'Screen 2: Tell Us a Little About You' },
+  { key: '3', label: "Screen 3: Let's Check Your Starting Point" },
   // Phase 2: Initial Clinical Screening
-  { key: '4', label: 'Screen 4: Important Health Questions' },
-  { key: '5', label: 'Screen 5: Have You Used a GLP-1 Before?' },
-  { key: '5.1', label: 'Branch 5.1: Which GLP-1 Medication?' },
-  { key: '5.2', label: 'Branch 5.2: GLP-1 Dose & Frequency' },
-  { key: '5.3', label: 'Branch 5.3: GLP-1 Experience' },
-  { key: '5.4', label: 'Branch 5.4: Upload Previous Prescription' },
+  { key: '4', label: 'Screen 4: A Few Important Health Questions' },
+  { key: '5', label: 'Screen 5: Have You Used a GLP-1 Medication Before?' },
+  { key: '5.1', label: 'Branch 5.1: Which GLP-1 Medication Have You Used?' },
+  { key: '5.2', label: 'Branch 5.2: What Was Your Most Recent Dose?' },
+  { key: '5.3', label: 'Branch 5.3: Main Reason You Stopped or Changed Treatment?' },
+  { key: '5.4', label: 'Branch 5.4: Have Your Previous Prescription Handy?' },
   // Phase 3: Confidence & Clinical Trust
-  { key: '6', label: 'Screen 6: Your Initial Result' },
+  { key: '6', label: 'Screen 6: Good News — You May Be Eligible for GLP-1' },
   { key: '7', label: 'Screen 7: Meet Your Physician' },
-  { key: '8', label: 'Screen 8: Explore Your Treatment Options' },
+  { key: '8', label: 'Screen 8: Which Treatment Option Interests You Most?' },
   // Phase 4: Treatment Plan & Payment
   { key: '9', label: 'Screen 9: Choose Your Treatment Plan' },
   { key: '10', label: 'Screen 10: Complete Your Payment' },
   { key: '11', label: 'Screen 11: Payment Confirmed' },
   // Phase 5: Comprehensive Clinical Intake
-  { key: '12', label: 'Screen 12: Tell Us About Your Health' },
-  { key: '13', label: 'Screen 13: What Medications Are You Taking?' },
-  { key: '14', label: 'Screen 14: Do You Have Any Allergies?' },
-  { key: '15', label: 'Screen 15: Tell Us About Your Weight Journey' },
-  { key: '16', label: 'Screen 16: What Have You Tried Before?' },
-  { key: '17', label: 'Screen 17: Have You Had Weight-Loss Surgery?' },
+  { key: '12', label: "Screen 12: Let's Look at Your Broader Health" },
+  { key: '13', label: 'Screen 13: Do You Take Any Medication?' },
+  { key: '14', label: 'Screen 14: Do You Have Any Known Allergies?' },
+  { key: '15', label: 'Screen 15: Can You Share Your Weight Journey So Far?' },
+  { key: '16', label: 'Screen 16: What Have You Tried Before to Lose Weight?' },
+  { key: '17', label: 'Screen 17: Have You Had Any Weight Loss Surgery?' },
   // Phase 6: Goals & Motivation
-  { key: '18', label: "Screen 18: What's Driving You Right Now?" },
+  { key: '18', label: "Screen 18: What's Making You Want to Start Now?" },
   // Phase 7: Lifestyle
-  { key: '19', label: 'Screen 19: What Does a Typical Week Look Like?' },
-  { key: '20', label: 'Screen 20: Lifestyle' },
-  { key: '21', label: 'Screen 21: Ethnicity' },
+  { key: '19', label: "Screen 19: Let's Start with Your Daily Routine" },
+  { key: '20', label: 'Screen 20: And a Few More Lifestyle Questions' },
+  { key: '21', label: 'Screen 21: How Do You Describe Your Ethnicity?' },
   // Phase 8: Verification & Fulfillment
-  { key: '22', label: 'Screen 22: Verify Your Identity' },
-  { key: '23', label: 'Screen 23: Shipping Information' },
+  { key: '22', label: 'Screen 22: Upload Your Photo ID' },
+  { key: '23', label: 'Screen 23: Where Should We Send Your Medication?' },
   // Phase 9: Appointment
-  { key: '24', label: 'Screen 24: Book Your Consultation' },
+  { key: '24', label: 'Screen 24: When Would You Like to Meet Your Physician?' },
   // Phase 10: Confirmation
   { key: '25', label: 'Screen 25: Appointment Confirmed' },
 ];
@@ -247,6 +247,92 @@ export default function OngoFlow({ onBackToWelcome }) {
     };
   };
 
+  const createEmptyFormData = () => ({
+    email: '',
+    password: '',
+    agreeTerms: false,
+    agreeMarketing: false,
+    firstName: '',
+    lastName: '',
+    gender: '',
+    dob: '',
+    state: '',
+    phone: '',
+    unit: 'Imperial',
+    feet: '',
+    inches: '',
+    lbs: '',
+    cm: '',
+    kg: '',
+    calculatedBmi: null,
+    safetyAnswers: {},
+    noneApply: false,
+    usedGLP1Before: null,
+    glp1Meds: [],
+    glp1Dose: '',
+    glp1UnitsAmount: '',
+    glp1Frequency: '',
+    glp1Experience: 5,
+    glp1StoppingReason: '',
+    glp1StoppingReasonOther: '',
+    glp1LastDate: '',
+    uploadedRxName: '',
+    uploadedRxSize: '',
+    selectedTreatment: '',
+    selectedTreatmentName: '',
+    selectedPlanId: '',
+    selectedPlan: null,
+    paymentMethod: 'card',
+    orderTotal: 0,
+    paymentDate: '',
+    healthConditions: {
+      selected: [],
+      noneApply: false,
+      otherCondition: ''
+    },
+    takesMedication: null,
+    medicationDetails: '',
+    hasAllergies: null,
+    allergyDetails: '',
+    highestWeight: '',
+    lowestWeight: '',
+    goalWeight: '',
+    waistCircumference: '',
+    weightLossAttempts: [],
+    hadSurgery: null,
+    weightLossSurgeries: [],
+    otherWeightLossSurgery: '',
+    weightLossGoal: '',
+    motivations: [],
+    routine: {
+      meals: '',
+      water: '',
+      sleep: '',
+      exercise: ''
+    },
+    lifestyle: {
+      fastFood: '',
+      sugaryDrinks: '',
+      alcohol: '',
+      drugs: ''
+    },
+    stressLevel: 5,
+    ethnicity: '',
+    otherEthnicity: '',
+    idPhotoName: '',
+    idPhotoSize: '',
+    idPhoto: null,
+    shippingAddress: {
+      street: '',
+      apt: '',
+      city: '',
+      zip: '',
+      state: ''
+    },
+    appointmentDate: '',
+    appointmentTime: ''
+  });
+
   const getInitialFormData = () => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -254,7 +340,7 @@ export default function OngoFlow({ onBackToWelcome }) {
         return createAutofillData();
       }
     }
-    return createAutofillData();
+    return createEmptyFormData();
   };
 
   const [formData, setFormData] = useState(getInitialFormData);

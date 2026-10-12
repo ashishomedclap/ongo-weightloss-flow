@@ -3,15 +3,16 @@ import { CreditCard, ChevronDown, CheckCircle2 } from 'lucide-react';
 
 export default function MochiFrame29Checkout({
   selectedPlan = '3-months',
+  paymentData = {},
   onCompletePayment,
   onBack
 }) {
   const [promoCode, setPromoCode] = useState('');
   const [promoApplied, setPromoApplied] = useState(false);
-  const [cardNumber, setCardNumber] = useState('1234 1234 1234 1234');
-  const [expDate, setExpDate] = useState('');
-  const [cvc, setCvc] = useState('');
-  const [country, setCountry] = useState('India');
+  const [cardNumber, setCardNumber] = useState(paymentData.cardNumber || '');
+  const [expDate, setExpDate] = useState(paymentData.expDate || '');
+  const [cvc, setCvc] = useState(paymentData.cvc || '');
+  const [country, setCountry] = useState(paymentData.country || 'United States');
   const [isPaid, setIsPaid] = useState(false);
 
   // Pricing details by selected plan

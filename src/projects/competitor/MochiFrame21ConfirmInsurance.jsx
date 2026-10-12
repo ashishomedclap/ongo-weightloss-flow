@@ -9,18 +9,18 @@ export default function MochiFrame21ConfirmInsurance({
 }) {
   const [insuranceType, setInsuranceType] = useState(formData.insuranceType || 'Commercial / Employer-sponsored');
   const [relationship, setRelationship] = useState(formData.relationship || 'Self');
-  const [insuranceProvider, setInsuranceProvider] = useState(formData.insuranceProvider || 'Blue Cross Blue Shield');
-  const [state, setState] = useState(formData.selectedState || 'Colorado');
-  const [memberId, setMemberId] = useState(formData.memberId || 'W123456789');
-  const [groupId, setGroupId] = useState(formData.groupId || 'GRP-10293');
-  const [firstName, setFirstName] = useState(formData.firstName || 'nicholas');
-  const [lastName, setLastName] = useState(formData.lastName || 'cage');
-  const [birthMonth, setBirthMonth] = useState(formData.birthMonth || 'April');
-  const [birthDay, setBirthDay] = useState(formData.birthDay || '09');
-  const [birthYear, setBirthYear] = useState(formData.birthYear || '1992');
-  const [gender, setGender] = useState(formData.gender || 'Male');
-  const [frontCard, setFrontCard] = useState(true);
-  const [backCard, setBackCard] = useState(true);
+  const [insuranceProvider, setInsuranceProvider] = useState(formData.insuranceProvider || '');
+  const [state, setState] = useState(formData.selectedState || '');
+  const [memberId, setMemberId] = useState(formData.memberId || '');
+  const [groupId, setGroupId] = useState(formData.groupId || '');
+  const [firstName, setFirstName] = useState(formData.firstName || '');
+  const [lastName, setLastName] = useState(formData.lastName || '');
+  const [birthMonth, setBirthMonth] = useState(formData.birthMonth || '');
+  const [birthDay, setBirthDay] = useState(formData.birthDay || '');
+  const [birthYear, setBirthYear] = useState(formData.birthYear || '');
+  const [gender, setGender] = useState(formData.gender || '');
+  const [frontCard, setFrontCard] = useState(Boolean(formData.frontUploaded));
+  const [backCard, setBackCard] = useState(Boolean(formData.backUploaded));
 
   useEffect(() => {
     if (formData.insuranceType) setInsuranceType(formData.insuranceType);

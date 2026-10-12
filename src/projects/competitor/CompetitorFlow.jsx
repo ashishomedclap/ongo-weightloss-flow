@@ -40,34 +40,34 @@ import {
 } from 'lucide-react';
 
 const MOCHI_SCREENS = [
-  { key: 'frame-1', label: 'Screen 1: First Month Free Offer (Modal)', short: 'Screen 1' },
-  { key: 'frame-2', label: 'Screen 2: Primary Weight Loss Goal', short: 'Screen 2' },
-  { key: 'frame-3', label: 'Screen 3: Why Weight Management is Important', short: 'Screen 3' },
-  { key: 'frame-4', label: 'Screen 4: Medication Values & Priorities', short: 'Screen 4' },
-  { key: 'frame-5', label: 'Screen 5: Doctor Consultation Preference', short: 'Screen 5' },
-  { key: 'frame-6', label: 'Screen 6: Treatment in Mind Already', short: 'Screen 6' },
-  { key: 'frame-7', label: 'Screen 7: Real Member Results & Transformations', short: 'Screen 7' },
-  { key: 'frame-8', label: 'Screen 8: State of Residence', short: 'Screen 8' },
-  { key: 'frame-9', label: 'Screen 9: Date of Birth', short: 'Screen 9' },
-  { key: 'frame-10', label: 'Screen 10: Patient First & Last Name', short: 'Screen 10' },
-  { key: 'frame-11', label: 'Screen 11: Birth-Assigned Gender', short: 'Screen 11' },
-  { key: 'frame-12', label: 'Screen 12: Height & Weight (BMI)', short: 'Screen 12' },
-  { key: 'frame-13', label: 'Screen 13: 6-Month Weight Loss Projection', short: 'Screen 13' },
-  { key: 'frame-14', label: 'Screen 14: Prior Weight Loss Meds (6 Mos)', short: 'Screen 14' },
-  { key: 'frame-15', label: 'Screen 15: Medical Conditions History', short: 'Screen 15' },
-  { key: 'frame-16', label: 'Screen 16: Safety Checks (Contraindications)', short: 'Screen 16' },
+  { key: 'frame-1', label: 'Screen 1: First Month Free Offer', short: 'Screen 1' },
+  { key: 'frame-2', label: "Screen 2: What's Your Primary Weight Loss Goal?", short: 'Screen 2' },
+  { key: 'frame-3', label: 'Screen 3: Why Weight Management is Important to You', short: 'Screen 3' },
+  { key: 'frame-4', label: 'Screen 4: What You Value in Weight Loss Medication', short: 'Screen 4' },
+  { key: 'frame-5', label: 'Screen 5: How You Prefer to Meet with Your Doctor', short: 'Screen 5' },
+  { key: 'frame-6', label: 'Screen 6: Do You Have a Treatment in Mind Already?', short: 'Screen 6' },
+  { key: 'frame-7', label: 'Screen 7: Ready for Real Results?', short: 'Screen 7' },
+  { key: 'frame-8', label: 'Screen 8: What State Do You Live In?', short: 'Screen 8' },
+  { key: 'frame-9', label: 'Screen 9: What is Your Date of Birth?', short: 'Screen 9' },
+  { key: 'frame-10', label: 'Screen 10: What is Your First and Last Name?', short: 'Screen 10' },
+  { key: 'frame-11', label: 'Screen 11: What is Your Birth-Assigned Gender?', short: 'Screen 11' },
+  { key: 'frame-12', label: 'Screen 12: What is Your Height and Weight?', short: 'Screen 12' },
+  { key: 'frame-13', label: 'Screen 13: In Six Months, You Could Lose Weight (Projection)', short: 'Screen 13' },
+  { key: 'frame-14', label: 'Screen 14: Have You Taken Weight Loss Meds in Past 6 Months?', short: 'Screen 14' },
+  { key: 'frame-15', label: 'Screen 15: Do You Have Any of These Conditions?', short: 'Screen 15' },
+  { key: 'frame-16', label: 'Screen 16: Next, a Few Safety Checks', short: 'Screen 16' },
   { key: 'frame-17', label: 'Screen 17: Candidate Approval Estimate', short: 'Screen 17' },
   { key: 'frame-18', label: 'Screen 18: Care Beyond Weight Loss', short: 'Screen 18' },
-  { key: 'frame-19', label: 'Screen 19: Save $389 with Insurance', short: 'Screen 19' },
-  { key: 'frame-20', label: 'Screen 20: Add Insurance Information', short: 'Screen 20' },
-  { key: 'frame-21', label: 'Screen 21: Confirm Insurance Details', short: 'Screen 21' },
-  { key: 'frame-22', label: 'Screen 22: Checking Coverage (Live Lookup)', short: 'Screen 22' },
-  { key: 'frame-23', label: 'Screen 23: Standard Membership Notice', short: 'Screen 23' },
-  { key: 'frame-24', label: 'Screen 24: You\'re in Good Hands (Doctors)', short: 'Screen 24' },
-  { key: 'frame-25', label: 'Screen 25: With You Every Step (Results)', short: 'Screen 25' },
-  { key: 'frame-26', label: 'Screen 26: Account Setup / Sign in', short: 'Screen 26' },
-  { key: 'frame-27', label: 'Screen 27: What Happens Next (Roadmap)', short: 'Screen 27' },
-  { key: 'frame-28', label: 'Screen 28: Plan Selection & Pricing', short: 'Screen 28' },
+  { key: 'frame-19', label: 'Screen 19: Save Up to $389 Annually with Insurance', short: 'Screen 19' },
+  { key: 'frame-20', label: 'Screen 20: Add Insurance to Check Coverage', short: 'Screen 20' },
+  { key: 'frame-21', label: 'Screen 21: Confirm Your Insurance Information', short: 'Screen 21' },
+  { key: 'frame-22', label: 'Screen 22: Checking Your Coverage (Live Lookup)', short: 'Screen 22' },
+  { key: 'frame-23', label: "Screen 23: Standard Membership Required (Not Covered)", short: 'Screen 23' },
+  { key: 'frame-24', label: "Screen 24: You're in Good Hands", short: 'Screen 24' },
+  { key: 'frame-25', label: 'Screen 25: With You Every Step of the Way', short: 'Screen 25' },
+  { key: 'frame-26', label: 'Screen 26: Ready to Get Started with Your Treatment Plan', short: 'Screen 26' },
+  { key: 'frame-27', label: "Screen 27: Let's Get Your Care Started (What Happens Next)", short: 'Screen 27' },
+  { key: 'frame-28', label: 'Screen 28: Join More Than 500,000 Members (Select Plan)', short: 'Screen 28' },
   { key: 'frame-29', label: 'Screen 29: Payment & Checkout', short: 'Screen 29' }
 ];
 
@@ -88,46 +88,91 @@ const getInitialStep = () => {
   return 'frame-1';
 };
 
+const createEmptyMochiData = () => ({
+  offerClaimed: false,
+  goal: '',
+  reasons: [],
+  medValues: [],
+  doctorPreference: '',
+  treatments: [],
+  selectedState: '',
+  birthMonth: '',
+  birthDay: '',
+  birthYear: '',
+  firstName: '',
+  lastName: '',
+  gender: '',
+  heightFeet: '',
+  heightInches: '',
+  weightLbs: '',
+  medHistory: '',
+  conditions: [],
+  safetyChecks: [],
+  careBeyond: [],
+  insurance: {
+    insuranceType: '',
+    relationship: '',
+    insuranceProvider: '',
+    method: 'photo',
+    frontUploaded: false,
+    backUploaded: false,
+    memberId: '',
+    groupId: ''
+  },
+  email: '',
+  selectedPlan: ''
+});
+
+const createAutofillMochiData = () => ({
+  offerClaimed: true,
+  goal: '20-50',
+  reasons: ['feel-confident', 'more-energy', 'prevent-disease', 'doctor-mentioned', 'family'],
+  medValues: ['lowest-side-effects', 'max-weight-loss', 'multi-month-supplies', 'lowest-cost'],
+  doctorPreference: 'video-when-needed-messaging',
+  treatments: ['compounded-semaglutide-inj', 'fda-injectable', 'provider-recommendation'],
+  selectedState: 'Texas',
+  birthMonth: 'September',
+  birthDay: '18',
+  birthYear: '1990',
+  firstName: 'Alex',
+  lastName: 'Rivera',
+  gender: 'Female',
+  heightFeet: '5',
+  heightInches: '6',
+  weightLbs: '198',
+  medHistory: 'no',
+  conditions: ['prediabetes'],
+  safetyChecks: ['none-of-these'],
+  careBeyond: ['skincare', 'longevity', 'mental-health'],
+  insurance: {
+    insuranceType: 'Commercial / Employer-sponsored',
+    relationship: 'Self',
+    insuranceProvider: 'Aetna Health',
+    method: 'photo',
+    frontUploaded: true,
+    backUploaded: true,
+    memberId: 'AET-89472019',
+    groupId: 'GRP-77402'
+  },
+  email: 'alex.rivera@example.com',
+  selectedPlan: '3-months'
+});
+
 export default function CompetitorFlow({ onBackToWelcome }) {
   const [currentStep, setCurrentStep] = useState(getInitialStep);
   const [isMobileFrame, setIsMobileFrame] = useState(false);
   const [language, setLanguage] = useState('en');
   const [showOfferModal, setShowOfferModal] = useState(false);
 
-  // Comprehensive Form State across Frames 1-29
-  const [formData, setFormData] = useState({
-    offerClaimed: false,
-    goal: '50-plus', // Frame 2
-    reasons: ['doctor-mentioned', 'feel-confident', 'more-energy'], // Frame 3
-    medValues: ['multi-month-supplies', 'max-weight-loss', 'lowest-side-effects'], // Frame 4
-    doctorPreference: 'video-when-needed-messaging', // Frame 5
-    treatments: ['compounded-semaglutide-inj', 'fda-injectable'], // Frame 6
-    selectedState: 'Colorado', // Frame 8 & 21
-    birthMonth: 'April', // Frame 9 & 21
-    birthDay: '09',
-    birthYear: '1992',
-    firstName: 'nicholas', // Frame 10 & 21
-    lastName: 'cage',
-    gender: 'Male', // Frame 11 & 21
-    heightFeet: '5', // Frame 12
-    heightInches: '8',
-    weightLbs: '220',
-    medHistory: 'no', // Frame 14
-    conditions: ['prediabetes', 'hypertension'], // Frame 15
-    safetyChecks: ['none-of-these'], // Frame 16
-    careBeyond: ['skincare', 'mental-health'], // Frame 18
-    insurance: { // Frame 20 & 21
-      insuranceType: 'Commercial / Employer-sponsored',
-      relationship: 'Self',
-      insuranceProvider: 'Blue Cross Blue Shield',
-      method: 'photo',
-      frontUploaded: true,
-      backUploaded: true,
-      memberId: 'W123456789',
-      groupId: 'GRP-10293'
-    },
-    email: 'nicholas.cage@mochihealth.com', // Frame 26
-    selectedPlan: '3-months' // Frame 28
+  // Form State initialized to empty so user can fill and choose manually
+  const [formData, setFormData] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('autofill') === '1' || params.get('autofill') === 'true') {
+        return createAutofillMochiData();
+      }
+    }
+    return createEmptyMochiData();
   });
 
   const [autofillKey, setAutofillKey] = useState(0);
@@ -149,42 +194,9 @@ export default function CompetitorFlow({ onBackToWelcome }) {
     }
   }, [currentStep]);
 
-  // Autofill Handler (populates all screens 1 to 29)
+  // Autofill Handler (populates all screens 1 to 29 on demand)
   const handleAutofill = () => {
-    setFormData({
-      offerClaimed: true,
-      goal: '50-plus',
-      reasons: ['doctor-mentioned', 'feel-confident', 'mental-health', 'family', 'more-energy'],
-      medValues: ['multi-month-supplies', 'max-weight-loss', 'lowest-cost', 'lowest-side-effects'],
-      doctorPreference: 'video-when-needed-messaging',
-      treatments: ['compounded-semaglutide-inj', 'fda-injectable', 'provider-recommendation'],
-      selectedState: 'Colorado',
-      birthMonth: 'April',
-      birthDay: '09',
-      birthYear: '1992',
-      firstName: 'nicholas',
-      lastName: 'cage',
-      gender: 'Male',
-      heightFeet: '5',
-      heightInches: '8',
-      weightLbs: '220',
-      medHistory: 'no',
-      conditions: ['prediabetes', 'hypertension'],
-      safetyChecks: ['none-of-these'],
-      careBeyond: ['skincare', 'mental-health', 'longevity'],
-      insurance: {
-        insuranceType: 'Commercial / Employer-sponsored',
-        relationship: 'Self',
-        insuranceProvider: 'Blue Cross Blue Shield',
-        method: 'photo',
-        frontUploaded: true,
-        backUploaded: true,
-        memberId: 'W123456789',
-        groupId: 'GRP-10293'
-      },
-      email: 'nicholas.cage@mochihealth.com',
-      selectedPlan: '3-months'
-    });
+    setFormData(createAutofillMochiData());
     setAutofillKey(prev => prev + 1);
   };
 

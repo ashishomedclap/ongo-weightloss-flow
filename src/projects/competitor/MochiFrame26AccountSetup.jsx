@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 export default function MochiFrame26AccountSetup({
   email = '',
   onChangeEmail,
   onNext,
-  onBack
+  _onBack
 }) {
-  const [inputEmail, setInputEmail] = useState(email || 'nicholas.cage@mochihealth.com');
-
-  useEffect(() => {
-    if (email) {
-      setInputEmail(email);
-    }
-  }, [email]);
+  const [localEmail, setLocalEmail] = useState('');
+  const inputEmail = email || localEmail;
 
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
@@ -69,7 +64,7 @@ export default function MochiFrame26AccountSetup({
             placeholder="email@mochi.com"
             value={inputEmail}
             onChange={(e) => {
-              setInputEmail(e.target.value);
+              setLocalEmail(e.target.value);
               if (onChangeEmail) onChangeEmail(e.target.value);
             }}
             required

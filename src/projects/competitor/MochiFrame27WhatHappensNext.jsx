@@ -4,7 +4,7 @@ import medicationVial from '../../assets/mochi/medication_vial.jpg';
 import { Smartphone } from 'lucide-react';
 
 export default function MochiFrame27WhatHappensNext({
-  firstName = 'nicholas',
+  firstName = 'Alex',
   onNext,
   onBack
 }) {
@@ -34,7 +34,7 @@ export default function MochiFrame27WhatHappensNext({
             letterSpacing: '-0.015em'
           }}
         >
-          {firstName}, let's get your care started.
+          {firstName ? `${firstName}, let's get your care started.` : "Let's get your care started."}
         </h1>
         <p 
           style={{

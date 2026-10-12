@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import medicationVial from '../../assets/mochi/medication_vial.jpg';
 import { LogOut } from 'lucide-react';
 
 export default function MochiFrame28PlanSelection({
-  selectedPlan = '3-months',
+  selectedPlan = '',
   onSelectPlan,
   onNext,
-  onBack,
+  _onBack,
   onSignOut
 }) {
-  const [currentPlan, setCurrentPlan] = useState(selectedPlan || '3-months');
-
-  useEffect(() => {
-    if (selectedPlan) {
-      setCurrentPlan(selectedPlan);
-    }
-  }, [selectedPlan]);
+  const [internalPlan, setInternalPlan] = useState(null);
+  const currentPlan = internalPlan !== null ? internalPlan : (selectedPlan || '');
 
   const plans = [
     {
@@ -51,7 +46,7 @@ export default function MochiFrame28PlanSelection({
   ];
 
   const handleChoose = (planId) => {
-    setCurrentPlan(planId);
+    setInternalPlan(planId);
     if (onSelectPlan) onSelectPlan(planId);
   };
 
