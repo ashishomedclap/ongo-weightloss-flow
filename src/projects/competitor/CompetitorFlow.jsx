@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import MochiScreen0, { MochiLogoSvg } from './MochiScreen0';
+import MochiScreen0, { mochiLogoImg, radioCheckedImg, radioUncheckedImg } from './MochiScreen0';
 import { 
   ArrowLeft, 
   Monitor, 
   Smartphone, 
   CheckCheck, 
-  ChevronRight,
+  ChevronLeft,
   ShieldCheck,
-  ChevronLeft
+  Sliders,
+  ChevronRight
 } from 'lucide-react';
 
 const MOCHI_SCREENS = [
@@ -22,10 +23,11 @@ export default function CompetitorFlow({ onBackToWelcome }) {
   const [currentStep, setCurrentStep] = useState('0');
   const [isMobileFrame, setIsMobileFrame] = useState(false);
   const [language, setLanguage] = useState('en');
+  const [showDevControls, setShowDevControls] = useState(false);
 
   // Form State
   const [formData, setFormData] = useState({
-    goal: '50-plus', // Pre-selected matching user screenshot ("Lose 50+ lbs")
+    goal: '50-plus', // Pre-selected matching screenshot ("Lose 50+ lbs")
     gender: 'female',
     heightFt: '5',
     heightIn: '6',
@@ -51,12 +53,12 @@ export default function CompetitorFlow({ onBackToWelcome }) {
 
   const getProgressPercentage = () => {
     switch (currentStep) {
-      case '0': return 10;
-      case '1': return 30;
-      case '2': return 55;
-      case '3': return 75;
+      case '0': return 12;
+      case '1': return 35;
+      case '2': return 58;
+      case '3': return 78;
       case '4': return 100;
-      default: return 10;
+      default: return 12;
     }
   };
 
@@ -77,18 +79,18 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         return (
           <div style={{
             width: '100%',
-            maxWidth: '580px',
+            maxWidth: '560px',
             margin: '0 auto',
-            padding: '48px 24px 64px',
+            padding: '40px 20px 60px',
             boxSizing: 'border-box',
             fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
             color: '#000045'
           }}>
             <div style={{ marginBottom: '32px', textAlign: 'left' }}>
-              <h1 style={{ fontSize: '24px', fontWeight: 500, lineHeight: '1.3', color: '#000045', margin: '0 0 8px' }}>
+              <h1 style={{ fontSize: '26px', fontWeight: 600, lineHeight: '1.28', color: '#000045', margin: '0 0 8px' }}>
                 What was your sex assigned at birth?
               </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.5' }}>
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.45' }}>
                 This is required for calculating accurate body metabolic indexes and medication dosing guidelines.
               </p>
             </div>
@@ -108,22 +110,29 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                       setTimeout(() => setCurrentStep('2'), 200);
                     }}
                     style={{
-                      minHeight: '68px',
+                      minHeight: '60px',
                       width: '100%',
                       border: isSelected ? '1.5px solid #000045' : '1px solid #D5D6E0',
-                      borderRadius: '16px',
-                      padding: '16px 20px',
+                      borderRadius: '12px',
+                      padding: '16px 24px',
                       backgroundColor: '#FFFFFF',
                       color: '#000045',
                       fontSize: '15px',
                       fontWeight: 500,
                       cursor: 'pointer',
-                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
                       fontFamily: 'inherit',
                       outline: 'none'
                     }}
                   >
-                    {opt.label}
+                    <span>{opt.label}</span>
+                    <img 
+                      src={isSelected ? radioCheckedImg : radioUncheckedImg} 
+                      alt={isSelected ? "Checked" : "Unchecked"}
+                      style={{ width: '22px', height: '22px', objectFit: 'contain' }}
+                    />
                   </button>
                 );
               })}
@@ -145,55 +154,55 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         return (
           <div style={{
             width: '100%',
-            maxWidth: '580px',
+            maxWidth: '560px',
             margin: '0 auto',
-            padding: '48px 24px 64px',
+            padding: '40px 20px 60px',
             boxSizing: 'border-box',
             fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
             color: '#000045'
           }}>
             <div style={{ marginBottom: '32px', textAlign: 'left' }}>
-              <h1 style={{ fontSize: '24px', fontWeight: 500, lineHeight: '1.3', color: '#000045', margin: '0 0 8px' }}>
+              <h1 style={{ fontSize: '26px', fontWeight: 600, lineHeight: '1.28', color: '#000045', margin: '0 0 8px' }}>
                 What are your measurements?
               </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.5' }}>
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.45' }}>
                 Used by our licensed clinical team to calculate your Body Mass Index (BMI).
               </p>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', width: '100%', marginBottom: '24px' }}>
               <div>
-                <label style={{ fontSize: '13px', fontWeight: 500, color: '#000045', display: 'block', marginBottom: '6px' }}>Height</label>
+                <label style={{ fontSize: '13px', fontWeight: 600, color: '#000045', display: 'block', marginBottom: '6px' }}>Height</label>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <input
                     type="number"
                     value={formData.heightFt}
                     onChange={(e) => setFormData({ ...formData, heightFt: e.target.value })}
-                    style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
+                    style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
                     placeholder="Ft"
                   />
                   <input
                     type="number"
                     value={formData.heightIn}
                     onChange={(e) => setFormData({ ...formData, heightIn: e.target.value })}
-                    style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
+                    style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
                     placeholder="In"
                   />
                 </div>
               </div>
 
               <div>
-                <label style={{ fontSize: '13px', fontWeight: 500, color: '#000045', display: 'block', marginBottom: '6px' }}>Current Weight (lbs)</label>
+                <label style={{ fontSize: '13px', fontWeight: 600, color: '#000045', display: 'block', marginBottom: '6px' }}>Current Weight (lbs)</label>
                 <input
                   type="number"
                   value={formData.weightLbs}
                   onChange={(e) => setFormData({ ...formData, weightLbs: e.target.value })}
-                  style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
+                  style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #D5D6E0', fontSize: '15px', color: '#000045', outline: 'none' }}
                 />
               </div>
             </div>
 
-            <div style={{ width: '100%', padding: '16px 20px', borderRadius: '14px', background: '#F4F4FA', border: '1px solid #E2E2EA', marginBottom: '28px' }}>
+            <div style={{ width: '100%', padding: '16px 20px', borderRadius: '12px', background: '#F4F4FA', border: '1px solid #E2E2EA', marginBottom: '28px', boxSizing: 'border-box' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: '14px', fontWeight: 500, color: '#000045' }}>Calculated BMI</span>
                 <span style={{ fontSize: '16px', fontWeight: 700, color: '#000045' }}>34.7 · Eligible for GLP-1 Care</span>
@@ -206,7 +215,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               style={{
                 width: '100%',
                 height: '52px',
-                borderRadius: '16px',
+                borderRadius: '12px',
                 background: '#000045',
                 color: '#FFF',
                 border: 'none',
@@ -235,18 +244,18 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         return (
           <div style={{
             width: '100%',
-            maxWidth: '580px',
+            maxWidth: '560px',
             margin: '0 auto',
-            padding: '48px 24px 64px',
+            padding: '40px 20px 60px',
             boxSizing: 'border-box',
             fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
             color: '#000045'
           }}>
             <div style={{ marginBottom: '32px', textAlign: 'left' }}>
-              <h1 style={{ fontSize: '24px', fontWeight: 500, lineHeight: '1.3', color: '#000045', margin: '0 0 8px' }}>
+              <h1 style={{ fontSize: '26px', fontWeight: 600, lineHeight: '1.28', color: '#000045', margin: '0 0 8px' }}>
                 Have you taken GLP-1 medications in the past 12 months?
               </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.5' }}>
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.45' }}>
                 This informs whether our medical team titrates or maintains your active dosage.
               </p>
             </div>
@@ -268,22 +277,29 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                       setTimeout(() => setCurrentStep('4'), 200);
                     }}
                     style={{
-                      minHeight: '68px',
+                      minHeight: '60px',
                       width: '100%',
                       border: isSelected ? '1.5px solid #000045' : '1px solid #D5D6E0',
-                      borderRadius: '16px',
-                      padding: '16px 20px',
+                      borderRadius: '12px',
+                      padding: '16px 24px',
                       backgroundColor: '#FFFFFF',
                       color: '#000045',
                       fontSize: '15px',
                       fontWeight: 500,
                       cursor: 'pointer',
-                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
                       fontFamily: 'inherit',
                       outline: 'none'
                     }}
                   >
-                    {opt.label}
+                    <span>{opt.label}</span>
+                    <img 
+                      src={isSelected ? radioCheckedImg : radioUncheckedImg} 
+                      alt={isSelected ? "Checked" : "Unchecked"}
+                      style={{ width: '22px', height: '22px', objectFit: 'contain' }}
+                    />
                   </button>
                 );
               })}
@@ -306,9 +322,9 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         return (
           <div style={{
             width: '100%',
-            maxWidth: '580px',
+            maxWidth: '560px',
             margin: '0 auto',
-            padding: '48px 24px 64px',
+            padding: '40px 20px 60px',
             boxSizing: 'border-box',
             fontFamily: "'Instrument Sans', system-ui, -apple-system, sans-serif",
             color: '#000045'
@@ -328,10 +344,10 @@ export default function CompetitorFlow({ onBackToWelcome }) {
             </div>
 
             <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-              <h1 style={{ fontSize: '24px', fontWeight: 500, color: '#000045', margin: '0 0 8px' }}>
+              <h1 style={{ fontSize: '24px', fontWeight: 600, color: '#000045', margin: '0 0 8px' }}>
                 You are clinically eligible for Mochi Health
               </h1>
-              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.5' }}>
+              <p style={{ fontSize: '15px', color: '#606069', margin: 0, lineHeight: '1.45' }}>
                 Based on your goal to lose 50+ lbs and your health profile, you qualify for physician-guided GLP-1 care.
               </p>
             </div>
@@ -363,7 +379,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                 style={{
                   width: '100%',
                   height: '52px',
-                  borderRadius: '14px',
+                  borderRadius: '12px',
                   background: '#000045',
                   color: '#FFF',
                   border: 'none',
@@ -393,53 +409,160 @@ export default function CompetitorFlow({ onBackToWelcome }) {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#FFFFFF', position: 'relative' }}>
       
-      {/* Dev Study Bar */}
-      <aside className="top-dev-toolbar" aria-label="Join Mochi flow controls" style={{ borderBottom: '1px solid #D5D6E0' }}>
-        <div className="toolbar-brand" style={{ cursor: onBackToWelcome ? 'pointer' : 'default' }} onClick={onBackToWelcome}>
-          {onBackToWelcome && (
-            <button 
-              type="button" 
-              className="toolbar-btn" 
-              onClick={onBackToWelcome}
-              title="Return to Select Project welcome screen"
-              style={{ marginRight: '6px', padding: '4px 8px' }}
-            >
-              <ArrowLeft size={13} />
-              <span>Projects</span>
-            </button>
-          )}
-          <span style={{ fontWeight: 800, color: '#000045' }}>Join Mochi</span>
-          <span style={{ fontSize: '11px', background: '#EAEAF2', color: '#000045', padding: '2px 6px', borderRadius: '6px', fontWeight: 600 }}>
-            Exact Mochi Architecture
-          </span>
-        </div>
-
-        <div className="toolbar-controls">
-          <select 
-            className="screen-select-dropdown" 
-            value={currentStep} 
-            onChange={(e) => setCurrentStep(e.target.value)} 
-            aria-label="Select Mochi survey screen"
-            style={{ maxWidth: '340px' }}
+      {/* Floating Demo Control Pill (Discreet, bottom-left, avoids breaking top bar layout) */}
+      <div style={{
+        position: 'fixed',
+        bottom: '20px',
+        left: '20px',
+        zIndex: 9999,
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
+      }}>
+        {!showDevControls ? (
+          <button
+            type="button"
+            onClick={() => setShowDevControls(true)}
+            style={{
+              background: '#000045',
+              color: '#FFFFFF',
+              border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '24px',
+              padding: '8px 16px',
+              fontSize: '12.5px',
+              fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              cursor: 'pointer',
+              boxShadow: '0 4px 16px rgba(0,0,69,0.25)'
+            }}
+            title="Open Flow Study & Demo Tools"
           >
-            {MOCHI_SCREENS.map((s) => (
-              <option key={s.key} value={s.key}>{s.label}</option>
-            ))}
-          </select>
-
-          <button type="button" className="toolbar-btn" onClick={handleAutofill} title="Autofill Mochi flow demo data">
-            <CheckCheck size={13} />
-            <span>Autofill Demo</span>
+            <Sliders size={14} />
+            <span>Study Tools</span>
           </button>
+        ) : (
+          <div style={{
+            background: 'rgba(0, 0, 69, 0.96)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: '16px',
+            padding: '10px 14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            boxShadow: '0 8px 32px rgba(0,0,69,0.3)',
+            color: '#FFFFFF'
+          }}>
+            {onBackToWelcome && (
+              <button
+                type="button"
+                onClick={onBackToWelcome}
+                style={{
+                  background: 'rgba(255,255,255,0.15)',
+                  border: 'none',
+                  color: '#FFFFFF',
+                  borderRadius: '8px',
+                  padding: '6px 10px',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <ArrowLeft size={13} />
+                <span>Projects</span>
+              </button>
+            )}
 
-          <button type="button" className={`toolbar-btn ${isMobileFrame ? 'active' : ''}`} onClick={() => setIsMobileFrame(!isMobileFrame)}>
-            {isMobileFrame ? <Monitor size={13} /> : <Smartphone size={13} />}
-            <span>{isMobileFrame ? 'Desktop (Full)' : 'Mobile Frame'}</span>
-          </button>
-        </div>
-      </aside>
+            <select
+              value={currentStep}
+              onChange={(e) => setCurrentStep(e.target.value)}
+              style={{
+                background: 'rgba(255,255,255,0.15)',
+                color: '#FFFFFF',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '6px 10px',
+                fontSize: '12px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                outline: 'none'
+              }}
+            >
+              {MOCHI_SCREENS.map((s) => (
+                <option key={s.key} value={s.key} style={{ background: '#000045', color: '#FFF' }}>
+                  {s.label}
+                </option>
+              ))}
+            </select>
 
-      {/* Floating Right Report / Usersnap Bug Button */}
+            <button
+              type="button"
+              onClick={handleAutofill}
+              style={{
+                background: 'rgba(255,255,255,0.15)',
+                border: 'none',
+                color: '#FFFFFF',
+                borderRadius: '8px',
+                padding: '6px 10px',
+                fontSize: '12px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}
+            >
+              <CheckCheck size={13} />
+              <span>Autofill</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsMobileFrame(!isMobileFrame)}
+              style={{
+                background: isMobileFrame ? '#2563EB' : 'rgba(255,255,255,0.15)',
+                border: 'none',
+                color: '#FFFFFF',
+                borderRadius: '8px',
+                padding: '6px 10px',
+                fontSize: '12px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}
+            >
+              {isMobileFrame ? <Monitor size={13} /> : <Smartphone size={13} />}
+              <span>{isMobileFrame ? 'Desktop' : 'Mobile'}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowDevControls(false)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: 'rgba(255,255,255,0.6)',
+                fontSize: '16px',
+                cursor: 'pointer',
+                padding: '0 4px',
+                lineHeight: 1
+              }}
+              title="Close Tools"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Floating Right Report Bug Tab (Matches Join Mochi live site) */}
       <div 
         title="Report an issue or feedback"
         style={{
@@ -460,7 +583,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
           zIndex: 9998,
           boxShadow: '0 2px 10px rgba(0,0,69,0.25)'
         }}
-        onClick={() => alert("Mochi Feedback Reporter")}
+        onClick={() => alert("Join Mochi Bug Reporter")}
       >
         <span style={{ 
           writingMode: 'vertical-rl', 
@@ -486,7 +609,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         </svg>
       </div>
 
-      {/* Mochi Shell */}
+      {/* Mochi Viewport Shell */}
       <div style={{
         maxWidth: isMobileFrame ? '420px' : '100%',
         margin: isMobileFrame ? '24px auto' : '0 auto',
@@ -497,26 +620,27 @@ export default function CompetitorFlow({ onBackToWelcome }) {
         minHeight: isMobileFrame ? '740px' : 'auto',
         backgroundColor: '#FFFFFF'
       }}>
-        {/* Exact Mochi Top Header with Progress Bar and Mochi Logo */}
+        
+        {/* Exact Mochi Top Bar: Centered layout with progress bar and logo on the right */}
         <header style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
           width: '100%',
           backgroundColor: '#FFFFFF',
-          borderBottom: '1px solid #E7E7F0',
-          padding: '16px 24px',
+          paddingTop: '36px',
+          paddingBottom: '20px',
+          paddingLeft: '24px',
+          paddingRight: '24px',
           boxSizing: 'border-box'
         }}>
           <div style={{
             display: 'flex',
             width: '100%',
-            maxWidth: '700px',
+            maxWidth: '740px',
+            margin: '0 auto',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: '24px'
+            gap: '32px'
           }}>
-            {/* Left Back Arrow or Invisible Balancer */}
+            {/* Left Back Arrow or Balanced Invisible Spacer */}
             {currentStep !== '0' ? (
               <button
                 type="button"
@@ -528,7 +652,7 @@ export default function CompetitorFlow({ onBackToWelcome }) {
                   padding: '4px',
                   display: 'flex',
                   alignItems: 'center',
-                  color: '#606069',
+                  color: '#000045',
                   flexShrink: 0
                 }}
                 title="Previous step"
@@ -539,11 +663,11 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               <div style={{ width: '24px', height: '24px', opacity: 0, flexShrink: 0 }} />
             )}
 
-            {/* Center Progress Track */}
+            {/* Center Progress Bar Line */}
             <div style={{
               flex: 1,
-              height: '6px',
-              backgroundColor: '#E7E7F0',
+              height: '5px',
+              backgroundColor: '#EAEAF2',
               borderRadius: '999px',
               overflow: 'hidden'
             }}>
@@ -556,15 +680,19 @@ export default function CompetitorFlow({ onBackToWelcome }) {
               }} />
             </div>
 
-            {/* Right Mochi Official SVG Logo */}
+            {/* Right Mochi Official Brand SVG Logo */}
             <a 
               href="https://www.joinmochi.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              style={{ flexShrink: 0, display: 'block' }}
+              style={{ flexShrink: 0, display: 'flex', alignItems: 'center', textDecoration: 'none' }}
               title="Join Mochi"
             >
-              <MochiLogoSvg width={55} height={52} />
+              <img 
+                src={mochiLogoImg} 
+                alt="mochi HEALTH" 
+                style={{ height: '36px', width: 'auto', display: 'block' }} 
+              />
             </a>
           </div>
         </header>
