@@ -465,60 +465,144 @@ export default function OngoFlow({ onBackToWelcome }) {
   const backAction = getHeaderBackAction();
 
   return (
-    <div className="app-viewport">
-      <aside className="top-dev-toolbar" aria-label="Survey review and device controls">
-        <div className="toolbar-brand" style={{ cursor: onBackToWelcome ? 'pointer' : 'default' }} onClick={onBackToWelcome}>
-          {onBackToWelcome && (
-            <button 
-              type="button" 
-              className="toolbar-btn" 
-              onClick={onBackToWelcome}
-              title="Return to Select Project welcome screen"
-              style={{ marginRight: '6px', padding: '4px 8px' }}
-            >
-              <ArrowLeft size={13} />
-              <span>Projects</span>
-            </button>
-          )}
-          <Sparkles size={16} color="var(--color-primary-dark)" />
-          <span>Ongo Flow (25 Screens)</span>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      background: '#F6F4EB',
+      fontFamily: "'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    }}>
+      {/* Dev & Flow Controller Bar */}
+      <div style={{
+        background: '#11261F',
+        color: '#FFFFFF',
+        padding: '8px 20px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '12px',
+        fontSize: '13px',
+        borderBottom: '1px solid #1F4F3D',
+        position: 'relative',
+        zIndex: 9995
+      }}>
+        {/* Left: Hub Return & Flow Tag */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <button
+            type="button"
+            onClick={onBackToWelcome}
+            style={{
+              background: 'rgba(255,255,255,0.1)',
+              border: 'none',
+              borderRadius: '6px',
+              padding: '5px 10px',
+              color: '#FFFFFF',
+              fontSize: '12.5px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontFamily: 'inherit'
+            }}
+          >
+            <ArrowLeft size={14} />
+            <span>Study Hub</span>
+          </button>
+
+          <span style={{ fontWeight: 700, color: '#F9FAFB' }}>
+            🌿 Ongo Weight Loss Flow (25 Screens)
+          </span>
         </div>
 
-        <div className="toolbar-controls">
-          <select 
-            className="screen-select-dropdown" 
-            value={currentScreen} 
-            onChange={(e) => setCurrentScreen(e.target.value)} 
-            aria-label="Select screen to view"
+        {/* Center: Screen Switcher */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ color: '#A3C2B3', fontSize: '12px' }}>Select Screen:</span>
+          <select
+            value={currentScreen}
+            onChange={(e) => setCurrentScreen(e.target.value)}
+            style={{
+              background: '#1A3F33',
+              color: '#FFFFFF',
+              border: '1px solid #2F8968',
+              borderRadius: '6px',
+              padding: '5px 12px',
+              fontSize: '12.5px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              outline: 'none',
+              fontFamily: 'inherit'
+            }}
           >
             {SCREEN_LIST.map((s) => (
-              <option key={s.key} value={s.key}>{s.label}</option>
+              <option key={s.key} value={s.key} style={{ background: '#174B38', color: '#FFFFFF' }}>{s.label}</option>
             ))}
           </select>
+        </div>
 
-          <button type="button" className="toolbar-btn" onClick={handleAutofill} title="Auto-fill sample patient survey data">
-            <CheckCheck size={13} />
-            <span>Autofill Demo</span>
+        {/* Right: Controls */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button
+            type="button"
+            onClick={handleAutofill}
+            style={{
+              background: '#2F8968',
+              border: 'none',
+              borderRadius: '6px',
+              padding: '5px 12px',
+              color: '#FFFFFF',
+              fontSize: '12px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontFamily: 'inherit'
+            }}
+          >
+            <Sparkles size={13} />
+            <span>Autofill</span>
           </button>
 
-          <button type="button" className={`toolbar-btn ${isMobileFrame ? 'active' : ''}`} onClick={() => setIsMobileFrame(!isMobileFrame)} title="Toggle between mobile viewport frame and centered desktop layout">
-            {isMobileFrame ? <Monitor size={13} /> : <Smartphone size={13} />}
-            <span>{isMobileFrame ? 'Desktop (540px)' : 'Mobile Frame'}</span>
+          <button
+            type="button"
+            onClick={() => setIsMobileFrame(!isMobileFrame)}
+            style={{
+              background: isMobileFrame ? '#1F4F3D' : 'rgba(255,255,255,0.1)',
+              border: isMobileFrame ? '1px solid #2F8968' : 'none',
+              borderRadius: '6px',
+              padding: '5px 10px',
+              color: '#FFFFFF',
+              fontSize: '12px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontFamily: 'inherit'
+            }}
+          >
+            {isMobileFrame ? <Monitor size={14} /> : <Smartphone size={14} />}
+            <span>{isMobileFrame ? 'Desktop' : 'Mobile'}</span>
           </button>
         </div>
-      </aside>
+      </div>
 
-      <main className={`onboarding-shell ${isMobileFrame ? 'device-frame-mobile' : ''}`}>
-        <Header 
-          ref={headerRef} 
-          showBack={backAction !== null} 
-          onBack={backAction} 
-          onLogoClick={() => setCurrentScreen('1')} 
-        />
-        <div className="main-card-body" key={autofillKey}>
-          {renderCurrentScreen()}
-        </div>
-      </main>
+      {/* Main Flow Viewport */}
+      <div className="app-viewport" style={{ flex: 1, padding: isMobileFrame ? '24px 16px 60px' : '24px 20px 60px', width: '100%', boxSizing: 'border-box' }}>
+        <main className={`onboarding-shell ${isMobileFrame ? 'device-frame-mobile' : ''}`}>
+          <Header 
+            ref={headerRef} 
+            showBack={backAction !== null} 
+            onBack={backAction} 
+            onLogoClick={() => setCurrentScreen('1')} 
+          />
+          <div className="main-card-body" key={autofillKey}>
+            {renderCurrentScreen()}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

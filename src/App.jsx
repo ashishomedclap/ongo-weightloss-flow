@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import WelcomeScreen from './projects/WelcomeScreen';
 import OngoFlow from './projects/ongo/OngoFlow';
-import CompetitorFlow from './projects/competitor/CompetitorFlow';
-import { Layers, Sparkles, Building2, ChevronDown } from 'lucide-react';
+import MochiFlow from './projects/join mochi/CompetitorFlow';
+import JoinFridaysFlow from './projects/join fridays/JoinFridaysFlow';
+import { Layers } from 'lucide-react';
 
 const getInitialProject = () => {
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
     const p = params.get('project');
-    if (p === 'ongo' || p === 'competitor' || p === 'welcome') {
-      return p;
+    if (p === 'ongo' || p === 'join-mochi' || p === 'competitor' || p === 'join-fridays' || p === 'welcome') {
+      return p === 'competitor' ? 'join-mochi' : p;
     }
   }
   return 'welcome';
@@ -105,23 +106,29 @@ export default function App() {
           >
             <option value="welcome">🏠 Select Project (Welcome Screen)</option>
             <option value="ongo">🌿 Ongo Weight Loss Flow (25 Screens)</option>
-            <option value="competitor">🟣 Join Mochi Flow (Competitor Benchmark)</option>
+            <option value="join-mochi">🟣 Join Mochi Flow (Competitor Benchmark)</option>
+            <option value="join-fridays">🟠 Join Fridays Flow (Competitor Benchmark)</option>
           </select>
         </div>
       </header>
 
       {/* Main View Router */}
       {project === 'welcome' && (
-        <WelcomeScreen onSelectProject={(p) => setProject(p)} />
+        <WelcomeScreen onSelectProject={(p) => setProject(p === 'competitor' ? 'join-mochi' : p)} />
       )}
 
       {project === 'ongo' && (
         <OngoFlow onBackToWelcome={() => setProject('welcome')} />
       )}
 
-      {project === 'competitor' && (
-        <CompetitorFlow onBackToWelcome={() => setProject('welcome')} />
+      {(project === 'join-mochi' || project === 'competitor') && (
+        <MochiFlow onBackToWelcome={() => setProject('welcome')} />
+      )}
+
+      {project === 'join-fridays' && (
+        <JoinFridaysFlow onBackToWelcome={() => setProject('welcome')} />
       )}
     </div>
   );
 }
+

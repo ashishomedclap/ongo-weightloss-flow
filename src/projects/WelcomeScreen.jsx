@@ -1,4 +1,5 @@
 import React from 'react';
+import fridaysLogoImg from '../assets/fridays/fridays-logo.png';
 import { 
   FolderGit2, 
   Sparkles, 
@@ -210,6 +211,96 @@ export default function WelcomeScreen({ onSelectProject }) {
               }}
             >
               <span>Launch Join Mochi Flow</span>
+              <ArrowRight size={17} />
+            </button>
+          </div>
+
+          {/* Card 3: Join Fridays Survey */}
+          <div 
+            onClick={() => onSelectProject('join-fridays')}
+            style={{
+              background: '#FFFFFF',
+              borderRadius: '24px',
+              border: '1px solid #E2E8F0',
+              boxShadow: '0 8px 24px rgba(15, 23, 42, 0.05)',
+              padding: '32px 28px',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.boxShadow = '0 16px 40px rgba(255, 94, 54, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 8px 24px rgba(15, 23, 42, 0.05)';
+            }}
+          >
+            <div style={{ position: 'absolute', top: '16px', right: '16px', background: '#FFF1EE', color: '#FF5E36', padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 800, letterSpacing: '0.04em' }}>
+              NEW COMPETITOR
+            </div>
+
+            <div>
+              <div style={{
+                height: '52px',
+                padding: '0 16px',
+                borderRadius: '16px',
+                background: '#F4F7F2',
+                border: '1px solid #D3DECE',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '20px'
+              }}>
+                <img
+                  src={fridaysLogoImg}
+                  alt="fridays"
+                  style={{
+                    height: '24px',
+                    width: 'auto',
+                    objectFit: 'contain'
+                  }}
+                />
+              </div>
+
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#282F26', margin: '0 0 8px' }}>
+                Join Fridays Flow
+              </h2>
+              <p style={{ fontSize: '14.5px', color: '#4B5563', lineHeight: '1.5', margin: '0 0 20px' }}>
+                Exact clinical onboarding & telehealth intake flow for Join Fridays, covering 10 structured phases from account creation to GLP-1 prescription checkout and consultation setup.
+              </p>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}>
+                <span style={{ fontSize: '12px', background: '#363F33', color: '#FFF', padding: '4px 10px', borderRadius: '12px', fontWeight: 700 }}>10 Screens Flow</span>
+                <span style={{ fontSize: '12px', background: '#F4F7F2', color: '#363F33', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Multi-month Plans</span>
+                <span style={{ fontSize: '12px', background: '#F4F7F2', color: '#363F33', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Provider Video Match</span>
+                <span style={{ fontSize: '12px', background: '#F4F7F2', color: '#363F33', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Autofill Demo</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="cta-button-pill active"
+              style={{
+                width: '100%',
+                background: '#363F33',
+                color: '#FFF',
+                border: 'none',
+                height: '50px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                fontWeight: 700,
+                fontSize: '15px'
+              }}
+            >
+              <span>Launch Join Fridays Flow</span>
               <ArrowRight size={17} />
             </button>
           </div>
