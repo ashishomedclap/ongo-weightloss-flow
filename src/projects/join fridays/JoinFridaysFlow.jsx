@@ -11,10 +11,10 @@ import FridaysFrame7Provider from './FridaysFrame7Provider';
 import FridaysFrame8Treatments from './FridaysFrame8Treatments';
 import FridaysFrame9Pricing from './FridaysFrame9Pricing';
 import FridaysFrame10Checkout from './FridaysFrame10Checkout';
-import { 
-  ArrowLeft, 
-  Monitor, 
-  Smartphone, 
+import {
+  ArrowLeft,
+  Monitor,
+  Smartphone,
   Sparkles
 } from 'lucide-react';
 

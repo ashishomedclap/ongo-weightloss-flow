@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import WelcomeScreen from './projects/WelcomeScreen';
+import StartScreen from './projects/StartScreen';
 import OngoFlow from './projects/ongo/OngoFlow';
+import OngoFlowV2 from './projects/ongo-v2/OngoFlow';
 import MochiFlow from './projects/join mochi/CompetitorFlow';
 import JoinFridaysFlow from './projects/join fridays/JoinFridaysFlow';
 import { Layers } from 'lucide-react';
@@ -9,8 +10,12 @@ const getInitialProject = () => {
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
     const p = params.get('project');
-    if (p === 'ongo' || p === 'join-mochi' || p === 'competitor' || p === 'join-fridays' || p === 'welcome') {
-      return p === 'competitor' ? 'join-mochi' : p;
+    if (p === 'ongo' || p === 'ongo-v1' || p === 'ongo-v2' || p === 'v2' || p === 'join-mochi' || p === 'competitor' || p === 'join-fridays' || p === 'welcome' || p === 'start') {
+      if (p === 'competitor') return 'join-mochi';
+      if (p === 'ongo-v1') return 'ongo';
+      if (p === 'v2') return 'ongo-v2';
+      if (p === 'start') return 'welcome';
+      return p;
     }
   }
   return 'welcome';
@@ -24,9 +29,10 @@ export default function App() {
       const params = new URLSearchParams(window.location.search);
       if (params.get('project') !== project) {
         params.set('project', project);
-        // Clear screen param if returning to welcome
-        if (project === 'welcome') {
+        // Clear screen and frame params if returning to start / welcome screen
+        if (project === 'welcome' || project === 'start') {
           params.delete('screen');
+          params.delete('frame');
         }
         const newUrl = `${window.location.pathname}?${params.toString()}`;
         window.history.replaceState({}, '', newUrl);
@@ -54,7 +60,7 @@ export default function App() {
         <div 
           onClick={() => setProject('welcome')}
           style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
-          title="Return to Welcome Screen"
+          title="Return to Start Screen"
         >
           <div style={{
             width: '28px',
@@ -78,19 +84,19 @@ export default function App() {
             borderRadius: '10px', 
             color: '#D1D5DB' 
           }}>
-            Comparison
+            Start Screen
           </span>
         </div>
 
-        {/* Project Selector Dropdown & Quick Toggles */}
+        {/* Project Selector Dropdown with Exact Categorized Hierarchy */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <label htmlFor="project-picker" style={{ fontSize: '13px', color: '#9CA3AF', fontWeight: 500 }}>
-            Active Project:
+            Active Flow:
           </label>
 
           <select
             id="project-picker"
-            value={project}
+            value={project === 'start' ? 'welcome' : project}
             onChange={(e) => setProject(e.target.value)}
             style={{
               background: '#1F2937',
@@ -98,35 +104,44 @@ export default function App() {
               border: '1px solid rgba(255,255,255,0.2)',
               borderRadius: '8px',
               padding: '6px 14px',
-              fontSize: '13.5px',
+              fontSize: '13px',
               fontWeight: 600,
               cursor: 'pointer',
               outline: 'none'
             }}
           >
-            <option value="welcome">🏠 Select Project (Welcome Screen)</option>
-            <option value="ongo">🌿 Ongo Weight Loss Flow (25 Screens)</option>
-            <option value="join-mochi">🟣 Join Mochi Flow (Competitor Benchmark)</option>
-            <option value="join-fridays">🟠 Join Fridays Flow (Competitor Benchmark)</option>
+            <option value="welcome">🏠 Start Screen (Project Hub)</option>
+            <optgroup label="Ongo Weight Loss">
+              <option value="ongo">🌿 V1 Survey (25 Screens - Baseline)</option>
+              <option value="ongo-v2">✨ V2 Survey (25 Screens - Active Workspace)</option>
+            </optgroup>
+            <optgroup label="Competitors">
+              <option value="join-fridays">🟠 1. Join Fridays (10 Screens)</option>
+              <option value="join-mochi">🟣 2. Join Mochi (29 Frames)</option>
+            </optgroup>
           </select>
         </div>
       </header>
 
       {/* Main View Router */}
-      {project === 'welcome' && (
-        <WelcomeScreen onSelectProject={(p) => setProject(p === 'competitor' ? 'join-mochi' : p)} />
+      {(project === 'welcome' || project === 'start') && (
+        <StartScreen onSelectProject={(p) => setProject(p === 'competitor' ? 'join-mochi' : (p === 'ongo-v1' ? 'ongo' : p))} />
       )}
 
-      {project === 'ongo' && (
+      {(project === 'ongo' || project === 'ongo-v1') && (
         <OngoFlow onBackToWelcome={() => setProject('welcome')} />
       )}
 
-      {(project === 'join-mochi' || project === 'competitor') && (
-        <MochiFlow onBackToWelcome={() => setProject('welcome')} />
+      {(project === 'ongo-v2' || project === 'v2') && (
+        <OngoFlowV2 onBackToWelcome={() => setProject('welcome')} />
       )}
 
       {project === 'join-fridays' && (
         <JoinFridaysFlow onBackToWelcome={() => setProject('welcome')} />
+      )}
+
+      {(project === 'join-mochi' || project === 'competitor') && (
+        <MochiFlow onBackToWelcome={() => setProject('welcome')} />
       )}
     </div>
   );
