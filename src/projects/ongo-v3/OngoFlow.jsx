@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Screen1Account from './components/Screen1Account';
 import Screen2AboutYou from './components/Screen2AboutYou';
 import Screen3Appointment from './components/Screen3Appointment';
-import Screen4HealthQuestions from './components/Screen4HealthQuestions';
+import Screen4ReviewDetails from './components/Screen4ReviewDetails';
 import Screen5Confirmed from './components/Screen5Confirmed';
 import { Smartphone, Monitor, Sparkles, ArrowLeft, RefreshCw } from 'lucide-react';
 
@@ -11,8 +11,8 @@ const getInitialScreen = () => {
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
     const screen = params.get('screen');
-    if (['1', '2', '3', '4', '5'].includes(screen)) {
-      return screen;
+    if (['1', '2', '3', '4', '5', '6'].includes(screen)) {
+      return screen === '6' ? '5' : screen;
     }
   }
   return '1';
@@ -208,7 +208,7 @@ export default function OngoFlowV3({ onBackToWelcome }) {
             <option value="1">Screen 1: Account / Login (V1 Screen 1)</option>
             <option value="2">Screen 2: Profile Details (V1 Screen 2)</option>
             <option value="3">Screen 3: Appointment Date &amp; Time</option>
-            <option value="4">Screen 4: Health Assessment (Checkbox Screenshot)</option>
+            <option value="4">Screen 4: Review &amp; Confirm Details (Edit options)</option>
             <option value="5">Screen 5: Appointment Confirmed</option>
           </select>
 
@@ -312,8 +312,8 @@ export default function OngoFlowV3({ onBackToWelcome }) {
           {/* Header Component */}
           <Header
             ref={headerRef}
-            currentStep={parseInt(currentScreen, 10)}
-            showBack={currentScreen !== '1' && currentScreen !== '5'}
+            currentStep={currentScreen === '6' ? 5 : parseInt(currentScreen, 10)}
+            showBack={currentScreen !== '1' && currentScreen !== '5' && currentScreen !== '6'}
             onBack={handlePrevScreen}
             onLogoClick={() => setCurrentScreen('1')}
           />
@@ -353,20 +353,20 @@ export default function OngoFlowV3({ onBackToWelcome }) {
             </div>
           )}
 
-          {/* Screen 4: Health Assessment Checkboxes from screenshot */}
+          {/* Screen 4: Review and confirm details (with edit options) */}
           {currentScreen === '4' && (
             <div style={{ padding: isMobileFrame ? '16px' : '28px 16px' }}>
-              <Screen4HealthQuestions
+              <Screen4ReviewDetails
                 formData={formData}
-                updateFormData={updateFormData}
-                onNext={handleNextScreen}
+                onConfirm={() => setCurrentScreen('5')}
                 onBack={handlePrevScreen}
+                onEditSection={(sectionKey) => setCurrentScreen(sectionKey)}
               />
             </div>
           )}
 
-          {/* Screen 5: Appointment with care team confirmed */}
-          {currentScreen === '5' && (
+          {/* Screen 5 / Screen 6: Appointment with care team confirmed */}
+          {(currentScreen === '5' || currentScreen === '6') && (
             <div style={{ padding: isMobileFrame ? '16px' : '28px 16px' }}>
               <Screen5Confirmed
                 formData={formData}

@@ -2,11 +2,10 @@ import React, { useEffect } from 'react';
 import { 
   Check, 
   Calendar, 
-  Download, 
-  ExternalLink, 
   CheckCircle2, 
   Video, 
-  ShieldCheck 
+  ShieldCheck, 
+  Users 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -32,30 +31,6 @@ export default function Screen5Confirmed({ formData, onBackToWelcome }) {
   const appointmentTime = formData.appointmentTime || '10:30 AM';
   const timezone = formData.timezone || 'MDT';
 
-  const handleDownloadICS = () => {
-    const icsContent = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Ongo Health//Weight Loss Consultation//EN',
-      'BEGIN:VEVENT',
-      `SUMMARY:Ongo Weight Loss Physician Consultation (Dr. Sarah Jenkins, MD)`,
-      `DESCRIPTION:1-on-1 virtual medical consultation with Dr. Sarah Jenkins and the Ongo Care Team. Video room link: https://meet.ongohealth.com/room/ong-78291`,
-      `LOCATION:Ongo Telehealth Virtual Room`,
-      'STATUS:CONFIRMED',
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
-
-    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'ongo-consultation.ics');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <div className="content-inner fade-in" style={{ textAlign: 'center', paddingBottom: '40px', maxWidth: '640px', margin: '0 auto' }}>
       
@@ -80,7 +55,7 @@ export default function Screen5Confirmed({ formData, onBackToWelcome }) {
           Appointment confirmed 🎉
         </h1>
         <p className="page-subtitle" style={{ fontSize: '15px', color: '#6B7280', maxWidth: '480px', margin: '0 auto', lineHeight: '1.5' }}>
-          Your clinical intake is complete and your appointment is confirmed. Your physician will review your details before your visit.
+          Your appointment is confirmed. The Ongo Support Care Team will review your details before your visit.
         </p>
       </div>
 
@@ -94,7 +69,7 @@ export default function Screen5Confirmed({ formData, onBackToWelcome }) {
             {formattedDate}
           </div>
           <div style={{ fontSize: '14px', color: '#166534', fontWeight: 600 }}>
-            {appointmentTime} ({timezone}) &bull; Virtual Telehealth Visit
+            {appointmentTime} ({timezone}) &bull; Virtual Support Consultation
           </div>
         </div>
         <div style={{
@@ -109,7 +84,7 @@ export default function Screen5Confirmed({ formData, onBackToWelcome }) {
         </div>
       </div>
 
-      {/* Care Team Doctor Card */}
+      {/* Support Care Team Card */}
       <div style={{
         background: '#FFFFFF',
         borderRadius: '16px',
@@ -122,17 +97,19 @@ export default function Screen5Confirmed({ formData, onBackToWelcome }) {
         marginBottom: '20px'
       }}>
         <div style={{ position: 'relative', flexShrink: 0 }}>
-          <img
-            src="/physician.jpg"
-            alt="Dr. Sarah Jenkins"
-            style={{
-              width: '52px',
-              height: '52px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              border: '2px solid #2F8968'
-            }}
-          />
+          <div style={{
+            width: '52px',
+            height: '52px',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, #1F4F3D 0%, #2F8968 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#FFFFFF',
+            boxShadow: '0 4px 12px rgba(31, 79, 61, 0.25)'
+          }}>
+            <Users size={26} strokeWidth={2.2} />
+          </div>
           <div style={{
             position: 'absolute',
             bottom: '-2px',
@@ -153,10 +130,10 @@ export default function Screen5Confirmed({ formData, onBackToWelcome }) {
 
         <div>
           <div style={{ fontSize: '15px', fontWeight: 800, color: '#111827' }}>
-            Dr. Sarah Jenkins, MD, FACP
+            Ongo Support Care Team
           </div>
           <div style={{ fontSize: '12.5px', color: '#4B5563' }}>
-            Board-Certified Obesity Medicine &bull; Licensed in {formData.state || 'California'}
+            Dedicated Telehealth Care Specialists &bull; Support Care Consultation
           </div>
           <div style={{ fontSize: '12px', color: '#059669', fontWeight: 600, marginTop: '2px', display: 'flex', alignItems: 'center', gap: '4px' }}>
             <Video size={13} /> Secure Video Room link will be sent to {formData.email || 'your email'}
@@ -192,10 +169,10 @@ export default function Screen5Confirmed({ formData, onBackToWelcome }) {
             </div>
             <div>
               <div style={{ fontWeight: 700, fontSize: '14px', color: '#000', marginBottom: '2px' }}>
-                Clinical Health Assessment
+                Details Confirmed &amp; Medical Intake
               </div>
               <div style={{ fontSize: '13px', color: '#666' }}>
-                Completed. Your safety responses have been securely submitted.
+                Completed. Your appointment details and patient intake are verified.
               </div>
             </div>
           </div>
@@ -210,7 +187,7 @@ export default function Screen5Confirmed({ formData, onBackToWelcome }) {
                 Consultation
               </div>
               <div style={{ fontSize: '13px', color: '#666' }}>
-                Next. Your physician will meet with you at your scheduled time.
+                Next. The support care team will meet with you at your scheduled time.
               </div>
             </div>
           </div>
@@ -230,59 +207,6 @@ export default function Screen5Confirmed({ formData, onBackToWelcome }) {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Calendar Sync Buttons */}
-      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '16px' }}>
-        <button
-          type="button"
-          onClick={handleDownloadICS}
-          style={{
-            flex: 1,
-            minWidth: '180px',
-            padding: '12px 18px',
-            borderRadius: '12px',
-            background: '#FFFFFF',
-            color: '#1F4F3D',
-            border: '1.5px solid #2F8968',
-            fontWeight: 700,
-            fontSize: '13.5px',
-            cursor: 'pointer',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px'
-          }}
-        >
-          <Download size={16} />
-          <span>Download .ICS Calendar Invite</span>
-        </button>
-
-        <a
-          href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=Ongo+Weight+Loss+Consultation+with+Dr.+Jenkins&dates=20261001T173000Z/20261001T180000Z&details=1-on-1+Consultation+with+Ongo+Medical+Team&location=https://meet.ongohealth.com/room/ong-78291`}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            flex: 1,
-            minWidth: '180px',
-            padding: '12px 18px',
-            borderRadius: '12px',
-            background: '#1F4F3D',
-            color: '#FFFFFF',
-            border: 'none',
-            fontWeight: 700,
-            fontSize: '13.5px',
-            cursor: 'pointer',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            textDecoration: 'none'
-          }}
-        >
-          <ExternalLink size={16} />
-          <span>Add to Google Calendar</span>
-        </a>
       </div>
 
       {/* Primary Action Button */}

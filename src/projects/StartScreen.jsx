@@ -841,7 +841,7 @@ export default function StartScreen({ onSelectProject }) {
                     </div>
 
                     <p style={{ fontSize: '15px', color: '#4B5563', lineHeight: 1.55, margin: '0 0 16px', maxWidth: '820px' }}>
-                      A focused 5-screen clinical intake and scheduling experience: (1) Account login/signup from V1 Screen 1, (2) Patient profile details from V1 Screen 2, (3) Appointment date and time selector, (4) Safety health assessment checkboxes from screenshot, and (5) Appointment with care team confirmed with celebration and calendar sync.
+                      A focused 5-screen clinical intake and scheduling experience: (1) Account login/signup from V1 Screen 1, (2) Patient profile details from V1 Screen 2, (3) Appointment date and time selector, (4) Review &amp; confirm details with direct edit options, and (5) Appointment with care team confirmed.
                     </p>
 
                     {/* Key Feature Tags */}
@@ -860,7 +860,7 @@ export default function StartScreen({ onSelectProject }) {
                       </span>
                       <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                         <ShieldCheck size={13} color="#2563EB" />
-                        Screen 4: Health Questions (Checkboxes)
+                        Screen 4: Review &amp; Confirm Details
                       </span>
                       <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                         <Check size={13} color="#2563EB" />
@@ -893,7 +893,7 @@ export default function StartScreen({ onSelectProject }) {
                         <ChevronRight size={13} color="#94A3B8" />
                         <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>3. Appointment Time</span>
                         <ChevronRight size={13} color="#94A3B8" />
-                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>4. Health Questions</span>
+                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>4. Review &amp; Confirm Details</span>
                         <ChevronRight size={13} color="#94A3B8" />
                         <span style={{ background: '#EFF6FF', border: '1px solid #93C5FD', color: '#1D4ED8', padding: '4px 8px', borderRadius: '6px', fontWeight: 700 }}>5. Appointment Confirmed</span>
                       </div>
@@ -992,7 +992,7 @@ export default function StartScreen({ onSelectProject }) {
                             cursor: 'pointer'
                           }}
                         >
-                          Screen 4 (Health Questions)
+                          Screen 4 (Review Details)
                         </button>
                         <button
                           type="button"
