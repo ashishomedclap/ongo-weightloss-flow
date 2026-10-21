@@ -208,11 +208,11 @@ ongo-weightloss-flow/
 
 ### ⚡ Available Projects
 - **Ongo V3 (`project=ongo-v3`)**: Streamlined 5-screen clinical intake & booking flow:
-  1. *Screen 1*: Create Account / Login
-  2. *Screen 2*: About You (demographics & state)
-  3. *Screen 3*: Appointment Date & Time Selection (interactive month calendar + time slots)
-  4. *Screen 4*: Review & Confirm Details (summary cards with direct 1-click edit options)
-  5. *Screen 5*: Care Team Consultation Confirmed (Support care team card, intake timeline, portal access)
+  1. *Screen 1*: Create Account (Email, password, Google/Apple OAuth, terms)
+  2. *Screen 2*: Profile Details (Name, DOB, gender, phone, state)
+  3. *Screen 3*: Schedule Consultation (Interactive calendar & weekday care team slot picker)
+  4. *Screen 4*: Review & Confirm (Profile and consultation summary with 1-click edit buttons)
+  5. *Screen 5*: Consultation Confirmed (Support care team booking confirmation, next steps timeline, patient portal)
 - **Ongo V1 (`project=ongo`)**: Complete 25-screen onboarding & clinical intake.
 - **Ongo V2 (`project=ongo-v2`)**: Polished 25-screen version with enhanced stepper navigation.
 - **Join Fridays (`project=join-fridays`)**: 10-screen competitor onboarding comparison.
@@ -228,11 +228,11 @@ The application includes a built-in top inspector toolbar for rapid evaluation:
 - **Autofill Demo**: Auto-populates realistic clinical and address data across all fields.
 - **Mobile Frame**: Toggles between desktop card view and 390px mobile viewport frame.
 - **Direct Deep-Linking**:
-  - `http://localhost:5173/?project=ongo-v3&screen=1` — Open V3 Screen 1 (Account)
+  - `http://localhost:5173/?project=ongo-v3&screen=1` — Open V3 Screen 1 (Create Account)
   - `http://localhost:5173/?project=ongo-v3&screen=2` — Open V3 Screen 2 (Profile Details)
-  - `http://localhost:5173/?project=ongo-v3&screen=3` — Open V3 Screen 3 (Appointment)
-  - `http://localhost:5173/?project=ongo-v3&screen=4` — Open V3 Screen 4 (Review & Confirm Details)
-  - `http://localhost:5173/?project=ongo-v3&screen=5` — Open V3 Screen 5 / Screen 6 (Confirmed)
+  - `http://localhost:5173/?project=ongo-v3&screen=3` — Open V3 Screen 3 (Schedule Consultation)
+  - `http://localhost:5173/?project=ongo-v3&screen=4` — Open V3 Screen 4 (Review & Confirm)
+  - `http://localhost:5173/?project=ongo-v3&screen=5` — Open V3 Screen 5 (Consultation Confirmed)
   - `http://localhost:5173/?project=ongo&screen=10&autofill=1` — Open V1 Screen 10
 
 

@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function Screen5Confirmed({ formData, onBackToWelcome }) {
+export default function Screen5ConsultationConfirmed({ formData, onBackToWelcome }) {
   useEffect(() => {
     try {
       confetti({
@@ -52,10 +52,10 @@ export default function Screen5Confirmed({ formData, onBackToWelcome }) {
 
       <div className="heading-section" style={{ marginBottom: '24px', textAlign: 'center' }}>
         <h1 className="page-title" style={{ fontSize: '28px', color: '#111827', marginBottom: '8px' }}>
-          Appointment confirmed 🎉
+          Consultation confirmed 🎉
         </h1>
         <p className="page-subtitle" style={{ fontSize: '15px', color: '#6B7280', maxWidth: '480px', margin: '0 auto', lineHeight: '1.5' }}>
-          Your appointment is confirmed. The Ongo Support Care Team will review your details before your visit.
+          Your consultation is confirmed. The Ongo Support Care Team will review your details before your visit.
         </p>
       </div>
 

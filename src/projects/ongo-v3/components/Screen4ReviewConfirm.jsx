@@ -14,7 +14,7 @@ import {
   Users 
 } from 'lucide-react';
 
-export default function Screen4ReviewDetails({ 
+export default function Screen4ReviewConfirm({ 
   formData, 
   onConfirm, 
   onBack, 
@@ -48,7 +48,7 @@ export default function Screen4ReviewDetails({
           letterSpacing: '0.04em'
         }}>
           <CheckCircle2 size={13} color="#059669" />
-          Step 4 of 5 • Final Review
+          Step 4 of 5 • Review &amp; Confirm
         </span>
         <h1 className="page-title" style={{ fontSize: '28px', color: '#111827', marginBottom: '8px', fontWeight: 800 }}>
           Review &amp; confirm details

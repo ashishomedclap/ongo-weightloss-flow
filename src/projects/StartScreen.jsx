@@ -841,14 +841,14 @@ export default function StartScreen({ onSelectProject }) {
                     </div>
 
                     <p style={{ fontSize: '15px', color: '#4B5563', lineHeight: 1.55, margin: '0 0 16px', maxWidth: '820px' }}>
-                      A focused 5-screen clinical intake and scheduling experience: (1) Account login/signup from V1 Screen 1, (2) Patient profile details from V1 Screen 2, (3) Appointment date and time selector, (4) Review &amp; confirm details with direct edit options, and (5) Appointment with care team confirmed.
+                      A focused 5-screen clinical intake and scheduling experience: (1) Create Account, (2) Profile Details, (3) Schedule Consultation, (4) Review &amp; confirm details with direct edit options, and (5) Consultation confirmed with support care team.
                     </p>
 
                     {/* Key Feature Tags */}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '22px' }}>
                       <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                         <CheckCircle2 size={13} color="#2563EB" />
-                        Screen 1: Account Login
+                        Screen 1: Create Account
                       </span>
                       <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                         <UserCheck size={13} color="#2563EB" />
@@ -856,15 +856,15 @@ export default function StartScreen({ onSelectProject }) {
                       </span>
                       <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                         <Calendar size={13} color="#2563EB" />
-                        Screen 3: Appointment Date &amp; Time
+                        Screen 3: Schedule Consultation
                       </span>
                       <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                         <ShieldCheck size={13} color="#2563EB" />
-                        Screen 4: Review &amp; Confirm Details
+                        Screen 4: Review &amp; Confirm
                       </span>
                       <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                         <Check size={13} color="#2563EB" />
-                        Screen 5: Care Team Confirmed
+                        Screen 5: Consultation Confirmed
                       </span>
                     </div>
 
@@ -887,15 +887,15 @@ export default function StartScreen({ onSelectProject }) {
                         fontSize: '12px',
                         color: '#475569'
                       }}>
-                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>1. Account Login</span>
+                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>1. Create Account</span>
                         <ChevronRight size={13} color="#94A3B8" />
                         <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>2. Profile Details</span>
                         <ChevronRight size={13} color="#94A3B8" />
-                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>3. Appointment Time</span>
+                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>3. Schedule Consultation</span>
                         <ChevronRight size={13} color="#94A3B8" />
-                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>4. Review &amp; Confirm Details</span>
+                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>4. Review &amp; Confirm</span>
                         <ChevronRight size={13} color="#94A3B8" />
-                        <span style={{ background: '#EFF6FF', border: '1px solid #93C5FD', color: '#1D4ED8', padding: '4px 8px', borderRadius: '6px', fontWeight: 700 }}>5. Appointment Confirmed</span>
+                        <span style={{ background: '#EFF6FF', border: '1px solid #93C5FD', color: '#1D4ED8', padding: '4px 8px', borderRadius: '6px', fontWeight: 700 }}>5. Consultation Confirmed</span>
                       </div>
                     </div>
 
@@ -944,7 +944,7 @@ export default function StartScreen({ onSelectProject }) {
                             cursor: 'pointer'
                           }}
                         >
-                          Screen 1 (Login)
+                          Screen 1 (Create Account)
                         </button>
                         <button
                           type="button"
@@ -960,7 +960,7 @@ export default function StartScreen({ onSelectProject }) {
                             cursor: 'pointer'
                           }}
                         >
-                          Screen 2 (Profile)
+                          Screen 2 (Profile Details)
                         </button>
                         <button
                           type="button"
@@ -976,7 +976,7 @@ export default function StartScreen({ onSelectProject }) {
                             cursor: 'pointer'
                           }}
                         >
-                          Screen 3 (Appointment)
+                          Screen 3 (Schedule Consultation)
                         </button>
                         <button
                           type="button"
@@ -992,7 +992,7 @@ export default function StartScreen({ onSelectProject }) {
                             cursor: 'pointer'
                           }}
                         >
-                          Screen 4 (Review Details)
+                          Screen 4 (Review &amp; Confirm)
                         </button>
                         <button
                           type="button"
@@ -1008,7 +1008,7 @@ export default function StartScreen({ onSelectProject }) {
                             cursor: 'pointer'
                           }}
                         >
-                          Screen 5 (Confirmed)
+                          Screen 5 (Consultation Confirmed)
                         </button>
                       </div>
 

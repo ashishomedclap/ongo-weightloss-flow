@@ -11,7 +11,7 @@ import {
   Video
 } from 'lucide-react';
 
-export default function Screen3Appointment({ 
+export default function Screen3ScheduleConsultation({ 
   formData, 
   updateFormData, 
   onNext, 
@@ -123,16 +123,16 @@ export default function Screen3Appointment({
       
       {/* Step Badge */}
       <div className="step-tag-teal" style={{ margin: '0 auto 14px auto', display: 'flex', justifyContent: 'center' }}>
-        STEP 3 OF 5 · APPOINTMENT SELECTION
+        STEP 3 OF 5 · SCHEDULE CONSULTATION
       </div>
 
       {/* Screen Title */}
       <div className="heading-section" style={{ textAlign: 'center', marginBottom: '20px' }}>
         <h1 className="page-title" style={{ fontSize: '28px', color: '#111827', marginBottom: '8px' }}>
-          When would you like to meet your physician?
+          When would you like to meet your support care team?
         </h1>
         <p className="page-subtitle" style={{ fontSize: '15px', color: '#6B7280', margin: '0 auto', maxWidth: '520px' }}>
-          Consultations take 10–30 minutes. Pick a date, then choose a time that works for you.
+          Consultations take 15–20 minutes. Pick a date, then choose a time that works for you.
         </p>
       </div>
 

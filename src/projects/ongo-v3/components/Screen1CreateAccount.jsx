@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Check } from 'lucide-react';
 
-export default function Screen1Account({ formData, updateFormData, onNext }) {
+export default function Screen1CreateAccount({ formData, updateFormData, onNext }) {
   const [agreedMarketing, setAgreedMarketing] = useState(formData.agreeMarketing ?? false);
   const [email, setEmail] = useState(formData.email || '');
   const [password, setPassword] = useState(formData.password || '');
@@ -38,7 +38,7 @@ export default function Screen1Account({ formData, updateFormData, onNext }) {
     <div className="content-inner fade-in" style={{ width: '100%', maxWidth: '520px', margin: '0 auto', paddingBottom: '40px' }}>
       <div style={{ textAlign: 'center', marginBottom: '14px' }}>
         <div className="step-tag-teal" style={{ display: 'inline-block' }}>
-          STEP 1 OF 5 · GET STARTED
+          STEP 1 OF 5 · CREATE ACCOUNT
         </div>
       </div>
 

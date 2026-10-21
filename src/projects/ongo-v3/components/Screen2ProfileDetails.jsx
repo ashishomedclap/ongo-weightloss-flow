@@ -13,7 +13,7 @@ const US_STATES = [
   "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
 ];
 
-export default function Screen2AboutYou({ formData, updateFormData, onNext, onBack }) {
+export default function Screen2ProfileDetails({ formData, updateFormData, onNext, onBack }) {
   const [firstName, setFirstName] = useState(formData.firstName || '');
   const [lastName, setLastName] = useState(formData.lastName || '');
   const [gender, setGender] = useState(formData.gender || '');
@@ -50,7 +50,7 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
     <div className="content-inner fade-in" style={{ width: '100%', maxWidth: '540px', margin: '0 auto', paddingBottom: '40px' }}>
       <div style={{ textAlign: 'center', marginBottom: '14px' }}>
         <div className="step-tag-teal" style={{ display: 'inline-block' }}>
-          STEP 2 OF 5 · ABOUT YOU
+          STEP 2 OF 5 · PROFILE DETAILS
         </div>
       </div>
 

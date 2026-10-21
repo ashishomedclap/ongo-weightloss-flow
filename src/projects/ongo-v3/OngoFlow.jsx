@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './components/Header';
-import Screen1Account from './components/Screen1Account';
-import Screen2AboutYou from './components/Screen2AboutYou';
-import Screen3Appointment from './components/Screen3Appointment';
-import Screen4ReviewDetails from './components/Screen4ReviewDetails';
-import Screen5Confirmed from './components/Screen5Confirmed';
+import Screen1CreateAccount from './components/Screen1CreateAccount';
+import Screen2ProfileDetails from './components/Screen2ProfileDetails';
+import Screen3ScheduleConsultation from './components/Screen3ScheduleConsultation';
+import Screen4ReviewConfirm from './components/Screen4ReviewConfirm';
+import Screen5ConsultationConfirmed from './components/Screen5ConsultationConfirmed';
 import { Smartphone, Monitor, Sparkles, ArrowLeft, RefreshCw } from 'lucide-react';
 
 const getInitialScreen = () => {
@@ -205,11 +205,11 @@ export default function OngoFlowV3({ onBackToWelcome }) {
               cursor: 'pointer'
             }}
           >
-            <option value="1">Screen 1: Account / Login (V1 Screen 1)</option>
-            <option value="2">Screen 2: Profile Details (V1 Screen 2)</option>
-            <option value="3">Screen 3: Appointment Date &amp; Time</option>
-            <option value="4">Screen 4: Review &amp; Confirm Details (Edit options)</option>
-            <option value="5">Screen 5: Appointment Confirmed</option>
+            <option value="1">Screen 1: Create Account</option>
+            <option value="2">Screen 2: Profile Details</option>
+            <option value="3">Screen 3: Schedule Consultation</option>
+            <option value="4">Screen 4: Review &amp; Confirm</option>
+            <option value="5">Screen 5: Consultation Confirmed</option>
           </select>
 
           {/* Autofill QA */}
@@ -318,10 +318,10 @@ export default function OngoFlowV3({ onBackToWelcome }) {
             onLogoClick={() => setCurrentScreen('1')}
           />
 
-          {/* Screen 1: Login / Account creation from V1 Screen 1 */}
+          {/* Screen 1: Create Account */}
           {currentScreen === '1' && (
             <div style={{ padding: isMobileFrame ? '16px' : '28px 16px', display: 'flex', justifyContent: 'center', width: '100%' }}>
-              <Screen1Account
+              <Screen1CreateAccount
                 formData={formData}
                 updateFormData={updateFormData}
                 onNext={handleNextScreen}
@@ -329,10 +329,10 @@ export default function OngoFlowV3({ onBackToWelcome }) {
             </div>
           )}
 
-          {/* Screen 2: Profile details from V1 Screen 2 */}
+          {/* Screen 2: Profile Details */}
           {currentScreen === '2' && (
             <div style={{ padding: isMobileFrame ? '16px' : '28px 16px', display: 'flex', justifyContent: 'center', width: '100%' }}>
-              <Screen2AboutYou
+              <Screen2ProfileDetails
                 formData={formData}
                 updateFormData={updateFormData}
                 onNext={handleNextScreen}
@@ -341,10 +341,10 @@ export default function OngoFlowV3({ onBackToWelcome }) {
             </div>
           )}
 
-          {/* Screen 3: Appointment date and time */}
+          {/* Screen 3: Schedule Consultation */}
           {currentScreen === '3' && (
             <div style={{ padding: isMobileFrame ? '16px' : '28px 16px' }}>
-              <Screen3Appointment
+              <Screen3ScheduleConsultation
                 formData={formData}
                 updateFormData={updateFormData}
                 onNext={handleNextScreen}
@@ -353,10 +353,10 @@ export default function OngoFlowV3({ onBackToWelcome }) {
             </div>
           )}
 
-          {/* Screen 4: Review and confirm details (with edit options) */}
+          {/* Screen 4: Review & Confirm */}
           {currentScreen === '4' && (
             <div style={{ padding: isMobileFrame ? '16px' : '28px 16px' }}>
-              <Screen4ReviewDetails
+              <Screen4ReviewConfirm
                 formData={formData}
                 onConfirm={() => setCurrentScreen('5')}
                 onBack={handlePrevScreen}
@@ -365,10 +365,10 @@ export default function OngoFlowV3({ onBackToWelcome }) {
             </div>
           )}
 
-          {/* Screen 5 / Screen 6: Appointment with care team confirmed */}
+          {/* Screen 5 / Screen 6: Consultation Confirmed */}
           {(currentScreen === '5' || currentScreen === '6') && (
             <div style={{ padding: isMobileFrame ? '16px' : '28px 16px' }}>
-              <Screen5Confirmed
+              <Screen5ConsultationConfirmed
                 formData={formData}
                 onBackToWelcome={onBackToWelcome}
               />
