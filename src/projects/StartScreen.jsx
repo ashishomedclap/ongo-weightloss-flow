@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import fridaysLogoImg from '../assets/fridays/fridays-logo.png';
-import OngoClockIcon from './ongo/components/OngoClockIcon';
-import MochiLogo from './join mochi/MochiLogo';
+import OngoClockIcon from '../components/common/OngoClockIcon';
+import MochiLogo from './join-mochi/MochiLogo';
 import { 
   Sparkles, 
   ArrowRight, 
   CheckCircle2, 
   Smartphone, 
-  Monitor, 
   Scale, 
   BookOpenCheck, 
   ShieldCheck, 
@@ -15,25 +14,12 @@ import {
   Calendar, 
   CreditCard, 
   UserCheck, 
-  ExternalLink, 
-  Layers, 
-  Activity, 
-  FileText, 
   ChevronRight, 
-  Clock, 
-  Check, 
-  ArrowUpRight,
-  TrendingDown,
-  Building,
-  Stethoscope,
-  Pill,
-  Search,
-  Filter
+  Check 
 } from 'lucide-react';
 
 export default function StartScreen({ onSelectProject }) {
   const [filterCategory, setFilterCategory] = useState('all'); // 'all', 'ongo', 'competitors'
-  const [searchQuery, setSearchQuery] = useState('');
 
   // Handle direct screen jumps
   const handleLaunchOngoScreen = (screenKey) => {
@@ -54,6 +40,16 @@ export default function StartScreen({ onSelectProject }) {
       window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
     }
     onSelectProject('ongo-v2');
+  };
+
+  const handleLaunchOngoV3Screen = (screenKey) => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      params.set('project', 'ongo-v3');
+      params.set('screen', screenKey);
+      window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
+    }
+    onSelectProject('ongo-v3');
   };
 
   const handleLaunchFridaysFrame = (frameNum) => {
@@ -183,7 +179,7 @@ export default function StartScreen({ onSelectProject }) {
                 transition: 'all 0.15s ease'
               }}
             >
-              All Projects (4)
+              All Projects (5)
             </button>
             <button
               type="button"
@@ -200,7 +196,7 @@ export default function StartScreen({ onSelectProject }) {
                 transition: 'all 0.15s ease'
               }}
             >
-              🌿 Ongo Weight Loss (2: V1 & V2)
+              🌿 Ongo Weight Loss (3: V1, V2, V3)
             </button>
             <button
               type="button"
@@ -276,7 +272,7 @@ export default function StartScreen({ onSelectProject }) {
               </div>
 
               <div style={{ fontSize: '12.5px', color: '#1F4F3D', fontWeight: 700, background: '#F0F9F2', padding: '6px 12px', borderRadius: '8px' }}>
-                2 Flows: V1 Baseline &bull; V2 Active Workspace
+                3 Flows: V1 Baseline &bull; V2 Active Workspace &bull; V3 3-Screen Hub
               </div>
             </div>
 
@@ -766,6 +762,253 @@ export default function StartScreen({ onSelectProject }) {
                           }}
                         >
                           Screen 24 (Calendar)
+                        </button>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+              {/* V3 Survey Card (3 Screens Hub) */}
+              <div style={{
+                background: '#FFFFFF',
+                borderRadius: '24px',
+                border: '2px solid #2563EB',
+                boxShadow: '0 12px 32px rgba(37, 99, 235, 0.09)',
+                padding: '32px',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+              }}>
+                
+                {/* Active V3 Status Badge */}
+                <div style={{
+                  position: 'absolute',
+                  top: '20px',
+                  right: '24px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: '#EFF6FF',
+                  color: '#1D4ED8',
+                  padding: '4px 12px',
+                  borderRadius: '12px',
+                  fontSize: '11.5px',
+                  fontWeight: 800,
+                  letterSpacing: '0.04em'
+                }}>
+                  <Sparkles size={12} color="#2563EB" />
+                  <span>V3 FLOW • 5 SCREENS</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '20px', flexWrap: 'wrap' }}>
+                  
+                  {/* Left Icon Accent */}
+                  <div style={{
+                    width: '60px',
+                    height: '60px',
+                    borderRadius: '18px',
+                    background: 'linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    boxShadow: '0 8px 16px rgba(37, 99, 235, 0.25)',
+                    color: '#FFF'
+                  }}>
+                    <OngoClockIcon size={34} coralColor="#93C5FD" whiteColor="#FFFFFF" />
+                  </div>
+
+                  {/* Right Content */}
+                  <div style={{ flex: 1, minWidth: '280px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                      <h3 style={{ fontSize: '24px', fontWeight: 800, color: '#111827', margin: 0 }}>
+                        Ongo Weight Loss — V3 Flow
+                      </h3>
+                      <span style={{
+                        background: '#1E40AF',
+                        color: '#FFF',
+                        fontSize: '11.5px',
+                        fontWeight: 700,
+                        padding: '2px 8px',
+                        borderRadius: '6px'
+                      }}>
+                        5 Screens
+                      </span>
+                    </div>
+
+                    <p style={{ fontSize: '15px', color: '#4B5563', lineHeight: 1.55, margin: '0 0 16px', maxWidth: '820px' }}>
+                      A focused 5-screen clinical intake and scheduling experience: (1) Account login/signup from V1 Screen 1, (2) Patient profile details from V1 Screen 2, (3) Appointment date and time selector, (4) Safety health assessment checkboxes from screenshot, and (5) Appointment with care team confirmed with celebration and calendar sync.
+                    </p>
+
+                    {/* Key Feature Tags */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '22px' }}>
+                      <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                        <CheckCircle2 size={13} color="#2563EB" />
+                        Screen 1: Account Login
+                      </span>
+                      <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                        <UserCheck size={13} color="#2563EB" />
+                        Screen 2: Profile Details
+                      </span>
+                      <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                        <Calendar size={13} color="#2563EB" />
+                        Screen 3: Appointment Date &amp; Time
+                      </span>
+                      <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                        <ShieldCheck size={13} color="#2563EB" />
+                        Screen 4: Health Questions (Checkboxes)
+                      </span>
+                      <span style={{ fontSize: '12px', background: '#EFF6FF', color: '#1D4ED8', padding: '5px 12px', borderRadius: '12px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                        <Check size={13} color="#2563EB" />
+                        Screen 5: Care Team Confirmed
+                      </span>
+                    </div>
+
+                    {/* Flow Phase Breadcrumbs Bar */}
+                    <div style={{
+                      background: '#F8FAFC',
+                      border: '1px solid #E2E8F0',
+                      borderRadius: '14px',
+                      padding: '14px 18px',
+                      marginBottom: '24px'
+                    }}>
+                      <div style={{ fontSize: '12px', fontWeight: 800, color: '#334155', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '10px' }}>
+                        V3 5-Screen Progression
+                      </div>
+                      <div style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        gap: '8px',
+                        fontSize: '12px',
+                        color: '#475569'
+                      }}>
+                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>1. Account Login</span>
+                        <ChevronRight size={13} color="#94A3B8" />
+                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>2. Profile Details</span>
+                        <ChevronRight size={13} color="#94A3B8" />
+                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>3. Appointment Time</span>
+                        <ChevronRight size={13} color="#94A3B8" />
+                        <span style={{ background: '#FFF', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '6px', fontWeight: 600 }}>4. Health Questions</span>
+                        <ChevronRight size={13} color="#94A3B8" />
+                        <span style={{ background: '#EFF6FF', border: '1px solid #93C5FD', color: '#1D4ED8', padding: '4px 8px', borderRadius: '6px', fontWeight: 700 }}>5. Appointment Confirmed</span>
+                      </div>
+                    </div>
+
+                    {/* CTAs and Deep Screen Launchers */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px' }}>
+                      
+                      {/* Primary Launch Button */}
+                      <button
+                        type="button"
+                        onClick={() => onSelectProject('ongo-v3')}
+                        style={{
+                          background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 100%)',
+                          color: '#FFFFFF',
+                          border: 'none',
+                          borderRadius: '14px',
+                          padding: '13px 26px',
+                          fontSize: '15px',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '10px',
+                          boxShadow: '0 4px 14px rgba(37, 99, 235, 0.28)',
+                          transition: 'background 0.15s ease, transform 0.15s ease'
+                        }}
+                      >
+                        <Sparkles size={17} />
+                        <span>Launch Ongo V3 Flow</span>
+                        <ArrowRight size={18} />
+                      </button>
+
+                      {/* Quick Screen Jump Buttons */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: '12px', color: '#6B7280', fontWeight: 600 }}>Jump in V3:</span>
+                        <button
+                          type="button"
+                          onClick={() => handleLaunchOngoV3Screen('1')}
+                          style={{
+                            background: '#F3F4F6',
+                            border: '1px solid #E5E7EB',
+                            borderRadius: '8px',
+                            padding: '6px 10px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: '#374151',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Screen 1 (Login)
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleLaunchOngoV3Screen('2')}
+                          style={{
+                            background: '#F3F4F6',
+                            border: '1px solid #E5E7EB',
+                            borderRadius: '8px',
+                            padding: '6px 10px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: '#374151',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Screen 2 (Profile)
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleLaunchOngoV3Screen('3')}
+                          style={{
+                            background: '#F3F4F6',
+                            border: '1px solid #E5E7EB',
+                            borderRadius: '8px',
+                            padding: '6px 10px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: '#374151',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Screen 3 (Appointment)
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleLaunchOngoV3Screen('4')}
+                          style={{
+                            background: '#F3F4F6',
+                            border: '1px solid #E5E7EB',
+                            borderRadius: '8px',
+                            padding: '6px 10px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: '#374151',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Screen 4 (Health Questions)
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleLaunchOngoV3Screen('5')}
+                          style={{
+                            background: '#F3F4F6',
+                            border: '1px solid #E5E7EB',
+                            borderRadius: '8px',
+                            padding: '6px 10px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: '#374151',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Screen 5 (Confirmed)
                         </button>
                       </div>
 

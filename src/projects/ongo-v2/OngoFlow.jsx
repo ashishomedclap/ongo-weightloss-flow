@@ -47,7 +47,7 @@ import Screen22PhotoID from './components/Screen22PhotoID';
 import Screen23Shipping from './components/Screen23Shipping';
 import Screen24Appointment from './components/Screen24Appointment';
 import Screen25IntakeConfirmed from './components/Screen25IntakeConfirmed';
-import { Smartphone, Monitor, Sparkles, CheckCheck, ArrowLeft } from 'lucide-react';
+import { Smartphone, Monitor, Sparkles, ArrowLeft } from 'lucide-react';
 
 const SCREEN_LIST = [
   // Phase 1: Get Started

@@ -2,25 +2,34 @@ import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
-const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-const ROOT_DIR = 'E:\\antigravity\\ongo-weightloss-flow';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const ROOT_DIR = path.resolve(__dirname, '..');
 const SCREENSHOTS_DIR = path.join(ROOT_DIR, 'screenshots');
+const REFERENCE_DIR = path.join(SCREENSHOTS_DIR, 'reference');
+
+const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 
 if (!fs.existsSync(SCREENSHOTS_DIR)) {
   fs.mkdirSync(SCREENSHOTS_DIR, { recursive: true });
 }
+if (!fs.existsSync(REFERENCE_DIR)) {
+  fs.mkdirSync(REFERENCE_DIR, { recursive: true });
+}
 
 // Targets to capture
 const tasks = [
-  // Root files update
-  { out: path.join(ROOT_DIR, 'screen2_clean.png'), url: 'http://localhost:5173/?screen=2', w: 1920, h: 1080 },
-  { out: path.join(ROOT_DIR, 'screen2_updated.png'), url: 'http://localhost:5173/?screen=2&autofill=1', w: 1920, h: 1080 },
-  { out: path.join(ROOT_DIR, 'screen3_bmi.png'), url: 'http://localhost:5173/?screen=3&autofill=1', w: 1920, h: 1080 },
-  { out: path.join(ROOT_DIR, 'screen4_checkboxes.png'), url: 'http://localhost:5173/?screen=4', w: 1920, h: 1200 },
-  { out: path.join(ROOT_DIR, 'screen7_physician.png'), url: 'http://localhost:5173/?screen=7', w: 1920, h: 1080 },
-  { out: path.join(ROOT_DIR, 'screen8_options.png'), url: 'http://localhost:5173/?screen=8&autofill=1', w: 1920, h: 1100 },
-  { out: path.join(ROOT_DIR, 'screen9_plan.png'), url: 'http://localhost:5173/?screen=9&autofill=1', w: 1920, h: 1100 },
-  { out: path.join(ROOT_DIR, 'screen10_payment.png'), url: 'http://localhost:5173/?screen=10&autofill=1', w: 1920, h: 1350 },
+  // Reference files
+  { out: path.join(REFERENCE_DIR, 'screen2_clean.png'), url: 'http://localhost:5173/?screen=2', w: 1920, h: 1080 },
+  { out: path.join(REFERENCE_DIR, 'screen2_updated.png'), url: 'http://localhost:5173/?screen=2&autofill=1', w: 1920, h: 1080 },
+  { out: path.join(REFERENCE_DIR, 'screen3_bmi.png'), url: 'http://localhost:5173/?screen=3&autofill=1', w: 1920, h: 1080 },
+  { out: path.join(REFERENCE_DIR, 'screen4_checkboxes.png'), url: 'http://localhost:5173/?screen=4', w: 1920, h: 1200 },
+  { out: path.join(REFERENCE_DIR, 'screen7_physician.png'), url: 'http://localhost:5173/?screen=7', w: 1920, h: 1080 },
+  { out: path.join(REFERENCE_DIR, 'screen8_options.png'), url: 'http://localhost:5173/?screen=8&autofill=1', w: 1920, h: 1100 },
+  { out: path.join(REFERENCE_DIR, 'screen9_plan.png'), url: 'http://localhost:5173/?screen=9&autofill=1', w: 1920, h: 1100 },
+  { out: path.join(REFERENCE_DIR, 'screen10_payment.png'), url: 'http://localhost:5173/?screen=10&autofill=1', w: 1920, h: 1350 },
 
   // Comprehensive gallery in screenshots/
   { out: path.join(SCREENSHOTS_DIR, '01_screen1_account.png'), url: 'http://localhost:5173/?screen=1', w: 1920, h: 1080 },

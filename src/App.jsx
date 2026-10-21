@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react';
 import StartScreen from './projects/StartScreen';
 import OngoFlow from './projects/ongo/OngoFlow';
 import OngoFlowV2 from './projects/ongo-v2/OngoFlow';
-import MochiFlow from './projects/join mochi/CompetitorFlow';
-import JoinFridaysFlow from './projects/join fridays/JoinFridaysFlow';
+import OngoFlowV3 from './projects/ongo-v3/OngoFlow';
+import MochiFlow from './projects/join-mochi/CompetitorFlow';
+import JoinFridaysFlow from './projects/join-fridays/JoinFridaysFlow';
 import { Layers } from 'lucide-react';
 
 const getInitialProject = () => {
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
     const p = params.get('project');
-    if (p === 'ongo' || p === 'ongo-v1' || p === 'ongo-v2' || p === 'v2' || p === 'join-mochi' || p === 'competitor' || p === 'join-fridays' || p === 'welcome' || p === 'start') {
+    if (p === 'ongo' || p === 'ongo-v1' || p === 'ongo-v2' || p === 'v2' || p === 'ongo-v3' || p === 'v3' || p === 'join-mochi' || p === 'competitor' || p === 'join-fridays' || p === 'welcome' || p === 'start') {
       if (p === 'competitor') return 'join-mochi';
       if (p === 'ongo-v1') return 'ongo';
       if (p === 'v2') return 'ongo-v2';
+      if (p === 'v3') return 'ongo-v3';
       if (p === 'start') return 'welcome';
       return p;
     }
@@ -114,6 +116,7 @@ export default function App() {
             <optgroup label="Ongo Weight Loss">
               <option value="ongo">🌿 V1 Survey (25 Screens - Baseline)</option>
               <option value="ongo-v2">✨ V2 Survey (25 Screens - Active Workspace)</option>
+              <option value="ongo-v3">🌟 V3 Flow (5 Screens: Intake, Calendar & Care Team)</option>
             </optgroup>
             <optgroup label="Competitors">
               <option value="join-fridays">🟠 1. Join Fridays (10 Screens)</option>
@@ -125,7 +128,7 @@ export default function App() {
 
       {/* Main View Router */}
       {(project === 'welcome' || project === 'start') && (
-        <StartScreen onSelectProject={(p) => setProject(p === 'competitor' ? 'join-mochi' : (p === 'ongo-v1' ? 'ongo' : p))} />
+        <StartScreen onSelectProject={(p) => setProject(p === 'competitor' ? 'join-mochi' : (p === 'ongo-v1' ? 'ongo' : (p === 'v3' ? 'ongo-v3' : p)))} />
       )}
 
       {(project === 'ongo' || project === 'ongo-v1') && (
@@ -134,6 +137,10 @@ export default function App() {
 
       {(project === 'ongo-v2' || project === 'v2') && (
         <OngoFlowV2 onBackToWelcome={() => setProject('welcome')} />
+      )}
+
+      {(project === 'ongo-v3' || project === 'v3') && (
+        <OngoFlowV3 onBackToWelcome={() => setProject('welcome')} />
       )}
 
       {project === 'join-fridays' && (

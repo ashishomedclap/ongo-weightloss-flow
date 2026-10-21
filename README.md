@@ -172,18 +172,68 @@ All screens are captured in high resolution and available in [`screenshots/`](./
 
 ---
 
+## 📁 Project Architecture & Directory Structure
+
+The project has been cleaned and reorganized into a modular architecture:
+
+```
+ongo-weightloss-flow/
+├── screenshots/
+│   ├── reference/                  # Source UI references & benchmark designs
+│   │   ├── screen4_checkboxes.png  # Reference for V3 safety assessment
+│   │   ├── screen10_payment.png, screen2_clean.png, etc.
+│   └── *.png                       # Automated capture gallery
+├── scripts/
+│   ├── capture.js                  # Automated screenshot runner
+│   ├── capture_fridays_frames.js   # Fridays benchmark capture
+│   └── capture_mochi_frames.js     # Mochi benchmark capture
+├── src/
+│   ├── components/
+│   │   └── common/                 # Reusable components across all flows
+│   │       ├── OngoClockIcon.jsx
+│   │       ├── OngoLogo.jsx
+│   │       └── ThemedDropdown.jsx
+│   ├── projects/
+│   │   ├── StartScreen.jsx         # Central project launcher & preview hub
+│   │   ├── ongo/                   # V1: Full 25-screen telehealth flow
+│   │   ├── ongo-v2/                # V2: Refined 25-screen flow with progress bars
+│   │   ├── ongo-v3/                # V3: Streamlined 5-screen fast-track flow
+│   │   ├── join-fridays/           # Benchmark: Join Fridays flow (10 screens)
+│   │   └── join-mochi/             # Benchmark: Join Mochi flow (29 screens)
+│   ├── App.jsx                     # Top-level switcher & router
+│   ├── main.jsx                    # React 19 entry point
+│   ├── index.css                   # Global design system & theme tokens
+│   └── tokens.js                   # Color & typography tokens
+```
+
+### ⚡ Available Projects
+- **Ongo V3 (`project=ongo-v3`)**: Streamlined 5-screen clinical intake & booking flow:
+  1. *Screen 1*: Create Account / Login
+  2. *Screen 2*: About You (demographics & state)
+  3. *Screen 3*: Appointment Date & Time Selection (interactive month calendar + time slots)
+  4. *Screen 4*: Important Health Screening (checklist with "None of these apply")
+  5. *Screen 5*: Care Team Consultation Confirmed (Dr. Sarah Jenkins card, calendar sync, confetti)
+- **Ongo V1 (`project=ongo`)**: Complete 25-screen onboarding & clinical intake.
+- **Ongo V2 (`project=ongo-v2`)**: Polished 25-screen version with enhanced stepper navigation.
+- **Join Fridays (`project=join-fridays`)**: 10-screen competitor onboarding comparison.
+- **Join Mochi (`project=join-mochi`)**: 29-screen telehealth journey benchmark.
+
+---
+
 ## 🛠️ Reviewer Controls
 
 The application includes a built-in top inspector toolbar for rapid evaluation:
-- **Screen Selector**: Jump to any of the 25 screens or 4 branches instantly.
+- **Project Switcher**: Switch dynamically between Start Screen, Ongo V1, V2, V3, Fridays, and Mochi.
+- **Screen Selector**: Jump to any screen directly.
 - **Autofill Demo**: Auto-populates realistic clinical and address data across all fields.
-- **Mobile Frame**: Toggles between 540px desktop card and 390px mobile viewport frame.
+- **Mobile Frame**: Toggles between desktop card view and 390px mobile viewport frame.
 - **Direct Deep-Linking**:
-  - `http://localhost:5173/?screen=7` — Open Screen 7 directly
-  - `http://localhost:5173/?screen=10&autofill=1` — Open Screen 10 with filled payment and promo
-  - `http://localhost:5173/?screen=24&mobile=true` — Open Screen 24 in mobile frame
+  - `http://localhost:5173/?project=ongo-v3&screen=1` — Open V3 Screen 1 (Account)
+  - `http://localhost:5173/?project=ongo-v3&screen=3` — Open V3 Screen 3 (Appointment)
+  - `http://localhost:5173/?project=ongo-v3&screen=4` — Open V3 Screen 4 (Health Questions)
+  - `http://localhost:5173/?project=ongo-v3&screen=5` — Open V3 Screen 5 (Confirmed)
+  - `http://localhost:5173/?project=ongo&screen=10&autofill=1` — Open V1 Screen 10
 
----
 
 ## 🚀 Running Locally
 

@@ -33,7 +33,6 @@ import {
   ArrowLeft, 
   Monitor, 
   Smartphone, 
-  CheckCheck, 
   ChevronLeft,
   Gift,
   Sparkles
