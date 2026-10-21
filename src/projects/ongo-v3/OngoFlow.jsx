@@ -320,7 +320,7 @@ export default function OngoFlowV3({ onBackToWelcome }) {
 
           {/* Screen 1: Login / Account creation from V1 Screen 1 */}
           {currentScreen === '1' && (
-            <div style={{ padding: isMobileFrame ? '16px' : '28px 16px' }}>
+            <div style={{ padding: isMobileFrame ? '16px' : '28px 16px', display: 'flex', justifyContent: 'center', width: '100%' }}>
               <Screen1Account
                 formData={formData}
                 updateFormData={updateFormData}
@@ -331,7 +331,7 @@ export default function OngoFlowV3({ onBackToWelcome }) {
 
           {/* Screen 2: Profile details from V1 Screen 2 */}
           {currentScreen === '2' && (
-            <div style={{ padding: isMobileFrame ? '16px' : '28px 16px' }}>
+            <div style={{ padding: isMobileFrame ? '16px' : '28px 16px', display: 'flex', justifyContent: 'center', width: '100%' }}>
               <Screen2AboutYou
                 formData={formData}
                 updateFormData={updateFormData}

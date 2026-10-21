@@ -35,14 +35,16 @@ export default function Screen1Account({ formData, updateFormData, onNext }) {
   };
 
   return (
-    <div className="content-inner fade-in">
-      <div className="step-tag-teal">
-        STEP 1 OF 5 · GET STARTED
+    <div className="content-inner fade-in" style={{ width: '100%', maxWidth: '520px', margin: '0 auto', paddingBottom: '40px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+        <div className="step-tag-teal" style={{ display: 'inline-block' }}>
+          STEP 1 OF 5 · GET STARTED
+        </div>
       </div>
 
-      <div className="heading-section">
-        <h1 className="page-title">Start your Ongo weight-loss journey</h1>
-        <p className="page-subtitle">
+      <div className="heading-section" style={{ textAlign: 'center', marginBottom: '24px' }}>
+        <h1 className="page-title" style={{ textAlign: 'center', marginBottom: '8px' }}>Start your Ongo weight-loss journey</h1>
+        <p className="page-subtitle" style={{ textAlign: 'center', margin: '0 auto', maxWidth: '440px' }}>
           Create an account to get started. You&apos;ll use these credentials to sign in to your patient portal later.
         </p>
       </div>

@@ -47,14 +47,16 @@ export default function Screen2AboutYou({ formData, updateFormData, onNext, onBa
   };
 
   return (
-    <div className="content-inner fade-in">
-      <div className="step-tag-teal">
-        STEP 2 OF 5 · ABOUT YOU
+    <div className="content-inner fade-in" style={{ width: '100%', maxWidth: '540px', margin: '0 auto', paddingBottom: '40px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+        <div className="step-tag-teal" style={{ display: 'inline-block' }}>
+          STEP 2 OF 5 · ABOUT YOU
+        </div>
       </div>
 
-      <div className="heading-section">
-        <h1 className="page-title">Tell us a little about you</h1>
-        <p className="page-subtitle">
+      <div className="heading-section" style={{ textAlign: 'center', marginBottom: '24px' }}>
+        <h1 className="page-title" style={{ textAlign: 'center', marginBottom: '8px' }}>Tell us a little about you</h1>
+        <p className="page-subtitle" style={{ textAlign: 'center', margin: '0 auto', maxWidth: '460px' }}>
           These details help your care team understand who you are and provide care appropriate for your state and needs.
         </p>
       </div>
